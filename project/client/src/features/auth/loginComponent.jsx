@@ -40,7 +40,7 @@ const LoginComponent = () => {
 				<ActionButton
 					click={submit}
 					text='Login'
-					type='cancel'></ActionButton>
+					type='submit'></ActionButton>
 			</form>
 		</div>
 	);
