@@ -5,7 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "env-cmd -f .env nodemon server.js"
+    "server": "env-cmd -f .env nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -18,6 +20,9 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.10",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.16"
+  },
+  "devDependencies": {
+    "concurrently": "^7.1.0"
   }
 }
