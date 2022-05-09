@@ -37,7 +37,10 @@ const LoginComponent = () => {
 					placeholder='Password'
 					onChange={inputChanged}
 					value={formInput.password}></input>
-				<ActionButton click={submit} text="Login"></ActionButton>
+				<ActionButton
+					click={submit}
+					text='Login'
+					type='cancel'></ActionButton>
 			</form>
 		</div>
 	);
