@@ -1,3 +1,76 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+	grid-template-columns: 20% 80%;
+	display: grid;
+	--prime-color: #19282f;
+	--color1: #19282f;
+	--color2: #b33030;
+	--color3: #a1b57d;
+	--color4: #d3eca7;
+	color: white;
+	margin: -8px;
+}
+/* button {
+	background: var(--color3);
+	border-radius: 5px;
+	padding: 5px 20px;
+	color: white;
+	font: normal bold 18px 'Open Sans', sans-serif;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+button:hover {
+	transition: all 0.3s;
+	background: #a1b57db9;
+} */
+
+.page-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: center;
+	grid-column: 2;
+	margin-top: 2%;
+}
+.login-page {
+	width: 100vw;
+	height: 105vh;
+	background: url('./images/imageBG.jpeg');
+	background-size: cover;
+	grid-column: 1/2;
+	background-color: rgba(0, 0, 0, 0.288);
+	background-blend-mode: multiply;
+	position: absolute;
+}
+.login-panel {
+	background-color: var(--prime-color);
+	width: 30vw;
+	border: 1px solid grey;
+	border-radius: 5px;
+	margin: 25vh auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+}
+
+.login-panel h1 {
+	width: 100%;
+}
+
+.login-panel input {
+	width: 70%;
+	height: 30px;
+	border-radius: 5px;
+	border: none;
+	margin: 10px;
+	padding-left: 5px;
+}
+
+.login-panel button {
+	flex-basis: calc(100% / 3);
+}
