@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Router, Switch, Route, Link } from 'react-router-dom';
+//import { Router, Switch, Route, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoginComponent from './features/auth/loginComponent';
 import HomeComponent from './features/home/homeComponent';
@@ -10,6 +10,7 @@ function App() {
 	const loggedIn = useSelector(getIsLogged);
 	let fullApp;
 	if (loggedIn) {
+		console.log("Success!")
 		fullApp = (
 			<div className=''>
 				<HomeComponent></HomeComponent>
