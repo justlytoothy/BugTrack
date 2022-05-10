@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import ActionButton from '../../common/button';
+import common from '../../common/commonImports.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { getLoginStatus, loginUser } from './authSlice.js';
 const LoginComponent = () => {
 	const dispatch = useDispatch();
+	const loginStatus = useSelector(getLoginStatus);
+	let isLoading;
+	if (loginStatus === 'loading') {
+		isLoading = true;
+	} else {
+		isLoading = false;
+	}
 
 	const [formInput, setFormInput] = useState({
-		name: '',
+		username: '',
 		password: '',
 	});
 
@@ -18,29 +26,32 @@ const LoginComponent = () => {
 	}
 
 	function submit(e) {
-		console.log(formInput.name, formInput.password);
 		e.preventDefault();
+		console.log(formInput.username, formInput.password);
+		let data = formInput;
+		dispatch(loginUser(data));
 	}
 
 	return (
-		<div className='login-page'>
+		<div className='login-page h-full w-full bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
 			<form className='login-panel text-black'>
 				<h1 className='text-white text-2xl'>Login:</h1>
 				<input
-					name='name'
-					placeholder='Name'
+					name='username'
+					placeholder='Username'
 					onChange={inputChanged}
-					value={formInput.name}></input>
+					value={formInput.username}></input>
 				<input
 					name='password'
 					type='password'
 					placeholder='Password'
 					onChange={inputChanged}
 					value={formInput.password}></input>
-				<ActionButton
+				<common.ActionButton
+					loading={isLoading}
 					click={submit}
 					text='Login'
-					type='submit'></ActionButton>
+					type='submit'></common.ActionButton>
 			</form>
 		</div>
 	);

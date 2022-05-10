@@ -1,15 +1,29 @@
 import React from 'react';
 import './App.css';
 import { Router, Switch, Route, Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import LoginComponent from './features/auth/loginComponent';
-import ActionButton from './common/button';
+import HomeComponent from './features/home/homeComponent';
+import { getIsLogged } from './features/auth/authSlice';
 
 function App() {
-	return (
-		<div className=''>
-			<LoginComponent></LoginComponent>
-		</div>
-	);
+	const loggedIn = useSelector(getIsLogged);
+	let fullApp;
+	if (loggedIn) {
+		fullApp = (
+			<div className=''>
+				<HomeComponent></HomeComponent>
+			</div>
+		);
+	} else {
+		fullApp = (
+			<div className=''>
+				<LoginComponent></LoginComponent>
+			</div>
+		);
+	}
+
+	return fullApp;
 }
 
 export default App;

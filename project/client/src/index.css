@@ -3,8 +3,6 @@
 @tailwind utilities;
 
 #root {
-	grid-template-columns: 20% 80%;
-	display: grid;
 	--prime-color: #19282f;
 	--color1: #19282f;
 	--color2: #b33030;
@@ -37,14 +35,8 @@ button:hover {
 	margin-top: 2%;
 }
 .login-page {
-	width: 100vw;
-	height: 105vh;
-	background: url('./images/imageBG.jpeg');
-	background-size: cover;
+
 	grid-column: 1/2;
-	background-color: rgba(0, 0, 0, 0.288);
-	background-blend-mode: multiply;
-	position: absolute;
 }
 .login-panel {
 	background-color: var(--prime-color);
