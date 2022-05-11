@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import common from '../../common/commonImports.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { getLoginStatus, loginUser } from './authSlice.js';
 const LoginComponent = () => {
 	const dispatch = useDispatch();

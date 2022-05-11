@@ -3,22 +3,22 @@ import './App.css';
 //import { Router, Switch, Route, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import LoginComponent from './features/auth/loginComponent';
-import HomeComponent from './features/home/homeComponent';
 import { getIsLogged } from './features/auth/authSlice';
+import MyRoutes from './features/sidebar/routes';
 
 function App() {
 	const loggedIn = useSelector(getIsLogged);
 	let fullApp;
 	if (loggedIn) {
-		console.log("Success!")
+		console.log('Success!');
 		fullApp = (
-			<div className=''>
-				<HomeComponent></HomeComponent>
+			<div className='p-2'>
+				<MyRoutes />
 			</div>
 		);
 	} else {
 		fullApp = (
-			<div className=''>
+			<div className='p-2'>
 				<LoginComponent></LoginComponent>
 			</div>
 		);

@@ -16,7 +16,7 @@ const HomeComponent = () => {
 	}
 
 	return (
-		<div>
+		<div className='bg-green-600 w-full'>
 			<p className='text-black'>Welcome Home</p>
 			<common.ActionButton
 				type='submit'
