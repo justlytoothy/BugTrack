@@ -3,7 +3,6 @@ import { useLocation, NavLink } from 'react-router-dom';
 import SidebarItems from './sidebarItems';
 
 const Sidebar = (props, { defaultActive }) => {
-	const location = useLocation().pathname;
 	return (
 		<>
 			<div className='bg-[#c34a36] w-64 h-[105vh] flex flex-col'>
