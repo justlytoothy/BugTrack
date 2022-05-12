@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from './footer';
 const Layout = (props) => {
 	return (
-		<div>
+		<div className=''>
 			<div className='flex flex-col'>
 				<NavBar />
 				<div className='flex flex-row'>

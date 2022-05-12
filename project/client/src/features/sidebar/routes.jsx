@@ -9,7 +9,7 @@ const MyRoutes = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Layout />}>
+				<Route path='/' element={<Layout />}>
 					<Route index element={<HomeComponent />} />
 					<Route path='/viewbugs' element={<ViewBugsComponent />} />
 					<Route path='*' element={<common.ErrorPageComponent />} />

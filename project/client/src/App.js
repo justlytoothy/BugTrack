@@ -11,13 +11,13 @@ function App() {
 	let fullApp;
 	if (loggedIn) {
 		fullApp = (
-			<div className='pl-2 pt-2 h-full w-full'>
+			<div className='overflow-hidden p-2 h-full w-full'>
 				<MyRoutes />
 			</div>
 		);
 	} else {
 		fullApp = (
-			<div className='pl-2 pt-2'>
+			<div className='min-w-full min-h-full p-2'>
 				<LoginComponent></LoginComponent>
 			</div>
 		);
