@@ -26,15 +26,14 @@ const LoginComponent = () => {
 
 	function submit(e) {
 		e.preventDefault();
-		console.log(formInput.username, formInput.password);
 		let data = formInput;
 		dispatch(loginUser(data));
 	}
 
 	return (
-		<div className='login-page h-full w-full bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
+		<div className='h-full w-full bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
 			<div className='h-full'>
-				<form className='login-panel text-black mt-[25vh] mx-auto h-1/2 w-1/4'>
+				<form className='login-panel bg-prime-color text-black mt-[25vh] mx-auto h-1/2 w-1/4'>
 					<h1 className='text-white text-2xl m-1 mt-6'>Login:</h1>
 					<input
 						className='mx-4 h-12'

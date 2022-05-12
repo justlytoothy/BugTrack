@@ -7,7 +7,6 @@
 }
 
 .login-panel {
-	background-color: var(--prime-color);
 	border: 1px solid grey;
 	border-radius: 5px;
 	display: flex;

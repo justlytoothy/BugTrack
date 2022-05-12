@@ -19,10 +19,12 @@ const HomeComponent = () => {
 		<div className='bg-green-600 w-full'>
 			<p className='text-black'>Welcome Home</p>
 			<common.ActionButton
+				extraClass=''
 				type='submit'
 				click={logout}
 				text='Log Out'></common.ActionButton>
 			<common.ActionButton
+				extraClass=''
 				type='submit'
 				click={listAll}
 				text='List Users'></common.ActionButton>
