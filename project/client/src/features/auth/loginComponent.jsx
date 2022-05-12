@@ -33,25 +33,30 @@ const LoginComponent = () => {
 
 	return (
 		<div className='login-page h-full w-full bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
-			<form className='login-panel text-black'>
-				<h1 className='text-white text-2xl'>Login:</h1>
-				<input
-					name='username'
-					placeholder='Username'
-					onChange={inputChanged}
-					value={formInput.username}></input>
-				<input
-					name='password'
-					type='password'
-					placeholder='Password'
-					onChange={inputChanged}
-					value={formInput.password}></input>
-				<common.ActionButton
-					loading={isLoading}
-					click={submit}
-					text='Login'
-					type='submit'></common.ActionButton>
-			</form>
+			<div className='h-full'>
+				<form className='login-panel text-black mt-[25vh] mx-auto h-1/2 w-1/4'>
+					<h1 className='text-white text-2xl m-1 mt-6'>Login:</h1>
+					<input
+						className='mx-4 h-12'
+						name='username'
+						placeholder='Username'
+						onChange={inputChanged}
+						value={formInput.username}></input>
+					<input
+						className='mx-4 h-12'
+						name='password'
+						type='password'
+						placeholder='Password'
+						onChange={inputChanged}
+						value={formInput.password}></input>
+					<common.ActionButton
+						extraClass='h-10'
+						loading={isLoading}
+						click={submit}
+						text='Login'
+						type='submit'></common.ActionButton>
+				</form>
+			</div>
 		</div>
 	);
 };

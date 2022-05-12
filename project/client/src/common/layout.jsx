@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../features/sidebar/homeSidebarComponent';
+import Sidebar from '../features/sidebar/sidebarComponent';
 import NavBar from './navbar';
 import { Outlet } from 'react-router-dom';
 const Layout = (props) => {

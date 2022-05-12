@@ -10,15 +10,14 @@ function App() {
 	const loggedIn = useSelector(getIsLogged);
 	let fullApp;
 	if (loggedIn) {
-		console.log('Success!');
 		fullApp = (
-			<div className='p-2'>
+			<div className='pl-2 pt-2 h-full w-full'>
 				<MyRoutes />
 			</div>
 		);
 	} else {
 		fullApp = (
-			<div className='p-2'>
+			<div className='pl-2 pt-2'>
 				<LoginComponent></LoginComponent>
 			</div>
 		);
