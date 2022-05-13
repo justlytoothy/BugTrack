@@ -4,8 +4,12 @@ const SidebarItems = [
 		route: '/',
 	},
 	{
-		name: 'ViewBugs',
-		route: '/viewbugs',
+		name: 'Projects',
+		route: '/projects',
+	},
+	{
+		name: 'Employees',
+		route: '/employees',
 	},
 ];
 

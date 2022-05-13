@@ -5,6 +5,11 @@ import { useSelector } from 'react-redux';
 import LoginComponent from './features/auth/loginComponent';
 import { getIsLogged } from './features/auth/authSlice';
 import MyRoutes from './features/sidebar/routes';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+library.add(fas, fab, far);
 
 function App() {
 	const loggedIn = useSelector(getIsLogged);

@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import HomeComponent from '../home/homeComponent';
+import DashboardComponent from '../dashboard/dashboardComponent';
+import EmployeesComponent from '../employees/employeesComponent';
 import common from '../../common/commonImports';
-import ViewBugsComponent from '../viewBugs/viewBugsComponent';
+import ProjectsComponent from '../projects/projectsComponent';
 import Layout from '../../common/layout';
 
 const MyRoutes = () => {
@@ -10,8 +11,9 @@ const MyRoutes = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path='/' element={<Layout />}>
-					<Route index element={<HomeComponent />} />
-					<Route path='/viewbugs' element={<ViewBugsComponent />} />
+					<Route index element={<DashboardComponent />} />
+					<Route path='/projects' element={<ProjectsComponent />} />
+					<Route path='/employees' element={<EmployeesComponent />} />
 					<Route path='*' element={<common.ErrorPageComponent />} />
 				</Route>
 			</Routes>
