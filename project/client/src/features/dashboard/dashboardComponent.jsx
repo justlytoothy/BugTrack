@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import common from '../../common/commonImports.js';
+//import { useDispatch } from 'react-redux';
+//import common from '../../common/commonImports.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const DashboardComponent = (props) => {
-	const dispatch = useDispatch();
+	//const dispatch = useDispatch();
 	return (
 		<div className='bg-gray-200 w-full flex flex-col flex-wrap'>
 			<h1 className='w-full h-[7%] text-center text-3xl border-8 border-black font-semibold'>
