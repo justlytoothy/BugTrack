@@ -1,10 +1,14 @@
-import React from 'react';
-//import { useDispatch } from 'react-redux';
-//import common from '../../common/commonImports.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { listAllUsers } from '../auth/authSlice'
+import common from '../../common/commonImports.js'
 
 const DashboardComponent = (props) => {
-	//const dispatch = useDispatch();
+	const dispatch = useDispatch()
+
+	const getUser = () => {
+		const bruh = dispatch(listAllUsers())
+	}
 	return (
 		<div className='bg-gray-200 w-full flex flex-col flex-wrap'>
 			<h1 className='w-full h-[7%] text-center text-3xl border-8 border-black font-semibold'>
@@ -12,7 +16,8 @@ const DashboardComponent = (props) => {
 			</h1>
 			<div className='w-full h-[93%] grid grid-cols-8'>
 				<div className='col-span-8 flex justify-center border-8 border-black text-3xl'>
-					Intro Section
+					Current Projects
+					<button onClick={getUser}>click</button>
 				</div>
 
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
@@ -21,26 +26,26 @@ const DashboardComponent = (props) => {
 				<div className='col-span-4 flex flex-wrap justify-center border-8 border-black text-3xl'>
 					Ticket Completion
 					<div className='break'></div>
-					<FontAwesomeIcon
+					<common.FontAwesomeIcon
 						className='text-carolina-blue'
 						icon='fa-solid fa-ticket'
 					/>
 				</div>
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<FontAwesomeIcon
+					<common.FontAwesomeIcon
 						className='text-midnight-blue'
 						icon='fa-solid fa-coffee'
 					/>
 				</div>
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<FontAwesomeIcon
+					<common.FontAwesomeIcon
 						className='text-midnight-blue'
 						icon='fa-brands fa-twitter'
 					/>
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default DashboardComponent;
+export default DashboardComponent

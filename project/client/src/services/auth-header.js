@@ -1,12 +1,11 @@
-function authHeader() {
-	const user = JSON.parse(sessionStorage.getItem('user'));
-	if (user && user.token) {
-		return "{ 'x-access-token': user.token }";
-	} else {
-		return "{}";
+import axios from 'axios'
+axios.defaults.baseURL = 'http://localhost:3500/'
+if (sessionStorage.getItem('user')) {
+	const userPre = sessionStorage.getItem('user')
+	const user = JSON.parse(userPre)
+	if (user.token) {
+		axios.defaults.headers.common['x-access-token'] = user.token
 	}
 }
 
-const token = authHeader();
-
-export default token;
+export default axios
