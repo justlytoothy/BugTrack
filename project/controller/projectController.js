@@ -1,4 +1,5 @@
 import projectModel from '../model/projectModel.js'
+import userModel from '../model/userModel.js'
 
 const newProject = async (req, res) => {
 	const { projName, projDesc, createdBy, employees } = req.body
@@ -19,6 +20,8 @@ const newProject = async (req, res) => {
 				project_owner: createdBy,
 			})
 		}
+		const creator = await userModel.findById(createdBy)
+		creator.assigned_projects.push(project._id)
 		console.log('success')
 		res.status(201).json(project)
 	} catch (err) {

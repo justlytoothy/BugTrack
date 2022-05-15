@@ -25,6 +25,7 @@ const newUser = async (req, res, next) => {
 			last_name: last_name,
 			username: username.toLowerCase(),
 			password: hashedPwd,
+			role: role,
 		})
 
 		const token = jwt.sign(
@@ -39,7 +40,7 @@ const newUser = async (req, res, next) => {
 		res.status(201).json(user)
 	} catch (err) {
 		console.log(err)
-		res.status(400).json({ Error: error })
+		res.status(400).json({ Error: err })
 	}
 }
 

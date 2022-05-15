@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from '../../services/auth-header'
+import myAxios from '../../services/auth-header'
 let initialState = {}
 if (
 	sessionStorage.length > 0 &&
@@ -21,7 +21,7 @@ if (
 
 export const loginUser = createAsyncThunk('user/login', async (user) => {
 	try {
-		const response = await axios.post('user/login', user)
+		const response = await myAxios.post('user/login', user)
 		return response.data
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured')
@@ -30,7 +30,7 @@ export const loginUser = createAsyncThunk('user/login', async (user) => {
 })
 export const listAllUsers = createAsyncThunk('user/list', async () => {
 	try {
-		const response = await axios.get('user')
+		const response = await myAxios.get('user')
 		return response.data
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured')

@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
-		//minlength: 6,
 	},
 	first_name: {
 		type: String,
@@ -30,6 +29,9 @@ const userSchema = new mongoose.Schema({
 	},
 	role: {
 		type: String,
+	},
+	assigned_projects: {
+		type: [{ type: mongoose.Schema.Types.ObjectId }],
 	},
 })
 
