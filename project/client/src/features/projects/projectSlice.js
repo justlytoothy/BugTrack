@@ -27,6 +27,17 @@ export const getAllProjects = createAsyncThunk('project/getall', async () => {
 		throw error
 	}
 })
+export const deleteProject = createAsyncThunk(
+	'project/delete',
+	async (data) => {
+		try {
+			const response = await axios.delete('project', data)
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
+	}
+)
 
 const initialState = {
 	status: 'none',
@@ -79,6 +90,17 @@ const projectSlice = createSlice({
 				return action.payload
 			})
 			.addCase(getAllProjects.rejected, (state, action) => {
+				state.status = 'failed'
+				state.error = action.error.message
+			})
+			.addCase(deleteProject.pending, (state, action) => {
+				state.status = 'loading'
+			})
+			.addCase(deleteProject.fulfilled, (state, action) => {
+				state.status = 'success'
+				return action.payload
+			})
+			.addCase(deleteProject.rejected, (state, action) => {
 				state.status = 'failed'
 				state.error = action.error.message
 			})

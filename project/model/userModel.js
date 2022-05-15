@@ -31,7 +31,8 @@ const userSchema = new mongoose.Schema({
 		type: String,
 	},
 	assigned_projects: {
-		type: [{ type: mongoose.Schema.Types.ObjectId }],
+		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
+		required: false,
 	},
 })
 

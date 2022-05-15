@@ -13,7 +13,7 @@ const ActionButton = (props) => {
 					onClick={props.click}
 					className={
 						props.extraClass +
-						' bg-color3 w-fit h-12 hover:bg-button-hover transition-all rounded text-center text-white font-bold font-sans px-5 py-1 m-2 whitespace-nowrap text-xl'
+						' bg-color3 w-fit h-8 hover:bg-button-hover transition-all rounded text-center text-white font-bold font-sans px-5 py-1 m-2 whitespace-nowrap'
 					}>
 					{text}
 				</button>

@@ -1,9 +1,9 @@
+import mongoose from 'mongoose'
 import projectModel from '../model/projectModel.js'
 import userModel from '../model/userModel.js'
 
 const newProject = async (req, res) => {
 	const { projName, projDesc, createdBy, employees } = req.body
-	console.log(createdBy)
 	let project = ''
 	try {
 		if (employees !== null) {
@@ -21,7 +21,9 @@ const newProject = async (req, res) => {
 			})
 		}
 		const creator = await userModel.findById(createdBy)
+		console.log(project._id)
 		creator.assigned_projects.push(project._id)
+		creator.save()
 		console.log('success')
 		res.status(201).json(project)
 	} catch (err) {
@@ -49,4 +51,14 @@ const getProject = async (req, res) => {
 	})
 }
 
-export default { newProject, getAllProjects, getProject }
+const deleteProject = async (req, res) => {
+	const name = req
+	console.log('implement delete project, remember to cascade delete')
+	// const id = await projectModel.findOne({ project_name: name })
+	// const projectEmployees = await userModel.find({
+	// 	assigned_projects: id,
+	// })
+	// console.log(projectEmployees)
+}
+
+export default { newProject, getAllProjects, getProject, deleteProject }
