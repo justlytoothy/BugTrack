@@ -53,14 +53,10 @@ const NewProjectComponent = (props) => {
 					Implement add employees
 				</h2>
 				<common.ActionButton
-					extraClass='col-span-8'
+					extraClass='col-span-8 mx-auto h-8'
 					text='Create Project'
 					type='submit'
 					click={handleSubmit(submitMe)}></common.ActionButton>
-				<input
-					className='cursor-pointer bg-white border mx-auto border-gray-400 col-span-8 h-8 w-16'
-					type='submit'
-				/>
 			</form>
 		</div>
 	)

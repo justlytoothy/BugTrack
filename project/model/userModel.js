@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
 const schema = mongoose.Schema({
 	name: String,
@@ -17,13 +17,16 @@ const userSchema = new mongoose.Schema({
 		//minlength: 6,
 	},
 	first_name: {
-		type: String
+		type: String,
 	},
 	last_name: {
-		type: String
+		type: String,
+	},
+	preferred_full_name: {
+		type: String,
 	},
 	token: {
-		type: String
+		type: String,
 	},
 	role: {
 		type: String,

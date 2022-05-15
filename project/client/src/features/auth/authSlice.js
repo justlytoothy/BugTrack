@@ -1,24 +1,40 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from '../../services/auth-header'
-const userPre = sessionStorage.getItem('user')
-const user = JSON.parse(userPre)
-const initialState = user
-	? { isLoggedIn: true, user, status: 'none', error: null }
-	: { isLoggedIn: false, user: null, status: 'none', error: null }
+let initialState = {}
+if (
+	sessionStorage.length > 0 &&
+	sessionStorage.getItem('user') !== 'undefined'
+) {
+	const userPre = sessionStorage.getItem('user')
+	let user = JSON.parse(userPre)
+	initialState = user
+		? { isLoggedIn: true, user, status: 'none', error: null }
+		: { isLoggedIn: false, user: null, status: 'none', error: null }
+} else {
+	initialState = {
+		isLoggedIn: false,
+		user: null,
+		status: 'none',
+		error: null,
+	}
+}
+
 export const loginUser = createAsyncThunk('user/login', async (user) => {
 	try {
 		const response = await axios.post('user/login', user)
 		return response.data
-	} catch (err) {
-		console.log('An error of ' + err.message + ' has occured')
+	} catch (error) {
+		console.log('An error of ' + error.message + ' has occured')
+		throw error
 	}
 })
 export const listAllUsers = createAsyncThunk('user/list', async () => {
 	try {
 		const response = await axios.get('user')
 		return response.data
-	} catch (err) {
-		console.log('An error of ' + err.message + ' has occured')
+	} catch (error) {
+		console.log('An error of ' + error.message + ' has occured')
+		throw error
 	}
 })
 
@@ -74,7 +90,6 @@ const authSlice = createSlice({
 			})
 			.addCase(listAllUsers.fulfilled, (state, action) => {
 				state.status = 'success'
-				console.log(action.payload)
 			})
 			.addCase(listAllUsers.rejected, (state, action) => {
 				state.status = 'failed'

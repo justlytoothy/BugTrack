@@ -4,24 +4,27 @@ import axios from '../../services/auth-header'
 export const newProject = createAsyncThunk('project/new', async (data) => {
 	try {
 		const response = await axios.post('project', data)
-	} catch (err) {
-		console.log(err)
+	} catch (error) {
+		console.log(error)
+		throw error
 	}
 })
 
 export const getProject = createAsyncThunk('project/getone', async (data) => {
 	try {
 		const response = await axios.get('project', data)
-	} catch (err) {
-		console.log(err)
+	} catch (error) {
+		console.log(error)
+		throw error
 	}
 })
 
 export const getAllProjects = createAsyncThunk('project/getall', async () => {
 	try {
 		const response = await axios.get('project/all')
-	} catch (err) {
-		console.log(err)
+	} catch (error) {
+		console.log(error)
+		throw error
 	}
 })
 
@@ -51,7 +54,6 @@ const projectSlice = createSlice({
 			})
 			.addCase(newProject.fulfilled, (state, action) => {
 				state.status = 'success'
-				console.log(action.payload)
 				return action.payload
 			})
 			.addCase(newProject.rejected, (state, action) => {
@@ -63,7 +65,6 @@ const projectSlice = createSlice({
 			})
 			.addCase(getProject.fulfilled, (state, action) => {
 				state.status = 'success'
-				console.log(action.payload)
 				return action.payload
 			})
 			.addCase(getProject.rejected, (state, action) => {
@@ -75,7 +76,6 @@ const projectSlice = createSlice({
 			})
 			.addCase(getAllProjects.fulfilled, (state, action) => {
 				state.status = 'success'
-				console.log(action.payload)
 				return action.payload
 			})
 			.addCase(getAllProjects.rejected, (state, action) => {

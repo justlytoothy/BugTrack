@@ -1,6 +1,9 @@
 import axios from 'axios'
 axios.defaults.baseURL = 'http://localhost:3500/'
-if (sessionStorage.getItem('user')) {
+if (
+	sessionStorage.length > 0 &&
+	sessionStorage.getItem('user') !== 'undefined'
+) {
 	const userPre = sessionStorage.getItem('user')
 	const user = JSON.parse(userPre)
 	if (user.token) {
