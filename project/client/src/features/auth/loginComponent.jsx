@@ -1,33 +1,48 @@
-import React, { useState } from 'react';
-import common from '../../common/commonImports.js';
-import { useDispatch, useSelector } from 'react-redux';
-import { getLoginStatus, loginUser } from './authSlice.js';
+import React, { useState } from 'react'
+import common from '../../common/commonImports.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { getLoginStatus, loginUser } from './authSlice.js'
 const LoginComponent = () => {
-	const dispatch = useDispatch();
-	const loginStatus = useSelector(getLoginStatus);
-	let isLoading;
+	const dispatch = useDispatch()
+	const loginStatus = useSelector(getLoginStatus)
+	let isLoading
 	if (loginStatus === 'loading') {
-		isLoading = true;
+		isLoading = true
 	} else {
-		isLoading = false;
+		isLoading = false
+	}
+	let errorStatus
+	if (loginStatus === 'failed') {
+		errorStatus = true
+	} else {
+		errorStatus = false
 	}
 
 	const [formInput, setFormInput] = useState({
 		username: '',
 		password: '',
-	});
+	})
 
 	function inputChanged(e) {
 		setFormInput({
 			...formInput,
 			[e.target.name]: e.target.value,
-		});
+		})
 	}
 
 	function submit(e) {
-		e.preventDefault();
-		let data = formInput;
-		dispatch(loginUser(data));
+		e.preventDefault()
+		let data = formInput
+		dispatch(loginUser(data))
+	}
+	const errorMsg = () => {
+		if (errorStatus) {
+			return (
+				<h3 className='text-white text-sm'>
+					Username and/or password incorrect
+				</h3>
+			)
+		}
 	}
 
 	return (
@@ -54,12 +69,13 @@ const LoginComponent = () => {
 						click={submit}
 						text='Login'
 						type='submit'></common.ActionButton>
+					{errorMsg()}
 				</form>
 			</div>
 		</div>
-	);
-};
-export default LoginComponent;
+	)
+}
+export default LoginComponent
 
 /*
 
