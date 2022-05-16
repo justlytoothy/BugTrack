@@ -27,18 +27,7 @@ const ProjectsComponent = () => {
 				Projects
 			</h1>
 			<div className='w-full h-[93%] grid grid-cols-8'>
-				<div className='col-span-8 flex justify-center border-8 border-black text-xl'>
-					<Modal
-						className='bg-midnight-blue text-white h-1/2 fixed w-[30vw] right-[35vw] left-[35vw] top-1/4 bottom-1/4'
-						overlayClassName=''
-						isOpen={modalIsOpen}
-						onRequestClose={closeForm}
-						contentLabel='New Project Form'>
-						<NewProjectComponent
-							close={closeForm}
-							refresh={refreshComponent}></NewProjectComponent>
-					</Modal>
-				</div>
+				<div className='col-span-8 flex justify-center border-8 border-black text-xl'></div>
 
 				<div className='col-span-4 flex justify-center border-8 border-black text-xl'>
 					<div className='h-4'>
@@ -88,6 +77,16 @@ const ProjectsComponent = () => {
 					</common.ActionButton>
 				</div>
 			</div>
+			<Modal
+				className='bg-midnight-blue text-white h-1/2 fixed w-[30vw] right-[35vw] left-[35vw] top-1/4 bottom-1/4'
+				overlayClassName=''
+				isOpen={modalIsOpen}
+				onRequestClose={closeForm}
+				contentLabel='New Project Form'>
+				<NewProjectComponent
+					close={closeForm}
+					refresh={refreshComponent}></NewProjectComponent>
+			</Modal>
 		</div>
 	)
 }
