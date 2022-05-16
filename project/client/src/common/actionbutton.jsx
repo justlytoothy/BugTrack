@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 const ActionButton = (props) => {
-	let content = ''
-	let text = props.text
+	let content = '';
+	let text = props.text;
 	if (props.loading) {
-		text = ''
+		text = '';
 	}
 	switch (props.type) {
 		case 'submit':
@@ -13,12 +13,12 @@ const ActionButton = (props) => {
 					onClick={props.click}
 					className={
 						props.extraClass +
-						' bg-color3 w-fit h-8 hover:bg-button-hover transition-all rounded text-center text-white font-bold font-sans px-5 py-1 m-2 whitespace-nowrap'
+						' bg-color-3 w-fit h-8 hover:bg-button-hover transition-all rounded text-center text-white font-bold font-sans px-5 py-1 m-2 whitespace-nowrap'
 					}>
 					{text}
 				</button>
-			)
-			break
+			);
+			break;
 		case 'cancel':
 			content = (
 				<button
@@ -26,8 +26,8 @@ const ActionButton = (props) => {
 					className='whitespace-nowrap text-slate-gray transition-all border border-solid rounded border-slate-gray font-bold font-sans text-xl px-5 py-1 lg:hover:text-white lg:hover:bg-slate-gray disabled:opacity-50 disabled:hover:bg-white m-2'>
 					{text}
 				</button>
-			)
-			break
+			);
+			break;
 		case 'delete':
 			content = (
 				<button
@@ -35,19 +35,19 @@ const ActionButton = (props) => {
 					className='whitespace-nowrap py-1 px-5 rounded transition-all bg-delete-red text-white text-xl font-bold font-sans lg:hover:bg-red-hover disabled:opacity-50 disabled:hover:bg-delete-red m-2'>
 					{text}
 				</button>
-			)
-			break
+			);
+			break;
 		default:
 			content = (
 				<button
 					onClick={props.click}
-					className='bg-color3 hover:bg-button-hover transition-all rounded text-center text-white font-bold font-sans px-5 py-1 m-2 whitespace-nowrap'>
+					className='bg-color-3 hover:bg-button-hover transition-all rounded text-center text-white font-bold font-sans px-5 py-1 m-2 whitespace-nowrap'>
 					{text}
 				</button>
-			)
-			break
+			);
+			break;
 	}
 
-	return content
-}
-export default ActionButton
+	return content;
+};
+export default ActionButton;
