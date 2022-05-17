@@ -30,7 +30,7 @@ const ProjectsComponent = () => {
 		setIsOpen(false);
 	};
 	const deleteOne = () => {
-		console.log(projectArray);
+		console.log(selectedProject);
 		//dispatch(deleteProject());
 	};
 	const showProject = (project) => {
@@ -130,15 +130,15 @@ const ProjectsComponent = () => {
 	///////////////////////////////////////////////////////////
 	return (
 		<div className='bg-gray-200 w-full flex flex-col flex-wrap'>
-			<div className='w-full h-[7%] text-center text-3xl font-semibold'>
-				Projects
+			<div className='w-full h-[7%] flex justify-center content-center text-3xl font-semibold'>
+				<span className='self-center'>Projects</span>
 			</div>
 			<div className='w-full h-[93%] grid grid-cols-8'>
 				<div className='col-span-8 text-xl'>
 					{listProjects()}
 					<span className='col-span-1'>
 						{' '}
-						<div className='h-4'>
+						<div className='h-4 mt-8 ml-12'>
 							<common.ActionButton
 								text={
 									<div>
