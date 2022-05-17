@@ -1,26 +1,26 @@
-import React from 'react'
-import common from '../../common/commonImports.js'
-import { useForm } from 'react-hook-form'
-import { newProject } from './projectSlice'
-import { useDispatch } from 'react-redux'
+import React from 'react';
+import common from '../../common/commonImports.js';
+import { useForm } from 'react-hook-form';
+import { newProject } from './projectSlice';
+import { useDispatch } from 'react-redux';
 
 const NewProjectComponent = (props) => {
-	const dispatch = useDispatch()
-	const user = JSON.parse(sessionStorage.getItem('user'))
-	let employees = []
-	employees.push(user._id)
+	const dispatch = useDispatch();
+	const user = JSON.parse(sessionStorage.getItem('user'));
+	let employees = [];
+	employees.push(user._id);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
+	} = useForm();
 	const submitMe = (data) => {
-		data.createdBy = user._id
-		data.employees = employees
-		dispatch(newProject(data))
-		props.close()
-		props.refresh()
-	}
+		data.createdBy = user._id;
+		data.employees = employees;
+		dispatch(newProject(data));
+		props.close();
+		props.refresh();
+	};
 	// const handleEmployeesChange = (data) => {
 
 	// }
@@ -59,7 +59,7 @@ const NewProjectComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-export default NewProjectComponent
+export default NewProjectComponent;

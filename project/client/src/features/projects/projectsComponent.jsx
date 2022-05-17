@@ -37,23 +37,61 @@ const ProjectsComponent = () => {
 		setSelectedProject(project);
 		showIt = true;
 	};
-
+	/**
+	 * Takes an array of employee names and returns them put together as one string
+	 * @param {*} empArray the array of employee names assigned to the specific project
+	 * @returns
+	 */
+	const listEmployees = (empArray) => {
+		let nameList = '';
+		let first = true;
+		empArray.forEach((employee) => {
+			if (first === true) {
+				let name = `${employee.first_name} ${employee.last_name}`;
+				nameList = name;
+				first = false;
+			} else {
+				let name = `${employee.first_name} ${employee.last_name}`;
+				nameList = nameList + ', ' + name;
+			}
+		});
+		return nameList;
+	};
+	/**
+	 * Takes in the fetched project array and iterates over it to display relevant data in the table
+	 * @returns project table
+	 */
 	const listProjects = () => {
 		let iter = projectArray.length - 1;
 		return (
-			<div>
+			<div className='overflow-scroll max-h-[400px] border-4 border-carolina-blue w-[95%] mx-auto'>
+				<div className='grid grid-cols-7 text-dark-heading font-bold border-gray-border whitespace-nowrap'>
+					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-r border-l border-t border-gray-border'>
+						Project Name
+					</span>
+					<span className='items-center flex justify-between col-span-3 px-5 py-2 border-t border-r border-gray-border'>
+						Assigned Employees
+					</span>
+					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-t border-r border-gray-border'>
+						Project Description
+					</span>
+				</div>
 				{React.Children.toArray(
 					projectArray.map((project) => {
 						if (iter !== 0) {
 							iter--;
 							return (
 								<div
+									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
-									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer'>
-									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-l border-gray-border'>
+									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:animate-bounce active:text-white focus:animate-bounce focus:text-white h-full w-full'>
+									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-l border-gray-border '>
 										{project.project_name}
 									</span>
-									<span className='col-span-4 justify-left px-5 py-2 border-r border-t border-gray-border'>
+									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-gray-border'>
+										{listEmployees(project.employees)}
+									</span>
+									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-gray-border'>
 										{project.project_description}
 									</span>
 								</div>
@@ -61,12 +99,16 @@ const ProjectsComponent = () => {
 						} else {
 							return (
 								<div
+									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
-									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer'>
-									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border'>
+									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:animate-bounce active:text-white focus:animate-bounce focus:text-white h-full w-full'>
+									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border'>
 										{project.project_name}
 									</span>
-									<span className='col-span-4 justify-left px-5 py-2 border-r border-t border-b border-gray-border'>
+									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-b border-gray-border'>
+										{listEmployees(project.employees)}
+									</span>
+									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-gray-border'>
 										{project.project_description}
 									</span>
 								</div>
@@ -81,7 +123,11 @@ const ProjectsComponent = () => {
 	const refreshComponent = () => {
 		window.location.reload(false);
 	};
-
+	///////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
+	//Actual Render Section
+	//////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////
 	return (
 		<div className='bg-gray-200 w-full flex flex-col flex-wrap'>
 			<div className='w-full h-[7%] text-center text-3xl font-semibold'>
@@ -89,33 +135,27 @@ const ProjectsComponent = () => {
 			</div>
 			<div className='w-full h-[93%] grid grid-cols-8'>
 				<div className='col-span-8 text-xl'>
-					<div className='grid grid-cols-7 text-dark-heading font-bold mt-1 border-gray-border whitespace-nowrap'>
-						<span className='items-center flex justify-between hover:bg-white-filled cursor-pointer col-span-3 px-5 py-2 border-r border-l border-t border-gray-border'>
-							Project Name
-						</span>
-						<span className='items-center flex justify-between hover:bg-white-filled cursor-pointer col-span-4 px-5 py-2 border-t border-r border-gray-border'>
-							Project Description
-						</span>
-					</div>
 					{listProjects()}
+					<span className='col-span-1'>
+						{' '}
+						<div className='h-4'>
+							<common.ActionButton
+								text={
+									<div>
+										New Project &nbsp;
+										<common.FontAwesomeIcon
+											className='text-midnight-blue text-xl'
+											icon='fa-solid fa-square-plus'
+										/>
+									</div>
+								}
+								click={openForm}
+								extraClass=''></common.ActionButton>
+						</div>
+					</span>
 				</div>
 
-				<div className='col-span-4 flex justify-center border-8 border-black text-xl'>
-					<div className='h-4'>
-						<common.ActionButton
-							text={
-								<div>
-									New Project &nbsp;
-									<common.FontAwesomeIcon
-										className='text-midnight-blue text-xl'
-										icon='fa-solid fa-square-plus'
-									/>
-								</div>
-							}
-							click={openForm}
-							extraClass=''></common.ActionButton>
-					</div>
-				</div>
+				<div className='col-span-4 flex justify-center border-8 border-black text-xl'></div>
 				<div className='col-span-4 flex flex-wrap justify-center border-8 border-black text-3xl'>
 					Ticket Completion
 					<div className='break'></div>
