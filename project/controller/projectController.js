@@ -50,8 +50,6 @@ const getAllProjects = async (req, res) => {
 	}
 };
 
-const nameFromID = async (req, res) => {};
-
 const getProject = async (req, res) => {
 	const id = req.body._id;
 	projectModel.findOne({ id }, (err, data) => {
@@ -64,7 +62,7 @@ const getProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
 	console.log('implement delete project, remember to cascade delete');
-	// const id = await projectModel.findOne({ project_name: name });
+	const id = await projectModel.findOneAndDelete({ _id: req.body.id });
 	// const projectEmployees = await userModel.find({
 	// 	assigned_projects: id,
 	// });
@@ -76,5 +74,4 @@ export default {
 	getAllProjects,
 	getProject,
 	deleteProject,
-	nameFromID,
 };

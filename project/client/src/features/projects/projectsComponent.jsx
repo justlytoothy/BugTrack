@@ -9,6 +9,9 @@ import {
 	allProjects,
 	projectStatus,
 } from './projectSlice.js';
+import { Doughnut, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 const ProjectsComponent = () => {
 	const projectArray = useSelector(allProjects);
 	const status = useSelector(projectStatus);
@@ -16,6 +19,26 @@ const ProjectsComponent = () => {
 	const dispatch = useDispatch();
 	const [modalIsOpen, setIsOpen] = useState(false);
 	let showIt = false;
+	const chartExampleData = {
+		labels: ['Open', 'Closed', 'Failed'],
+		datasets: [
+			{
+				label: 'Current Ticket Status',
+				data: [12, 23, 6],
+				backgroundColor: [
+					'rgba(255, 99, 132, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+				],
+				borderColor: [
+					'rgba(255, 99, 132, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+				],
+				borderWidth: 1,
+			},
+		],
+	};
 	Modal.setAppElement('#root');
 	useEffect(() => {
 		if (status === 'none') {
@@ -30,8 +53,9 @@ const ProjectsComponent = () => {
 		setIsOpen(false);
 	};
 	const deleteOne = () => {
-		console.log(selectedProject);
-		//dispatch(deleteProject());
+		console.log(sessionStorage.getItem('user'));
+		// dispatch(deleteProject(selectedProject._id));
+		// refreshComponent();
 	};
 	const showProject = (project) => {
 		setSelectedProject(project);
@@ -64,15 +88,15 @@ const ProjectsComponent = () => {
 	const listProjects = () => {
 		let iter = projectArray.length - 1;
 		return (
-			<div className='overflow-scroll max-h-[400px] border-4 border-carolina-blue w-[95%] mx-auto'>
+			<div className='overflow-scroll max-h-[400px] min-h-[400px] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-dark-heading font-bold border-gray-border whitespace-nowrap'>
-					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-r border-l border-t border-gray-border'>
+					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border'>
 						Project Name
 					</span>
-					<span className='items-center flex justify-between col-span-3 px-5 py-2 border-t border-r border-gray-border'>
+					<span className='items-center flex justify-between col-span-3 px-5 py-2 border-t border-b border-r border-gray-border'>
 						Assigned Employees
 					</span>
-					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-t border-r border-gray-border'>
+					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-t border-b border-r border-gray-border'>
 						Project Description
 					</span>
 				</div>
@@ -165,10 +189,9 @@ const ProjectsComponent = () => {
 					/>
 				</div>
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<common.FontAwesomeIcon
-						className='text-midnight-blue'
-						icon='fa-solid fa-coffee'
-					/>
+					<div>
+						<Doughnut data={chartExampleData}></Doughnut>
+					</div>
 				</div>
 				<div className='col-span-4 flex justify-center border-8 border-black text-xl'>
 					<div className='h-4 items-center'>

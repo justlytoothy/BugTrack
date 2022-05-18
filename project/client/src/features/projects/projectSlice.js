@@ -45,7 +45,10 @@ export const deleteProject = createAsyncThunk(
 	'project/delete',
 	async (data) => {
 		try {
-			const response = await axios.delete('project', data);
+			console.log(data);
+			const response = await axios.delete('project', {
+				data: { id: data },
+			});
 		} catch (error) {
 			console.log(error);
 			throw error;

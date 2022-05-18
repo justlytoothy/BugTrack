@@ -1,14 +1,13 @@
 import React from 'react';
 import './App.css';
-//import { Router, Switch, Route, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import LoginComponent from './features/auth/loginComponent';
-import { getIsLogged } from './features/auth/authSlice';
+import { getIsLogged, logoutUser } from './features/auth/authSlice';
 import MyRoutes from './features/sidebar/routes';
-
 
 function App() {
 	const loggedIn = useSelector(getIsLogged);
+	const dispatch = useDispatch();
 	let fullApp;
 	if (loggedIn) {
 		fullApp = (
@@ -17,6 +16,7 @@ function App() {
 			</div>
 		);
 	} else {
+		dispatch(logoutUser);
 		fullApp = (
 			<div className='min-w-full min-h-full p-2'>
 				<LoginComponent></LoginComponent>

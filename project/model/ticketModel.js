@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 const schema = Schema({
 	name: String,
@@ -7,11 +7,12 @@ const schema = Schema({
 	steps: String,
 	version: String,
 	priority: Number,
+	project: { type: Schema.Types.ObjectId, ref: 'Project' },
 	assigned: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 	creator: { type: Schema.Types.ObjectId, ref: 'User' },
 	time: Date(),
-})
+});
 
-const model = mongoose.model('Bugs', schema)
+const model = mongoose.model('Tickets', schema);
 
-module.exports = model
+module.exports = model;
