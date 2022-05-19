@@ -14,7 +14,7 @@ const newUser = async (req, res, next) => {
 		//Check to see if already exists
 		const check = await userModel.findOne({ username });
 		if (check) {
-			res.status(400).send('User already exists, please login');
+			return res.status(400).send('User already exists, please login');
 		}
 
 		//Encrypt Password
@@ -37,10 +37,10 @@ const newUser = async (req, res, next) => {
 		);
 
 		user.token = token;
-		res.status(201).json(user);
+		return res.status(201).json(user);
 	} catch (err) {
 		console.log(err);
-		res.status(400).json({ Error: err });
+		return res.status(400).json({ Error: err });
 	}
 };
 
@@ -53,7 +53,9 @@ const editUser = (req, res) => {
 			res.send('updated');
 		})
 		.catch((err) => {
-			if (err) res.status(400).send(err);
+			if (err) {
+				return res.status(400).send(err);
+			}
 		});
 };
 
@@ -61,7 +63,7 @@ const loginUser = async (req, res) => {
 	try {
 		const { username, password } = req.body;
 		if (!(username && password)) {
-			res.status(400).send('All input is required');
+			return res.status(400).send('All input is required');
 		}
 		const user = await userModel.findOne({ username });
 
@@ -75,12 +77,13 @@ const loginUser = async (req, res) => {
 			);
 			user.token = token;
 			user.password = '';
-			res.status(200).json(user);
+			return res.status(200).json(user);
 		} else {
-			res.status(400).send('Invalid Credentials');
+			return res.status(400).send('Invalid Credentials');
 		}
 	} catch (error) {
 		console.log(error);
+		return res.status(400).json({ Error: error });
 	}
 };
 const getUsers = (req, res) => {

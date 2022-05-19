@@ -11,7 +11,7 @@ const Sidebar = (props, { defaultActive }) => {
 		dispatch(logoutUser());
 	}
 	return (
-		<div className='bg-carolina-blue w-64 h-[100vh] flex flex-col'>
+		<div className='bg-carolina-blue w-64 min-h-full flex flex-col'>
 			{SidebarItems.map((item, index) => {
 				return (
 					<NavLink

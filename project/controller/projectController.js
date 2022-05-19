@@ -25,10 +25,10 @@ const newProject = async (req, res) => {
 		creator.assigned_projects.push(project._id);
 		creator.save();
 		console.log('success');
-		res.status(201).json(project);
+		return res.status(201).json(project);
 	} catch (err) {
 		console.log(err);
-		res.status(400).json({ Error: err });
+		return res.status(400).json({ Error: err });
 	}
 };
 
@@ -46,7 +46,7 @@ const getAllProjects = async (req, res) => {
 		return res.json(response);
 	} catch (error) {
 		console.log(error);
-		res.status(400).json({ Error: error });
+		return res.status(400).json({ Error: error });
 	}
 };
 
@@ -54,7 +54,7 @@ const getProject = async (req, res) => {
 	const id = req.body._id;
 	projectModel.findOne({ id }, (err, data) => {
 		if (err) {
-			return res.json({ Error: err });
+			return res.status(400).json({ Error: err });
 		}
 		return res.json(data);
 	});
@@ -62,7 +62,15 @@ const getProject = async (req, res) => {
 
 const deleteProject = async (req, res) => {
 	console.log('implement delete project, remember to cascade delete');
-	const id = await projectModel.findOneAndDelete({ _id: req.body.id });
+	try {
+		const id = await projectModel.findOneAndDelete({
+			_id: req.body.id,
+		});
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ Error: error });
+	}
+
 	// const projectEmployees = await userModel.find({
 	// 	assigned_projects: id,
 	// });

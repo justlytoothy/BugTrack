@@ -11,7 +11,7 @@ function App() {
 	let fullApp;
 	if (loggedIn) {
 		fullApp = (
-			<div className='overflow-hidden p-2 h-full w-full'>
+			<div className='overflow-hidden p-2 min-h-full w-full'>
 				<MyRoutes />
 			</div>
 		);
