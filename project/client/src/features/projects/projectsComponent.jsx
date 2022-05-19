@@ -153,7 +153,7 @@ const ProjectsComponent = () => {
 	//////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	return (
-		<div className='bg-gray-200 w-full flex flex-col min-h-[100vh]'>
+		<div className='bg-back-color w-full flex flex-col min-h-[100vh]'>
 			<div className='w-full min-h-[7%] flex justify-center content-center text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>

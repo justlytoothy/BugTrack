@@ -33,7 +33,7 @@ const DashboardComponent = (props) => {
 		const bruh = dispatch(listAllUsers());
 	};
 	return (
-		<div className='bg-gray-200 w-full flex flex-col min-h-[100vh]'>
+		<div className='bg-back-color w-full flex flex-col min-h-[100vh]'>
 			<div className='w-full min-h-[7%] flex justify-center content-center text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>
@@ -72,21 +72,6 @@ const DashboardComponent = (props) => {
 							}></common.ActionButton>
 					</div>
 				</div>
-				<div className='col-span-8 text-xl'>
-					<span className='col-span-1'></span>
-				</div>
-				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<div>
-						<Doughnut data={chartExampleData}></Doughnut>
-					</div>
-				</div>
-				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<div>
-						<Doughnut data={chartExampleData}></Doughnut>
-					</div>
-				</div>
-
-
 			</div>
 		</div>
 	);

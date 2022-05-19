@@ -11,7 +11,7 @@ const Sidebar = (props, { defaultActive }) => {
 		dispatch(logoutUser());
 	}
 	return (
-		<div className='bg-carolina-blue w-64 min-h-full flex flex-col'>
+		<div className='bg-sidebar w-64 min-h-full flex flex-col'>
 			{SidebarItems.map((item, index) => {
 				return (
 					<NavLink
@@ -19,8 +19,8 @@ const Sidebar = (props, { defaultActive }) => {
 						key={item.name}
 						className={({ isActive }) =>
 							isActive
-								? 'bg-gray-500 text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
-								: 'hover:bg-gray-500 text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
+								? 'bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
+								: 'hover:bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
 						}>
 						{item.name}
 					</NavLink>
@@ -28,7 +28,7 @@ const Sidebar = (props, { defaultActive }) => {
 			})}
 			<h1
 				onClick={logout}
-				className='hover:bg-gray-500 text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'>
+				className='hover:bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'>
 				Logout
 			</h1>
 		</div>
