@@ -3,13 +3,13 @@ import logo from '../images/exLogo.png';
 
 const Footer = (props) => {
 	return (
-		<div className='pl-3 grid grid-cols-2 items-center text-center'>
+		<div className='pl-3 grid grid-cols-2 items-center text-center h-[16px] w-full'>
 			<img
 				alt='My Example Logo'
 				src={logo}
 				width='80px'
 				className='col-span-2 mx-auto block'></img>
-			<small className='col-span-2'>
+			<small className='col-span-2 text-black'>
 				&copy; Copyright 2022, Jakob Schilling
 			</small>
 		</div>

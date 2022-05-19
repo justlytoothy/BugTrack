@@ -11,14 +11,14 @@ function App() {
 	let fullApp;
 	if (loggedIn) {
 		fullApp = (
-			<div className='overflow-hidden p-2 min-h-full w-full'>
+			<div className='p-2 overscroll-x-contain overflow-x-hidden min-h-[100vh] w-full'>
 				<MyRoutes />
 			</div>
 		);
 	} else {
 		dispatch(logoutUser);
 		fullApp = (
-			<div className='min-w-full min-h-full p-2'>
+			<div className='min-w-[100vw] overflow-y-hidden overflow-x-hidden min-h-full p-2'>
 				<LoginComponent></LoginComponent>
 			</div>
 		);

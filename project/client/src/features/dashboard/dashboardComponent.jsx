@@ -1,28 +1,46 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { listAllUsers } from '../auth/authSlice'
-import common from '../../common/commonImports.js'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { listAllUsers } from '../auth/authSlice';
+import common from '../../common/commonImports.js';
+import { Doughnut, Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
+const chartExampleData = {
+	labels: ['Open', 'Closed', 'Failed'],
+	datasets: [
+		{
+			label: 'Current Ticket Status',
+			data: [12, 23, 6],
+			backgroundColor: [
+				'rgba(255, 99, 132, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+				'rgba(255, 206, 86, 0.2)',
+			],
+			borderColor: [
+				'rgba(255, 99, 132, 1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(255, 206, 86, 1)',
+			],
+			borderWidth: 1,
+		},
+	],
+};
 const DashboardComponent = (props) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const getUser = () => {
-		const bruh = dispatch(listAllUsers())
-	}
+		const bruh = dispatch(listAllUsers());
+	};
 	return (
-		<div className='bg-gray-200 w-full flex flex-col flex-wrap'>
-			<h1 className='w-full h-[7%] text-center text-3xl border-8 border-black font-semibold'>
-				Dashboard
-			</h1>
-			<div className='w-full h-[93%] grid grid-cols-8'>
-				<div className='col-span-8 flex justify-center border-8 border-black text-3xl'>
-					Current Projects
-					<button onClick={getUser}>click</button>
-				</div>
-
-				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					Current Tickets Status
-				</div>
+		<div className='bg-gray-200 w-full flex flex-col min-h-[100vh]'>
+			<div className='w-full min-h-[7%] flex justify-center content-center text-3xl font-semibold'>
+				<span className='self-center'>Projects</span>
+			</div>
+			<div className='w-full min-h-[93%] grid grid-cols-8'>
+				<div className='col-span-8 text-xl'></div>
+				<div className='col-span-8 flex justify-start items-center text-xl'></div>
+				<div className='col-span-4 flex justify-center border-8 border-black text-xl'></div>
 				<div className='col-span-4 flex flex-wrap justify-center border-8 border-black text-3xl'>
 					Ticket Completion
 					<div className='break'></div>
@@ -30,22 +48,48 @@ const DashboardComponent = (props) => {
 						className='text-carolina-blue'
 						icon='fa-solid fa-ticket'
 					/>
+					<div className='col-span-8 flex justify-center border-8 border-black text-3xl'>
+						Current Projects
+						<button onClick={getUser}>click</button>
+					</div>
 				</div>
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<common.FontAwesomeIcon
-						className='text-midnight-blue'
-						icon='fa-solid fa-coffee'
-					/>
+					<div>
+						<Doughnut data={chartExampleData}></Doughnut>
+					</div>
+				</div>
+				<div className='col-span-4 flex justify-center border-8 border-black text-xl'>
+					<div className='h-4 items-center'>
+						<common.ActionButton
+							text={
+								<div className=''>
+									Delete Project &nbsp;
+									<common.FontAwesomeIcon
+										className='text-midnight-blue text-xl'
+										icon='fa-solid fa-square-plus'
+									/>
+								</div>
+							}></common.ActionButton>
+					</div>
+				</div>
+				<div className='col-span-8 text-xl'>
+					<span className='col-span-1'></span>
 				</div>
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
-					<common.FontAwesomeIcon
-						className='text-midnight-blue'
-						icon='fa-brands fa-twitter'
-					/>
+					<div>
+						<Doughnut data={chartExampleData}></Doughnut>
+					</div>
 				</div>
+				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
+					<div>
+						<Doughnut data={chartExampleData}></Doughnut>
+					</div>
+				</div>
+
+
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default DashboardComponent
+export default DashboardComponent;

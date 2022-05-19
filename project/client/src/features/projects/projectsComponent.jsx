@@ -153,7 +153,7 @@ const ProjectsComponent = () => {
 	//////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	return (
-		<div className='bg-gray-200 w-full flex flex-col min-h-full'>
+		<div className='bg-gray-200 w-full flex flex-col min-h-[100vh]'>
 			<div className='w-full min-h-[7%] flex justify-center content-center text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>
@@ -161,18 +161,18 @@ const ProjectsComponent = () => {
 				<div className='col-span-8 text-xl'>{listProjects()}</div>
 				<div className='col-span-8 flex justify-start items-center text-xl'>
 					<span className='items-center py-2 ml-12 h-fit'>
-							<common.ActionButton
-								text={
-									<div>
-										New Project &nbsp;
-										<common.FontAwesomeIcon
-											className='text-midnight-blue text-xl'
-											icon='fa-solid fa-square-plus'
-										/>
-									</div>
-								}
-								click={openForm}
-								extraClass=''></common.ActionButton>
+						<common.ActionButton
+							text={
+								<div>
+									New Project &nbsp;
+									<common.FontAwesomeIcon
+										className='text-midnight-blue text-xl'
+										icon='fa-solid fa-square-plus'
+									/>
+								</div>
+							}
+							click={openForm}
+							extraClass=''></common.ActionButton>
 					</span>
 				</div>
 
@@ -204,26 +204,6 @@ const ProjectsComponent = () => {
 							}
 							click={deleteOne}></common.ActionButton>
 					</div>
-				</div>
-				<div className='col-span-8 text-xl'>
-					{listProjects()}
-					<span className='col-span-1'>
-						{' '}
-						<div className='h-4 mt-8 ml-12'>
-							<common.ActionButton
-								text={
-									<div>
-										New Project &nbsp;
-										<common.FontAwesomeIcon
-											className='text-midnight-blue text-xl'
-											icon='fa-solid fa-square-plus'
-										/>
-									</div>
-								}
-								click={openForm}
-								extraClass=''></common.ActionButton>
-						</div>
-					</span>
 				</div>
 			</div>
 			<Modal

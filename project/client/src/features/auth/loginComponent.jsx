@@ -46,7 +46,7 @@ const LoginComponent = () => {
 	};
 
 	return (
-		<div className='overflow-hidden h-full w-full bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
+		<div className='overflow-hidden overflow-x-hidden overscroll-contain h-full min-w-[101vw] bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
 			<div className='h-full'>
 				<form className='login-panel bg-prime-color text-black mx-auto my-[25vh] h-1/2 w-1/4'>
 					<h1 className='text-white text-2xl m-1 mt-6'>Login:</h1>

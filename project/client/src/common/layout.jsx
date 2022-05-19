@@ -12,8 +12,8 @@ const Layout = (props) => {
 					<Sidebar />
 					<Outlet />
 				</div>
+				<Footer />
 			</div>
-			<Footer></Footer>
 		</div>
 	);
 };
