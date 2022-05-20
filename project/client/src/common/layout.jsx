@@ -14,14 +14,14 @@ const Layout = (props) => {
 
 	return (
 		<div className='flex flex-col'>
-			<div className='flex flex-row min-w-full min-h-full'>
-				<Sidebar open={isOpen} openIt={openSidebar} />
+			<div className='flex flex-col min-w-full'>
+				<NavBar openIt={openSidebar} />
 
-				<div className='flex flex-col min-h-full w-full'>
-					<NavBar openIt={openSidebar} />
-					<Outlet />
-					<Footer />
+				<div className='flex flex-row min-h-full w-full'>
+					<Sidebar open={isOpen} closeIt={closeSidebar} />
+					<Outlet context={closeSidebar} />
 				</div>
+				<Footer />
 			</div>
 		</div>
 	);

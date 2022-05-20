@@ -1,6 +1,5 @@
 import React from 'react';
 import common from './commonImports';
-import logo from '../images/exLogo.png';
 
 const NavBar = (props) => {
 	return (

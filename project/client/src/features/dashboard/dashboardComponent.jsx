@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { listAllUsers } from '../auth/authSlice';
 import common from '../../common/commonImports.js';
 import { Doughnut, Pie } from 'react-chartjs-2';
+import { useOutletContext } from 'react-router-dom';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -28,12 +29,15 @@ const chartExampleData = {
 };
 const DashboardComponent = (props) => {
 	const dispatch = useDispatch();
+	const closeIt = useOutletContext();
 
 	const getUser = () => {
 		const bruh = dispatch(listAllUsers());
 	};
 	return (
-		<div className='bg-back-color w-full flex flex-col min-h-[100vh]'>
+		<div
+			className='bg-back-color w-full flex flex-col min-h-[100vh]'
+			onClick={closeIt}>
 			<div className='w-full min-h-[7%] flex justify-center content-center text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>

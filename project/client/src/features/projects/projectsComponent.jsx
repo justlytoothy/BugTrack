@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import common from '../../common/commonImports.js';
 import NewProjectComponent from './newProjectComponent.jsx';
 import Modal from 'react-modal';
+import { useOutletContext } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	deleteProject,
@@ -12,7 +13,8 @@ import {
 import { Doughnut, Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
-const ProjectsComponent = () => {
+const ProjectsComponent = (props) => {
+	const closeIt = useOutletContext();
 	const projectArray = useSelector(allProjects);
 	const status = useSelector(projectStatus);
 	const [selectedProject, setSelectedProject] = useState();
@@ -153,7 +155,9 @@ const ProjectsComponent = () => {
 	//////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	return (
-		<div className='bg-back-color w-full flex flex-col min-h-[100vh]'>
+		<div
+			className='bg-back-color w-full flex flex-col min-h-[100vh]'
+			onClick={closeIt}>
 			<div className='w-full min-h-[7%] flex justify-center content-center text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>
