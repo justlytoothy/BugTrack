@@ -4,6 +4,8 @@ import NewProjectComponent from './newProjectComponent.jsx';
 import Modal from 'react-modal';
 import { useOutletContext } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import ProjectCard from './projectCardComponent.jsx';
+import { CSSTransition } from 'react-transition-group';
 import {
 	deleteProject,
 	getAllProjects,
@@ -18,9 +20,9 @@ const ProjectsComponent = (props) => {
 	const projectArray = useSelector(allProjects);
 	const status = useSelector(projectStatus);
 	const [selectedProject, setSelectedProject] = useState();
+	const [showDetails, setShowDetails] = useState(false);
 	const dispatch = useDispatch();
 	const [modalIsOpen, setIsOpen] = useState(false);
-	let showIt = false;
 	const chartExampleData = {
 		labels: ['Open', 'Closed', 'Failed'],
 		datasets: [
@@ -41,6 +43,7 @@ const ProjectsComponent = (props) => {
 			},
 		],
 	};
+	const nodeRef = React.useRef(null);
 	Modal.setAppElement('#root');
 	useEffect(() => {
 		if (status === 'none') {
@@ -54,14 +57,32 @@ const ProjectsComponent = (props) => {
 	const closeForm = () => {
 		setIsOpen(false);
 	};
+	const openDetails = () => {
+		setShowDetails(true);
+	};
+	const closeDetails = () => {
+		setShowDetails(false);
+	};
 	const deleteOne = () => {
-		console.log(sessionStorage.getItem('user'));
-		// dispatch(deleteProject(selectedProject._id));
-		// refreshComponent();
+		// console.log(sessionStorage.getItem('user'));
+		dispatch(deleteProject(selectedProject._id));
+		refreshComponent();
 	};
 	const showProject = (project) => {
-		setSelectedProject(project);
-		showIt = true;
+		if (project !== selectedProject && showDetails === true) {
+			closeDetails();
+			setTimeout(() => {
+				setSelectedProject(project);
+				openDetails();
+			}, 410);
+		} else {
+			setSelectedProject(project);
+			if (showDetails === true) {
+				closeDetails();
+			} else {
+				openDetails();
+			}
+		}
 	};
 	/**
 	 * Takes an array of employee names and returns them put together as one string
@@ -110,7 +131,7 @@ const ProjectsComponent = (props) => {
 								<div
 									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
-									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:animate-bounce active:text-white focus:animate-bounce focus:text-white h-full w-full'>
+									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white h-full w-full'>
 									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-l border-gray-border '>
 										{project.project_name}
 									</span>
@@ -127,7 +148,7 @@ const ProjectsComponent = (props) => {
 								<div
 									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
-									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:animate-bounce active:text-white focus:animate-bounce focus:text-white h-full w-full'>
+									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white h-full w-full'>
 									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border'>
 										{project.project_name}
 									</span>
@@ -180,15 +201,32 @@ const ProjectsComponent = (props) => {
 					</span>
 				</div>
 
-				<div className='col-span-4 flex justify-center border-8 border-black text-xl'></div>
-				<div className='col-span-4 flex flex-wrap justify-center border-8 border-black text-3xl'>
-					Ticket Completion
-					<div className='break'></div>
-					<common.FontAwesomeIcon
-						className='text-carolina-blue'
-						icon='fa-solid fa-ticket'
-					/>
-				</div>
+				<CSSTransition
+					in={showDetails}
+					timeout={{
+						enter: 0,
+						exit: 400,
+					}}
+					unmountOnExit
+					classNames={{
+						enter: 'scale-y-0 duration-300',
+						enterActive: 'scale-y-100 duration-300',
+						enterDone: 'scale-y-100 duration-300',
+						exit: 'scale-y-100 duration-500',
+						exitActive: 'scale-y-0 duration-500',
+						exitDone: 'scale-y-0 duration-500',
+					}}
+					nodeRef={nodeRef}>
+					<div
+						ref={nodeRef}
+						className='col-span-8 m-2 p-2 flex justify-center border-8 rounded border-rich-black text-3xl transition-all motion-reduce:transition-none transform origin-center'>
+						<ProjectCard
+							project={selectedProject}
+							show={showDetails}
+							close={closeDetails}></ProjectCard>
+					</div>
+				</CSSTransition>
+
 				<div className='col-span-4 flex justify-center border-8 border-black text-3xl'>
 					<div>
 						<Doughnut data={chartExampleData}></Doughnut>
