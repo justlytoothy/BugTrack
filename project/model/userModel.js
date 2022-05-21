@@ -1,10 +1,10 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 const schema = mongoose.Schema({
 	name: String,
 	password: String,
 	role: String,
-});
+})
 
 const userSchema = new mongoose.Schema({
 	username: {
@@ -34,11 +34,10 @@ const userSchema = new mongoose.Schema({
 		type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
 		required: false,
 	},
-});
+})
 
 userSchema.post('findOneAndDelete', (document) => {
-	const userId = document._id;
-	console.log(`${userId} has been deleted`);
+	const userId = document._id
 	projectModel.find({ employees: { $in: [userId] } }).then((projects) => {
 		Promise.all(
 			projects.map((project) =>
@@ -48,10 +47,10 @@ userSchema.post('findOneAndDelete', (document) => {
 					{ new: true }
 				)
 			)
-		);
-	});
-});
+		)
+	})
+})
 
-const model = mongoose.model('User', userSchema);
+const model = mongoose.model('User', userSchema)
 
-export default model;
+export default model

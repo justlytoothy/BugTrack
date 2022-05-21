@@ -27,7 +27,6 @@ const projectSchema = new mongoose.Schema({
 
 projectSchema.post('findOneAndDelete', (document) => {
 	const projId = document._id;
-	console.log(`${projId} has been deleted`);
 	userModel.find({ assigned_projects: { $in: [projId] } }).then((users) => {
 		Promise.all(
 			users.map((user) =>
