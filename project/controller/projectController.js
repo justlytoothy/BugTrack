@@ -52,7 +52,10 @@ const getAllProjects = async (req, res) => {
 const getProject = async (req, res) => {
 	const id = req.query[0]
 	try {
-		const project = await projectModel.findById(id).populate('employees').exec()
+		const project = await projectModel
+			.findById(id)
+			.populate('employees tickets')
+			.exec()
 		return res.status(200).json(project)
 	} catch (error) {
 		console.log(error)

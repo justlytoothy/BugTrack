@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useOutletContext, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getProject, getSelectedProject, refreshStatus } from '../projectSlice'
+import { refreshTicketStatus } from '../../tickets/ticketSlice'
 import { CSSTransition } from 'react-transition-group'
 import common from '../../../common/commonImports'
 import NewTicketComponent from '../../tickets/newTicketComponent'
@@ -18,11 +19,12 @@ const ProjectDetails = (props) => {
 	const nodeRef = React.useRef(null)
 	const dispatch = useDispatch()
 	const refresh = useSelector(refreshStatus)
+	const refreshTicket = useSelector(refreshTicketStatus)
 	const project = useSelector(getSelectedProject)
 	useEffect(() => {
 		dispatch(getProject(id))
 		console.log(project)
-	}, [refresh])
+	}, [refresh, refreshTicket])
 	Modal.setAppElement('#root')
 
 	const scrollMe = () => {
@@ -106,52 +108,52 @@ const ProjectDetails = (props) => {
 					</span>
 				</div>
 				{React.Children.toArray(
-					project.employees.map((employee) => {
-						let iter = project.employees.length - 1
+					project.tickets.map((ticket) => {
+						let iter = project.tickets.length - 1
 						if (iter !== 0) {
 							iter--
 							return (
 								<div
 									className='grid grid-cols-8 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-									tabIndex={project.employees.length - iter}
-									onClick={() => showTicket(employee)}>
+									tabIndex={project.tickets.length - iter}
+									onClick={() => showTicket(ticket)}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.first_name + ' ' + employee.last_name}
+										{ticket.ticket_name}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-1'>
-										{employee.role}
+										{ticket.ticket_status}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-1'>
-										{employee.role}
+										{ticket.ticket_type}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.role}
+										{ticket.ticket_creator}
 									</span>
 									<span className='p-2 border-b border-rich-black col-span-2'>
-										{employee.role}
+										{ticket.ticket_description}
 									</span>
 								</div>
 							)
 						} else {
 							return (
 								<div
-									tabIndex={project.employees.length - iter}
+									tabIndex={project.tickets.length - iter}
 									className='grid grid-cols-8 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-									onClick={() => showTicket(employee)}>
+									onClick={() => showTicket(ticket)}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.first_name + ' ' + employee.last_name}
+										{ticket.ticket_name}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-1'>
-										{employee.role}
+										{ticket.ticket_status}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-1'>
-										{employee.role}
+										{ticket.ticket_type}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.role}
+										{ticket.ticket_creator}
 									</span>
 									<span className='p-2 border-b border-rich-black col-span-2'>
-										{employee.role}
+										{ticket.ticket_description}
 									</span>
 								</div>
 							)
@@ -220,6 +222,7 @@ const ProjectDetails = (props) => {
 	}
 
 	if (Object.keys(project).length > 0) {
+		console.log(project)
 		return (
 			<div
 				className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
@@ -314,7 +317,9 @@ const ProjectDetails = (props) => {
 						isOpen={modalIsOpen}
 						onRequestClose={closeForm}
 						contentLabel='New Ticket Form'>
-						<NewTicketComponent close={closeForm}></NewTicketComponent>
+						<NewTicketComponent
+							project_id={project._id}
+							close={closeForm}></NewTicketComponent>
 					</Modal>
 				</div>
 			</div>

@@ -9,14 +9,20 @@ const initialState = {
 	refresh: 0,
 }
 
-export const newTicket = createAsyncThunk('ticket/new', async (data) => {
-	try {
-		const response = await axios.post('ticket', data)
-	} catch (error) {
-		console.log(error)
-		throw error
+export const newTicket = createAsyncThunk(
+	'ticket/new',
+	async (data, { getState }) => {
+		try {
+			const state = getState()
+			const user_id = state.auth.user._id
+			data.ticket_creator = user_id
+			const response = await axios.post('ticket', data)
+		} catch (error) {
+			console.log(error)
+			throw error
+		}
 	}
-})
+)
 
 export const getTicket = createAsyncThunk('ticket/getone', async (data) => {
 	try {
@@ -32,7 +38,7 @@ export const getTicket = createAsyncThunk('ticket/getone', async (data) => {
 })
 
 export const getAllProjectTickets = createAsyncThunk(
-	'ticket/getall',
+	'ticket/project/getall',
 	async (data) => {
 		try {
 			const response = await axios.get('ticket/all/project', {
@@ -46,7 +52,7 @@ export const getAllProjectTickets = createAsyncThunk(
 	}
 )
 export const getAllUserTickets = createAsyncThunk(
-	'ticket/getall',
+	'ticket/user/getall',
 	async (arg, { getState }) => {
 		try {
 			const state = getState()
@@ -150,7 +156,7 @@ const ticketSlice = createSlice({
 })
 
 export const ticketStatus = (state) => state.ticket.status
-export const refreshStatus = (state) => state.ticket.refresh
+export const refreshTicketStatus = (state) => state.ticket.refresh
 export const allTickets = (state) => state.ticket.allTickets
 export const getSelectedTicket = (state) => state.ticket.selectedTicket
 export const { login, register } = ticketSlice.actions
