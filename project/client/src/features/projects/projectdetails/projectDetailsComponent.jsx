@@ -1,91 +1,91 @@
-import React, { useEffect, useState } from 'react'
-import { useOutletContext, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { getProject, getSelectedProject, refreshStatus } from '../projectSlice'
-import { refreshTicketStatus } from '../../tickets/ticketSlice'
-import { CSSTransition } from 'react-transition-group'
-import common from '../../../common/commonImports'
-import NewTicketComponent from '../../tickets/newTicketComponent'
-import Modal from 'react-modal'
+import React, { useEffect, useState } from 'react';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProject, getSelectedProject, refreshStatus } from '../projectSlice';
+import { refreshTicketStatus } from '../../tickets/ticketSlice';
+import { CSSTransition } from 'react-transition-group';
+import common from '../../../common/commonImports';
+import NewTicketComponent from '../../tickets/newTicketComponent';
+import Modal from 'react-modal';
 
-import TicketCard from '../../tickets/ticketCardComponent'
+import TicketCard from '../../tickets/ticketCardComponent';
 
 const ProjectDetails = (props) => {
-	const closeIt = useOutletContext()
-	const { id } = useParams()
-	const [selectedTicket, setSelectedTicket] = useState()
-	const [showDetails, setShowDetails] = useState(false)
-	const [modalIsOpen, setIsOpen] = useState(false)
-	const nodeRef = React.useRef(null)
-	const dispatch = useDispatch()
-	const refresh = useSelector(refreshStatus)
-	const refreshTicket = useSelector(refreshTicketStatus)
-	const project = useSelector(getSelectedProject)
+	const closeIt = useOutletContext();
+	const { id } = useParams();
+	const [selectedTicket, setSelectedTicket] = useState();
+	const [showDetails, setShowDetails] = useState(false);
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const nodeRef = React.useRef(null);
+	const dispatch = useDispatch();
+	const refresh = useSelector(refreshStatus);
+	const refreshTicket = useSelector(refreshTicketStatus);
+	const project = useSelector(getSelectedProject);
 	useEffect(() => {
-		dispatch(getProject(id))
-		console.log(project)
-	}, [refresh, refreshTicket])
-	Modal.setAppElement('#root')
+		dispatch(getProject(id));
+	}, [refresh, refreshTicket]);
+	Modal.setAppElement('#root');
 
 	const scrollMe = () => {
-		if (!nodeRef) return
+		if (!nodeRef) return;
 		// Get node coords from Ref
-		const node = nodeRef.current.getBoundingClientRect().top + window.scrollY
+		const node =
+			nodeRef.current.getBoundingClientRect().top + window.scrollY;
 
 		window.scroll({
 			top: node,
 			behavior: 'smooth',
-		})
-	}
+		});
+	};
 	const scrollMeFirst = () => {
-		nodeRef.current.scrollIntoView(true)
-	}
+		nodeRef.current.scrollIntoView(true);
+	};
 	const toTop = () => {
 		window.scroll({
 			top: 0,
 			left: 0,
 			behavior: 'smooth',
-		})
-	}
+		});
+	};
 
 	const openForm = () => {
-		setIsOpen(true)
-	}
+		setIsOpen(true);
+	};
 	const closeForm = () => {
-		setIsOpen(false)
-	}
+		setIsOpen(false);
+	};
 
 	const openDetails = () => {
-		setShowDetails(true)
-	}
+		setShowDetails(true);
+	};
 	const closeDetails = () => {
-		setShowDetails(false)
-	}
+		setShowDetails(false);
+	};
 	const closeDetailsScroll = () => {
-		setShowDetails(false)
-		setTimeout(() => toTop(), 100)
-	}
+		setShowDetails(false);
+		setTimeout(() => toTop(), 100);
+	};
 
 	const showTicket = (ticket) => {
 		if (ticket !== selectedTicket && showDetails === true) {
-			scrollMe()
+			scrollMe();
 			setTimeout(() => {
-				closeDetails()
+				closeDetails();
 				setTimeout(() => {
-					setSelectedTicket(ticket)
-					openDetails()
-				}, 500)
-			}, 250)
+					setSelectedTicket(ticket);
+					openDetails();
+				}, 500);
+			}, 250);
 		} else {
-			setSelectedTicket(ticket)
+			setSelectedTicket(ticket);
 			if (showDetails === true) {
-				closeDetails()
+				closeDetails();
 			} else {
-				setTimeout(() => scrollMeFirst(), 1)
-				openDetails()
+				setTimeout(() => scrollMeFirst(), 1);
+				openDetails();
 			}
 		}
-	}
+	};
 
 	const listTickets = () => {
 		return (
@@ -109,12 +109,12 @@ const ProjectDetails = (props) => {
 				</div>
 				{React.Children.toArray(
 					project.tickets.map((ticket) => {
-						let iter = project.tickets.length - 1
+						let iter = project.tickets.length - 1;
 						if (iter !== 0) {
-							iter--
+							iter--;
 							return (
 								<div
-									className='grid grid-cols-8 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
+									className='grid grid-cols-8 hover:bg-white-filled focus:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'
 									tabIndex={project.tickets.length - iter}
 									onClick={() => showTicket(ticket)}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
@@ -133,12 +133,12 @@ const ProjectDetails = (props) => {
 										{ticket.ticket_description}
 									</span>
 								</div>
-							)
+							);
 						} else {
 							return (
 								<div
 									tabIndex={project.tickets.length - iter}
-									className='grid grid-cols-8 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
+									className='grid grid-cols-8 hover:bg-white-filled focus:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'
 									onClick={() => showTicket(ticket)}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
 										{ticket.ticket_name}
@@ -150,19 +150,19 @@ const ProjectDetails = (props) => {
 										{ticket.ticket_type}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{ticket.ticket_creator}
+										{`${ticket.ticket_creator.first_name} ${ticket.ticket_creator.last_name}`}
 									</span>
 									<span className='p-2 border-b border-rich-black col-span-2'>
-										{ticket.ticket_description}
+										{`${ticket.assigned_employees[0].first_name} ${ticket.assigned_employees[0].last_name}`}
 									</span>
 								</div>
-							)
+							);
 						}
 					})
 				)}
 			</div>
-		)
-	}
+		);
+	};
 
 	const listEmployees = () => {
 		return (
@@ -180,15 +180,17 @@ const ProjectDetails = (props) => {
 				</div>
 				{React.Children.toArray(
 					project.employees.map((employee) => {
-						let iter = project.employees.length - 1
+						let iter = project.employees.length - 1;
 						if (iter !== 0) {
-							iter--
+							iter--;
 							return (
 								<div
 									className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
 									tabIndex={project.employees.length - iter}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.first_name + ' ' + employee.last_name}
+										{employee.first_name +
+											' ' +
+											employee.last_name}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-1'>
 										{employee.role}
@@ -197,14 +199,16 @@ const ProjectDetails = (props) => {
 										{employee.role}
 									</span>
 								</div>
-							)
+							);
 						} else {
 							return (
 								<div
 									tabIndex={project.employees.length - iter}
 									className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.first_name + ' ' + employee.last_name}
+										{employee.first_name +
+											' ' +
+											employee.last_name}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-1'>
 										{employee.role}
@@ -213,16 +217,15 @@ const ProjectDetails = (props) => {
 										{employee.role}
 									</span>
 								</div>
-							)
+							);
 						}
 					})
 				)}
 			</div>
-		)
-	}
+		);
+	};
 
 	if (Object.keys(project).length > 0) {
-		console.log(project)
 		return (
 			<div
 				className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
@@ -289,8 +292,7 @@ const ProjectDetails = (props) => {
 						}}
 						unmountOnExit
 						classNames={{
-							enter:
-								'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
+							enter: 'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 							enterActive:
 								'scale-y-100 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 							enterDone:
@@ -323,10 +325,10 @@ const ProjectDetails = (props) => {
 					</Modal>
 				</div>
 			</div>
-		)
+		);
 	} else {
-		return <div>Loading Project Info...</div>
+		return <div>Loading Project Info...</div>;
 	}
-}
+};
 
-export default ProjectDetails
+export default ProjectDetails;
