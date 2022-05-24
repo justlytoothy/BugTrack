@@ -81,7 +81,7 @@ const getTicket = async (req, res) => {
 	try {
 		const ticket = await ticketModel
 			.findById(id)
-			.populate('employees')
+			.populate('assigned_employees ticket_comments')
 			.exec();
 		return res.status(200).json(ticket);
 	} catch (error) {

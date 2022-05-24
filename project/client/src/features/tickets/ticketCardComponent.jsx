@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports'
-import { Doughnut } from 'react-chartjs-2'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-ChartJS.register(ArcElement, Tooltip, Legend)
+import React, { useEffect } from 'react';
+import common from '../../common/commonImports';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TicketCard = (props) => {
 	const chartExampleData = {
@@ -24,32 +24,34 @@ const TicketCard = (props) => {
 				borderWidth: 1,
 			},
 		],
-	}
-	const listEmployees = (empArray) => {
-		let iter = empArray.length - 1
-		{
-			React.Children.toArray(
-				empArray.map((employee) => {
-					return <h1>{employee.first_name}</h1>
-				})
-			)
-		}
-	}
+	};
+	// const listEmployees = (empArray) => {
+	// 	let iter = empArray.length - 1
+	// 	{
+	// 		React.Children.toArray(
+	// 			empArray.map((employee) => {
+	// 				return <h1>{employee.first_name}</h1>
+	// 			})
+	// 		)
+	// 	}
+	// }
 
-	const openProjectPage = () => {
-		window.location.href = `/project/${props.project._id}`
-		props.close()
-	}
+	const openTicketPage = () => {
+		window.location.href = `/ticket/${props.ticket._id}`;
+		props.close();
+	};
 	// useEffect(() => {
 	// 	console.log('hello');
 	// }, []);
-	if (props.project !== null) {
+	if (props.ticket !== null) {
 		return (
 			<div className='h-full relative w-full grid grid-cols-4'>
 				<div className='h-80 col-span-4 relative w-full flex flex-row justify-between p-2'>
-					{/* Project Information Section */}
+					{/* Ticket Information Section */}
 					<div className='h-full w-full grid grid-cols-4 bg-white-filled rounded text-rich-black mx-2'>
-						<h1 className='col-span-4 text-2xl text-center'>NAme</h1>
+						<h1 className='col-span-4 text-2xl text-center'>
+							Name
+						</h1>
 						<h2 className='col-span-4 text-xl text-center'>Id</h2>
 						<h3 className='col-span-4 text-xl text-center'>Desc</h3>
 					</div>
@@ -68,14 +70,14 @@ const TicketCard = (props) => {
 								</span>
 							</div>
 							{/*{React.Children.toArray(
-								props.project.employees.map((employee) => {
-									let iter = props.project.employees.length - 1
+								props.ticket.employees.map((employee) => {
+									let iter = props.ticket.employees.length - 1
 									if (iter !== 0) {
 										iter--
 										return (
 											<div
 												className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-												tabIndex={props.project.employees.length - iter}>
+												tabIndex={props.ticket.employees.length - iter}>
 												<span className='p-2 border-r border-b border-rich-black col-span-2'>
 													{employee.first_name + ' ' + employee.last_name}
 												</span>
@@ -90,7 +92,7 @@ const TicketCard = (props) => {
 									} else {
 										return (
 											<div
-												tabIndex={props.project.employees.length - iter}
+												tabIndex={props.ticket.employees.length - iter}
 												className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 												<span className='p-2 border-r border-b border-rich-black col-span-2'>
 													{employee.first_name + ' ' + employee.last_name}
@@ -132,13 +134,13 @@ const TicketCard = (props) => {
 						type='submit'
 						text='More Info'
 						extraClass='col-span-1'
-						click={openProjectPage}></common.ActionButton>
+						click={openTicketPage}></common.ActionButton>
 				</div>
 			</div>
-		)
+		);
 	} else {
-		;<div></div>
+		<div></div>;
 	}
-}
+};
 
-export default TicketCard
+export default TicketCard;

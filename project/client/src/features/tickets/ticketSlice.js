@@ -26,7 +26,6 @@ export const newTicket = createAsyncThunk(
 
 export const getTicket = createAsyncThunk('ticket/getone', async (data) => {
 	try {
-		let { id } = data
 		const response = await axios.get('ticket', {
 			params: data,
 		})
