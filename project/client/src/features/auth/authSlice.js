@@ -8,13 +8,20 @@ if (
 	const userPre = sessionStorage.getItem('user');
 	let user = JSON.parse(userPre);
 	if (user.token) {
-		initialState = { isLoggedIn: true, user, status: 'none', error: null }
+		initialState = {
+			isLoggedIn: true,
+			user,
+			status: 'none',
+			error: null,
+			allUsers: [],
+		};
 	} else {
 		initialState = {
 			isLoggedIn: false,
 			user: null,
 			status: 'none',
 			error: null,
+			allUsers: [],
 		};
 	}
 } else {
@@ -23,6 +30,7 @@ if (
 		user: null,
 		status: 'none',
 		error: null,
+		allUsers: [],
 	};
 }
 
@@ -97,6 +105,12 @@ const authSlice = createSlice({
 			})
 			.addCase(listAllUsers.fulfilled, (state, action) => {
 				state.status = 'success';
+				let users = action.payload;
+				users.forEach((user) => {
+					console.log(user);
+					user.password = '';
+				});
+				state.allUsers = users;
 			})
 			.addCase(listAllUsers.rejected, (state, action) => {
 				state.status = 'failed';
@@ -106,6 +120,7 @@ const authSlice = createSlice({
 });
 
 export const getLoginStatus = (state) => state.auth.status;
+export const getAllUsers = (state) => state.auth.allUsers;
 export const getIsLogged = (state) => state.auth.isLoggedIn;
 export const getLoginError = (state) => state.auth.error;
 export const { login, register } = authSlice.actions;

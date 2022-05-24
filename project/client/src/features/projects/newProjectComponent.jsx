@@ -1,25 +1,51 @@
-import React from 'react'
-import common from '../../common/commonImports.js'
-import { useForm } from 'react-hook-form'
-import { newProject } from './projectSlice'
-import { useDispatch } from 'react-redux'
+import React, { useEffect } from 'react';
+import common from '../../common/commonImports.js';
+import { useForm } from 'react-hook-form';
+import { newProject } from './projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { listAllUsers, getAllUsers } from '../auth/authSlice.js';
+import Select from 'react-select';
 
 const NewProjectComponent = (props) => {
-	const dispatch = useDispatch()
-	const user = JSON.parse(sessionStorage.getItem('user'))
-	let employees = []
-	employees.push(user._id)
+	const dispatch = useDispatch();
+	const user = JSON.parse(sessionStorage.getItem('user'));
+	let employees = [];
+	employees.push(user._id);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
+	} = useForm();
+	const allEmployees = useSelector(getAllUsers);
+
+	useEffect(() => {
+		dispatch(listAllUsers());
+	}, []);
+
 	const submitMe = (data) => {
-		data.createdBy = user._id
-		data.employees = employees
-		dispatch(newProject(data))
-		props.close()
-	}
+		data.createdBy = user._id;
+		data.employees = assignedEmployees;
+		dispatch(newProject(data));
+		props.close();
+	};
+	let assignedEmployees = [];
+	const onChange = (newValue, actionMeta) => {
+		console.log('on change ', newValue, actionMeta);
+		switch (actionMeta.action) {
+			case 'clear':
+				assignedEmployees = [];
+				break;
+			case 'select-option':
+				assignedEmployees = [];
+				assignedEmployees = newValue;
+				break;
+			default:
+				break;
+		}
+	};
+	const onInputChange = (newValue, actionMeta) => {
+		console.log('on input change ', newValue, actionMeta);
+	};
 	// const handleEmployeesChange = (data) => {
 
 	// }
@@ -48,9 +74,24 @@ const NewProjectComponent = (props) => {
 					name='projDesc'
 					{...register('projDesc')}
 				/>
-				<h2 className='text-white text-xl text-center col-span-8'>
-					Implement add employees
-				</h2>
+				<span className='col-span-1'></span>
+				<div className='col-span-6'>
+					<Select
+						isSearchable
+						isClearable
+						isMulti
+						defaultValue='Select Employees'
+						options={allEmployees}
+						getOptionLabel={(option) =>
+							`${option.first_name} ${option.last_name}`
+						}
+						name='employee-select'
+						onInputChange={onInputChange}
+						onChange={onChange}
+						getOptionValue={(option) => option._id}
+					/>
+				</div>
+				<span className='col-span-1'></span>
 				<common.ActionButton
 					extraClass='col-span-8 mx-auto h-8'
 					text='Create Project'
@@ -58,7 +99,7 @@ const NewProjectComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-export default NewProjectComponent
+export default NewProjectComponent;

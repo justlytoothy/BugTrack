@@ -3,27 +3,36 @@ import userModel from '../model/userModel.js';
 import ticketModel from '../model/ticketModel.js';
 
 const newComment = async (req, res) => {
-	const { projName, projDesc, createdBy, employees } = req.body;
+	const {
+		project_id,
+		comment_name,
+		comment_description,
+		comment_status,
+		comment_type,
+		comment_steps,
+		comment_priority,
+		assigned_employees,
+		comment_creator,
+	} = req.body;
 	let comment = '';
 	try {
-		const creator = await userModel.findById(createdBy);
-		if (employees !== null) {
-			comment = await commentModel.create({
-				comment_name: projName,
-				comment_description: projDesc,
-				comment_owner: createdBy,
-				employees: employees,
-			});
-		} else {
-			comment = await commentModel.create({
-				comment_name: first_name,
-				comment_description: projDesc,
-				comment_owner: createdBy,
-			});
-		}
-
+		const creator = await userModel.findById(comment_creator);
+		const project = await projectModel.findById(project_id);
+		comment = await ticketModel.create({
+			comment_name: comment_name,
+			comment_description: comment_description,
+			comment_creator: comment_creator,
+			comment_status: comment_status,
+			project: project_id,
+			comment_type: comment_type,
+			comment_steps: comment_steps,
+			comment_priority: comment_priority,
+			assigned_employees: assigned_employees,
+		});
 		creator.assigned_comments.push(comment._id);
 		creator.save();
+		project.comments.push(comment._id);
+		project.save();
 		return res.status(201).json(comment);
 	} catch (err) {
 		console.log(err);
