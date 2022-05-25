@@ -43,6 +43,15 @@ export const loginUser = createAsyncThunk('user/login', async (user) => {
 		throw error;
 	}
 });
+export const newUser = createAsyncThunk('user/register', async (user) => {
+	try {
+		const response = await myAxios.post('user/register', user);
+		return response.data;
+	} catch (error) {
+		console.log('An error of ' + error.message + ' has occured');
+		throw error;
+	}
+});
 export const listAllUsers = createAsyncThunk('user/list', async () => {
 	try {
 		const response = await myAxios.get('user');
@@ -63,12 +72,6 @@ const authSlice = createSlice({
 	reducers: {
 		login(state, action) {
 			state.push(action.payload);
-		},
-		register(state, action) {
-			return {
-				...state,
-				status: 'loading',
-			};
 		},
 	},
 	extraReducers(builder) {
@@ -115,6 +118,16 @@ const authSlice = createSlice({
 			.addCase(listAllUsers.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
+			})
+			.addCase(newUser.pending, (state, action) => {
+				state.status = 'loading';
+			})
+			.addCase(newUser.fulfilled, (state, action) => {
+				state.status = 'success';
+			})
+			.addCase(newUser.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
 			});
 	},
 });
@@ -123,5 +136,5 @@ export const getLoginStatus = (state) => state.auth.status;
 export const getAllUsers = (state) => state.auth.allUsers;
 export const getIsLogged = (state) => state.auth.isLoggedIn;
 export const getLoginError = (state) => state.auth.error;
-export const { login, register } = authSlice.actions;
+export const { login } = authSlice.actions;
 export default authSlice.reducer;

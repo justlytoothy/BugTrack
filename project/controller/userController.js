@@ -2,7 +2,7 @@ import userModel from '../model/userModel.js';
 import bcryptjs from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const newUser = async (req, res, next) => {
+const newUser = async (req, res) => {
 	try {
 		const { username, password, first_name, last_name, role } = req.body;
 

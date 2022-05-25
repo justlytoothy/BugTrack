@@ -13,7 +13,7 @@ const router = express.Router();
  * Separate later into separate controllers
  */
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-router.post('/user', function (req, res) {
+router.post('/user/register', function (req, res) {
 	userController.newUser(req, res);
 });
 router.put('/user', function (req, res) {
