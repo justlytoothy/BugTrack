@@ -1,4 +1,5 @@
 import React from 'react';
+import common from './commonImports';
 import { useOutletContext } from 'react-router-dom';
 
 const ErrorPageComponent = () => {
@@ -10,6 +11,7 @@ const ErrorPageComponent = () => {
 			onClick={closeIt}>
 			<h1 className='text-black text-2xl'>
 				Error, the page you are looking for does not exist!
+				<common.Spinner></common.Spinner>
 			</h1>
 		</div>
 	);
