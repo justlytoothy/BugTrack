@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema(
 			type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
 			required: false,
 		},
+		created_tickets: {
+			type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }],
+			required: false,
+		},
 		assigned_tickets: {
 			type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ticket' }],
 			required: false,

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
-import userModel from './userModel.js';
-import projectModel from './projectModel.js';
+import mongoose from 'mongoose'
+import userModel from './userModel.js'
+import projectModel from './projectModel.js'
 
 const commentSchema = new mongoose.Schema(
 	{
@@ -10,7 +10,7 @@ const commentSchema = new mongoose.Schema(
 	{
 		timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 	}
-);
+)
 const ticketSchema = new mongoose.Schema(
 	{
 		ticket_name: String,
@@ -19,9 +19,7 @@ const ticketSchema = new mongoose.Schema(
 		ticket_type: String,
 		ticket_steps: String,
 		ticket_priority: Number,
-		assigned_employees: [
-			{ type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-		],
+		assigned_employees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 		project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
 		ticket_creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 		ticket_comments: { type: [commentSchema], required: false },
@@ -29,10 +27,10 @@ const ticketSchema = new mongoose.Schema(
 	{
 		timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 	}
-);
+)
 
 ticketSchema.post('findOneAndDelete', (document) => {
-	const ticketId = document._id;
+	const ticketId = document._id
 	projectModel.find({ tickets: { $in: [ticketId] } }).then((projects) => {
 		Promise.all(
 			projects.map((project) =>
@@ -42,8 +40,8 @@ ticketSchema.post('findOneAndDelete', (document) => {
 					{ new: true }
 				)
 			)
-		);
-	});
+		)
+	})
 	userModel.find({ tickets: { $in: [ticketId] } }).then((users) => {
 		Promise.all(
 			users.map((user) =>
@@ -53,10 +51,10 @@ ticketSchema.post('findOneAndDelete', (document) => {
 					{ new: true }
 				)
 			)
-		);
-	});
-});
+		)
+	})
+})
 
-const model = mongoose.model('Ticket', ticketSchema);
+const model = mongoose.model('Ticket', ticketSchema)
 
-export default model;
+export default model

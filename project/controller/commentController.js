@@ -1,100 +1,79 @@
-import mongoose from 'mongoose';
-import userModel from '../model/userModel.js';
-import ticketModel from '../model/ticketModel.js';
+import mongoose from 'mongoose'
+import userModel from '../model/userModel.js'
+import ticketModel from '../model/ticketModel.js'
 
 const newComment = async (req, res) => {
-	const {
-		project_id,
-		comment_name,
-		comment_description,
-		comment_status,
-		comment_type,
-		comment_steps,
-		comment_priority,
-		assigned_employees,
-		comment_creator,
-	} = req.body;
-	let comment = '';
+	const { ticket_id, message, creator } = req.body
+	let comment = ''
 	try {
-		const creator = await userModel.findById(comment_creator);
-		const project = await projectModel.findById(project_id);
-		comment = await ticketModel.create({
-			comment_name: comment_name,
-			comment_description: comment_description,
-			comment_creator: comment_creator,
-			comment_status: comment_status,
-			project: project_id,
-			comment_type: comment_type,
-			comment_steps: comment_steps,
-			comment_priority: comment_priority,
-			assigned_employees: assigned_employees,
-		});
-		creator.assigned_comments.push(comment._id);
-		creator.save();
-		project.comments.push(comment._id);
-		project.save();
-		return res.status(201).json(comment);
+		const ticket = await ticketModel.findById(ticket_id)
+		ticket.ticket_comments.push({ message: message, creator: creator })
+		ticket.save()
+		console.log(ticket.ticket_comments)
+		return res.status(201).json(ticket)
 	} catch (err) {
-		console.log(err);
-		return res.status(400).json({ Error: err });
+		console.log(err)
+		return res.status(400).json({ Error: err })
 	}
-};
+}
 
 const getAllComments = async (req, res) => {
-	let id = req.query[0];
-	const currUser = await userModel.findById(id);
-	const assigned_comments = currUser.assigned_comments;
+	let ticket_id = req.query[0]
 	try {
-		const response = await commentModel
-			.find({
-				_id: { $in: assigned_comments },
-			})
-			.populate('employees')
-			.exec();
-		return res.json(response);
+		const ticket = await ticketModel
+			.findById(ticket_id)
+			.populate('ticket_comments')
+			.exec()
+		console.log(ticket.ticket_comments)
+		return res.json(ticket)
 	} catch (error) {
-		console.log(error);
-		return res.status(400).json({ Error: error });
+		console.log(error)
+		return res.status(400).json({ Error: error })
 	}
-};
+}
 
 const getComment = async (req, res) => {
-	const id = req.query[0];
+	const { ticket_id, comment_id } = req.query[0]
 	try {
-		const comment = await commentModel
-			.findById(id)
-			.populate('employees')
-			.populate({
-				path: 'tickets',
-				populate: { path: 'assigned_employees ticket_creator' },
-			})
-			.exec();
-		return res.status(200).json(comment);
+		const ticket = await ticketModel
+			.findById(ticket_id)
+			.populate('ticket_comments')
+			.exec()
+		const comment = await ticket.ticket_comments.id(comment_id)
+		console.log(comment)
+		return res.status(200).json(comment)
 	} catch (error) {
-		console.log(error);
-		return res.status(400).json({ Error: error });
+		console.log(error)
+		return res.status(400).json({ Error: error })
 	}
-};
+}
 
+/**
+ * finds ticket by ticket id and then deletes the comment from it by comment id
+ * @param {*} req must pass both ticket and comment id
+ * @param {*} res
+ * @returns
+ */
 const deleteComment = async (req, res) => {
+	const { ticket_id, comment_id } = req.body
 	try {
-		const id = await commentModel.findOneAndDelete({
-			_id: req.body.id,
-		});
+		const ticket = await ticketModel.findById(ticket_id)
+		const response = await ticket.ticket_comments.id(comment_id).remove()
+		console.log('removed comment', comment_id)
 	} catch (error) {
-		console.log(error);
-		return res.status(400).json({ Error: error });
+		console.log(error)
+		return res.status(400).json({ Error: error })
 	}
 
 	// const commentEmployees = await userModel.find({
 	// 	assigned_comments: id,
 	// });
 	// console.log(commentEmployees);
-};
+}
 
 export default {
 	newComment,
 	getAllComments,
 	getComment,
 	deleteComment,
-};
+}

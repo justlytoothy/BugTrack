@@ -16,7 +16,6 @@ const NewTicketComponent = (props) => {
 	} = useForm();
 	let assignedEmployees = [];
 	const onChange = (newValue, actionMeta) => {
-		console.log('just change ', newValue, actionMeta);
 		switch (actionMeta.action) {
 			case 'clear':
 				assignedEmployees = [];
@@ -30,7 +29,6 @@ const NewTicketComponent = (props) => {
 		}
 	};
 	const onInputChange = (newValue, actionMeta) => {
-		console.log('input change ', newValue, actionMeta);
 	};
 	const submitMe = (data) => {
 		console.log(assignedEmployees);

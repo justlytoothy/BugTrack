@@ -1,114 +1,123 @@
-import React, { useEffect, useState } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import { useOutletContext, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useForm } from 'react-hook-form'
+
 import {
 	refreshTicketStatus,
 	getTicket,
 	getSelectedTicket,
-} from './ticketSlice';
-import { CSSTransition } from 'react-transition-group';
-import common from '../../common/commonImports';
-import Modal from 'react-modal';
+} from './ticketSlice'
+import { newComment } from '../comments/commentSlice'
+import { CSSTransition } from 'react-transition-group'
+import common from '../../common/commonImports'
+import Modal from 'react-modal'
+import { displayPartsToString } from 'typescript'
 
 const TicketDetails = (props) => {
-	const closeIt = useOutletContext();
-	const { id } = useParams();
-	const [showDetails, setShowDetails] = useState(false);
-	const [selectedComment, setSelectedComment] = useState();
-	const [modalIsOpen, setIsOpen] = useState(false);
-	const nodeRef = React.useRef(null);
-	const dispatch = useDispatch();
-	const ticket = useSelector(getSelectedTicket);
-	const refreshTicket = useSelector(refreshTicketStatus);
-	useEffect(() => {
-		dispatch(getTicket(id));
-	}, [refreshTicket]);
-	Modal.setAppElement('#root');
+	const closeIt = useOutletContext()
+	const { id } = useParams()
+	const [showDetails, setShowDetails] = useState(false)
+	const [selectedComment, setSelectedComment] = useState()
+	const [modalIsOpen, setIsOpen] = useState(false)
+	const nodeRef = React.useRef(null)
 
+	const dispatch = useDispatch()
+	const ticket = useSelector(getSelectedTicket)
+	const refreshTicket = useSelector(refreshTicketStatus)
+	useEffect(() => {
+		dispatch(getTicket(id))
+		console.log(ticket)
+	}, [refreshTicket])
+	Modal.setAppElement('#root')
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm()
 	const scrollMe = () => {
-		if (!nodeRef) return;
+		if (!nodeRef) return
 		// Get node coords from Ref
-		const node =
-			nodeRef.current.getBoundingClientRect().top + window.scrollY;
+		const node = nodeRef.current.getBoundingClientRect().top + window.scrollY
 
 		window.scroll({
 			top: node,
 			behavior: 'smooth',
-		});
-	};
+		})
+	}
 	const scrollMeFirst = () => {
-		nodeRef.current.scrollIntoView(true);
-	};
+		nodeRef.current.scrollIntoView(true)
+	}
 	const toTop = () => {
 		window.scroll({
 			top: 0,
 			left: 0,
 			behavior: 'smooth',
-		});
-	};
-
-	const openForm = () => {
-		setIsOpen(true);
-	};
-	const closeForm = () => {
-		setIsOpen(false);
-	};
-
-	const openDetails = () => {
-		setShowDetails(true);
-	};
-	const closeDetails = () => {
-		setShowDetails(false);
-	};
-	const closeDetailsScroll = () => {
-		setShowDetails(false);
-		setTimeout(() => toTop(), 100);
-	};
-
-	const showComment = (comment) => {
-		if (comment !== selectedComment && showDetails === true) {
-			scrollMe();
-			setTimeout(() => {
-				closeDetails();
-				setTimeout(() => {
-					setSelectedComment(comment);
-					openDetails();
-				}, 500);
-			}, 250);
-		} else {
-			setSelectedComment(comment);
-			if (showDetails === true) {
-				closeDetails();
-			} else {
-				setTimeout(() => scrollMeFirst(), 1);
-				openDetails();
-			}
-		}
-	};
+		})
+	}
 
 	const listComments = () => {
 		return (
 			<div className='border-rich-black border overflow-scroll min-h-[20rem] max-h-[20rem] bg-white'>
 				<div className='grid grid-cols-8'>
-					<span className='col-span-2 p-2 border-y border-r border-rich-black text-2xl'>
-						Ticket Name
+					<span className='col-span-2 p-2 border-y border-rich-black text-2xl'>
+						Commentor
 					</span>
-					<span className='col-span-1 p-2 border-y border-r border-rich-black text-2xl'>
-						Status
-					</span>
-					<span className='col-span-1 p-2 border-y border-r border-rich-black text-2xl'>
-						Type
-					</span>
-					<span className='col-span-2 p-2 border-y border-r border-rich-black text-2xl'>
-						Submitted By
+					<span className='col-span-4 p-2 border-y border-rich-black text-2xl'>
+						Message
 					</span>
 					<span className='col-span-2 p-2 border-y border-rich-black text-2xl'>
-						Assigned To
+						Date
 					</span>
 				</div>
+				{React.Children.toArray(
+					ticket.ticket_comments.map((comment) => {
+						let iter = ticket.ticket_comments - 1
+						if (iter !== 0) {
+							iter--
+							return (
+								<div
+									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'
+									tabIndex={ticket.ticket_comments.length - iter}>
+									<span className='p-2 border-r border-b border-rich-black col-span-2'>
+										{comment.commentor}
+									</span>
+									<span className='p-2 border-r border-b border-rich-black col-span-4'>
+										{comment.message}
+									</span>
+
+									<span className='p-2 border-b border-rich-black col-span-2'>
+										{comment.created_at}
+									</span>
+								</div>
+							)
+						} else {
+							return (
+								<div
+									tabIndex={ticket.ticket_comments.length - iter}
+									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'>
+									<span className='p-2 border-r border-b border-rich-black col-span-2'>
+										{comment.commentor}
+									</span>
+									<span className='p-2 border-r border-b border-rich-black col-span-4'>
+										{comment.message}
+									</span>
+
+									<span className='p-2 border-b border-rich-black col-span-2'>
+										{comment.created_at}
+									</span>
+								</div>
+							)
+						}
+					})
+				)}
 			</div>
-		);
-	};
+		)
+	}
+
+	const submitMe = (message) => {
+		dispatch(newComment(message))
+	}
 
 	if (Object.keys(ticket).length > 0) {
 		return (
@@ -131,7 +140,17 @@ const TicketDetails = (props) => {
 									<h2 className='col-span-4 text-xl'>{`Ticket Description: ${ticket.ticket_description}`}</h2>
 									<h2 className='col-span-4 text-xl'>{`Assigned Employees: ${ticket.assigned_employees.length}`}</h2>
 								</div>
-								<div className='w-[49%]'>{listComments()}</div>
+								<div className='w-[49%]'>
+									{listComments()}
+									<div className='min-w-full grid grid-cols-3 h-16 bg-carolina-blue'>
+										<span className='col-span-2'></span>
+										<common.ActionButton
+											extraClass='col-span-1 mx-auto h-8'
+											text='Submit Ticket'
+											type='submit'
+											click={handleSubmit(submitMe)}></common.ActionButton>
+									</div>
+								</div>
 							</div>
 							<div className='col-span-8 flex flex-col'>
 								<div className='mt-4 border border-rich-black'>
@@ -155,7 +174,6 @@ const TicketDetails = (props) => {
 										/>
 									</div>
 								}
-								click={openForm}
 								extraClass=''></common.ActionButton>
 							<common.ActionButton
 								text={
@@ -177,7 +195,8 @@ const TicketDetails = (props) => {
 						}}
 						unmountOnExit
 						classNames={{
-							enter: 'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
+							enter:
+								'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 							enterActive:
 								'scale-y-100 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 							enterDone:
@@ -202,7 +221,6 @@ const TicketDetails = (props) => {
 						className='bg-midnight-blue text-white h-1/2 fixed w-[30vw] right-[35vw] left-[35vw] top-1/4 bottom-1/4'
 						overlayClassName=''
 						isOpen={modalIsOpen}
-						onRequestClose={closeForm}
 						contentLabel='New Ticket Form'>
 						{/* <NewTicketComponent
 							project_id={project._id}
@@ -210,10 +228,10 @@ const TicketDetails = (props) => {
 					</Modal>
 				</div>
 			</div>
-		);
+		)
 	} else {
-		return <div className='animate-pulse'>Loading Ticket Info...</div>;
+		return <div className='animate-pulse'>Loading Ticket Info...</div>
 	}
-};
+}
 
-export default TicketDetails;
+export default TicketDetails
