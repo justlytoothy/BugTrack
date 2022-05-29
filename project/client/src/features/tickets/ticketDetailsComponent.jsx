@@ -8,7 +8,7 @@ import {
 	getTicket,
 	getSelectedTicket,
 } from './ticketSlice'
-import { newComment } from '../comments/commentSlice'
+import { newComment, refreshCommentStatus } from '../comments/commentSlice'
 import { CSSTransition } from 'react-transition-group'
 import common from '../../common/commonImports'
 import Modal from 'react-modal'
@@ -25,10 +25,11 @@ const TicketDetails = (props) => {
 	const dispatch = useDispatch()
 	const ticket = useSelector(getSelectedTicket)
 	const refreshTicket = useSelector(refreshTicketStatus)
+	const refreshComment = useSelector(refreshCommentStatus)
 	useEffect(() => {
 		dispatch(getTicket(id))
 		console.log(ticket)
-	}, [refreshTicket])
+	}, [refreshTicket, refreshComment])
 	Modal.setAppElement('#root')
 	const {
 		register,
@@ -72,22 +73,23 @@ const TicketDetails = (props) => {
 				</div>
 				{React.Children.toArray(
 					ticket.ticket_comments.map((comment) => {
-						let iter = ticket.ticket_comments - 1
+						let iter = ticket.ticket_comments.length - 1
 						if (iter !== 0) {
 							iter--
+							console.log(ticket.ticket_comments)
 							return (
 								<div
 									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'
 									tabIndex={ticket.ticket_comments.length - iter}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{comment.commentor}
+										{`${comment.creator.first_name} ${comment.creator.last_name}`}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-4'>
 										{comment.message}
 									</span>
 
 									<span className='p-2 border-b border-rich-black col-span-2'>
-										{comment.created_at}
+										{comment.created_at.slice(0, 10)}
 									</span>
 								</div>
 							)
@@ -97,14 +99,14 @@ const TicketDetails = (props) => {
 									tabIndex={ticket.ticket_comments.length - iter}
 									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{comment.commentor}
+										{`${comment.creator.first_name} ${comment.creator.last_name}`}
 									</span>
 									<span className='p-2 border-r border-b border-rich-black col-span-4'>
 										{comment.message}
 									</span>
 
 									<span className='p-2 border-b border-rich-black col-span-2'>
-										{comment.created_at}
+										{comment.created_at.slice(0, 10)}
 									</span>
 								</div>
 							)
@@ -116,6 +118,7 @@ const TicketDetails = (props) => {
 	}
 
 	const submitMe = (message) => {
+		message.ticket_id = ticket._id
 		dispatch(newComment(message))
 	}
 
@@ -142,10 +145,18 @@ const TicketDetails = (props) => {
 								</div>
 								<div className='w-[49%]'>
 									{listComments()}
-									<div className='min-w-full grid grid-cols-3 h-16 bg-carolina-blue'>
-										<span className='col-span-2'></span>
+									<div className='min-w-full grid grid-cols-3 h-8'>
+										<form className='col-span-2 h-8'>
+											<input
+												className='h-full w-full'
+												type='text'
+												placeholder='Leave a comment'
+												name='message'
+												{...register('message')}
+											/>
+										</form>
 										<common.ActionButton
-											extraClass='col-span-1 mx-auto h-8'
+											extraClass='col-span-1 text-base h-fit'
 											text='Submit Ticket'
 											type='submit'
 											click={handleSubmit(submitMe)}></common.ActionButton>

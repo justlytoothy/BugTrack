@@ -15,10 +15,11 @@ export const newComment = createAsyncThunk(
 		try {
 			const state = getState()
 			const user_id = state.auth.user._id
-			const { message } = data
+			const { message, ticket_id } = data
 			let temp = {
 				message: message,
 				creator: user_id,
+				ticket_id: ticket_id,
 			}
 			const response = await axios.post('comment', temp)
 		} catch (error) {

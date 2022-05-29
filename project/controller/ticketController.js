@@ -87,6 +87,10 @@ const getTicket = async (req, res) => {
 		const ticket = await ticketModel
 			.findById(id)
 			.populate('assigned_employees ticket_comments')
+			.populate({
+				path: 'ticket_comments',
+				populate: { path: 'creator' },
+			})
 			.exec()
 		return res.status(200).json(ticket)
 	} catch (error) {
