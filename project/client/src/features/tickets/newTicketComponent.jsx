@@ -1,37 +1,67 @@
-import React, { useEffect } from 'react';
-import common from '../../common/commonImports.js';
-import { useForm } from 'react-hook-form';
-import { newTicket } from './ticketSlice.js';
-import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { getSelectedProject } from '../projects/projectSlice.js';
+import React, { useEffect } from 'react'
+import common from '../../common/commonImports.js'
+import { useForm } from 'react-hook-form'
+import { typeOptions, priorityOptions } from './optionArrays.js'
+import { newTicket } from './ticketSlice.js'
+import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import { getSelectedProject } from '../projects/projectSlice.js'
 
 const NewTicketComponent = (props) => {
-	const dispatch = useDispatch();
-	const selectedProject = useSelector(getSelectedProject);
+	const dispatch = useDispatch()
+	const selectedProject = useSelector(getSelectedProject)
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
-	let assignedEmployees = [];
+	} = useForm()
+	let assignedEmployees = []
+	let ticketPriority = 0
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = [];
-				break;
+				assignedEmployees = []
+				break
 			case 'select-option':
-				assignedEmployees = [];
-				assignedEmployees.push(newValue._id);
-				break;
+				assignedEmployees = []
+				assignedEmployees.push(newValue._id)
+				break
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChange = (newValue, actionMeta) => {
-	};
+	}
+	const onInputChangePriority = (newValue, actionMeta) => {}
+	const onChangePriority = (newValue, actionMeta) => {
+		switch (actionMeta.action) {
+			case 'clear':
+				ticketPriority = 0
+				break
+			case 'select-option':
+				console.log(newValue)
+				ticketPriority = newValue.id
+				break
+			default:
+				break
+		}
+	}
+	let ticketType = ''
+	const onInputChangeType = (newValue, actionMeta) => {}
+	const onChangeType = (newValue, actionMeta) => {
+		switch (actionMeta.action) {
+			case 'clear':
+				ticketType = ''
+				break
+			case 'select-option':
+				console.log(newValue)
+				ticketType = newValue
+				break
+			default:
+				break
+		}
+	}
+	const onInputChange = (newValue, actionMeta) => {}
 	const submitMe = (data) => {
-		console.log(assignedEmployees);
+		console.log(assignedEmployees)
 		const ticket = {
 			project_id: props.project_id,
 			ticket_name: data.ticket_name,
@@ -39,13 +69,13 @@ const NewTicketComponent = (props) => {
 			ticket_status: data.ticket_status,
 			ticket_type: data.ticket_type,
 			ticket_steps: data.ticket_steps,
-			ticket_priority: data.ticket_priority,
+			ticket_priority: ticketPriority,
 			assigned_employees: assignedEmployees,
 			ticket_creator: '',
-		};
-		dispatch(newTicket(ticket));
-		props.close();
-	};
+		}
+		dispatch(newTicket(ticket))
+		props.close()
+	}
 	// const handleEmployeesChange = (data) => {
 
 	// }
@@ -81,13 +111,19 @@ const NewTicketComponent = (props) => {
 					name='ticket_status'
 					{...register('ticket_status')}
 				/>
-				<input
-					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
-					type='text'
-					placeholder='Type of ticket'
-					name='ticket_type'
-					{...register('ticket_type')}
-				/>
+				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
+					<Select
+						isSearchable
+						isClearable
+						defaultValue='Select Priority'
+						options={typeOptions}
+						getOptionLabel={(option) => option.option}
+						name='type-select'
+						onInputChange={onInputChangeType}
+						onChange={onChangeType}
+						getOptionValue={(option) => option.option}
+					/>
+				</div>
 				<input
 					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
 					type='text'
@@ -95,13 +131,20 @@ const NewTicketComponent = (props) => {
 					name='ticket_steps'
 					{...register('ticket_steps')}
 				/>
-				<input
-					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
-					type='text'
-					placeholder='Priority of ticket'
-					name='ticket_priority'
-					{...register('ticket_priority')}
-				/>
+				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
+					<Select
+						isSearchable
+						isClearable
+						defaultValue='Select Priority'
+						options={priorityOptions}
+						getOptionLabel={(option) => option.option}
+						name='priority-select'
+						onInputChange={onInputChangePriority}
+						onChange={onChangePriority}
+						getOptionValue={(option) => option.id}
+					/>
+				</div>
+
 				<span className='col-span-1'></span>
 				<div className='col-span-6'>
 					<Select
@@ -127,7 +170,7 @@ const NewTicketComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	);
-};
+	)
+}
 
-export default NewTicketComponent;
+export default NewTicketComponent
