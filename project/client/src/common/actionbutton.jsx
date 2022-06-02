@@ -17,7 +17,7 @@ const ActionButton = (props) => {
 					// }
 					className={
 						props.extraClass +
-						' whitespace-nowrap bg-color-3 w-fit h-8 text-white transition-all border border-solid rounded border-slate-gray font-bold font-sans text-xl px-5 text-center hover:text-white hover:bg-button-hover disabled:opacity-50 disabled:hover:bg-white m-2'
+						' whitespace-nowrap bg-color-3 min-w-fit h-8 text-white transition-all border border-solid rounded border-slate-gray font-bold font-sans text-xl px-5 text-center hover:text-white hover:bg-button-hover disabled:opacity-50 disabled:hover:bg-white m-2'
 					}>
 					{text}
 				</button>
