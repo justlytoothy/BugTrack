@@ -18,10 +18,8 @@ const Sidebar = (props, { defaultActive }) => {
 		const handleResize = () => {
 			if (window.innerWidth <= 1024) {
 				setIsBig(false);
-				console.log('false');
 			} else {
 				setIsBig(true);
-				console.log('true');
 			}
 		};
 		if (onLoad < 1) {
@@ -42,7 +40,7 @@ const Sidebar = (props, { defaultActive }) => {
 				enter: 'scale-x-0',
 				enterActive: 'scale-x-100',
 				enterDone: 'scale-x-100',
-				exit: 'scale-x-100',
+				exit: 'scale-x-0',
 				exitActive: 'scale-x-0',
 				exitDone: 'scale-x-0',
 			}}
@@ -50,7 +48,7 @@ const Sidebar = (props, { defaultActive }) => {
 			nodeRef={nodeRef}>
 			<div
 				ref={nodeRef}
-				className='bg-sidebar w-64 min-h-full flex flex-col z-50 transition-all motion-reduce:transition-none transform origin-left duration-300'>
+				className='bg-sidebar w-64 min-h-full flex flex-col z-50 transition-all motion-reduce:transition-none origin-left duration-300'>
 				{SidebarItems.map((item, index) => {
 					return (
 						<NavLink

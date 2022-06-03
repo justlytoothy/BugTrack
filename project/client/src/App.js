@@ -11,7 +11,7 @@ function App() {
 	let fullApp;
 	if (loggedIn) {
 		fullApp = (
-			<div className='p-2 overscroll-x-contain overflow-x-hidden min-h-[100vh] w-full'>
+			<div className='px-2 pt-2 overscroll-x-contain overflow-x-hidden min-h-[101vh] h-full w-full'>
 				<MyRoutes />
 			</div>
 		);

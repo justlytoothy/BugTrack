@@ -16,8 +16,8 @@ const Layout = (props) => {
 	};
 
 	return (
-		<div className='flex flex-col'>
-			<div className='flex flex-col min-w-full'>
+		<div className='flex flex-col min-h-full min-w-full'>
+			<div className='flex flex-col min-w-full min-h-full'>
 				<NavBar openIt={openSidebar} />
 
 				<div className='flex flex-row min-h-full w-full'>
@@ -26,7 +26,7 @@ const Layout = (props) => {
 						open={isOpen}
 						closeIt={closeSidebar}
 					/>
-					<div className='p-8 w-full'>
+					<div className='p-8 w-full min-h-full'>
 						<Outlet context={closeSidebar} />
 					</div>
 				</div>

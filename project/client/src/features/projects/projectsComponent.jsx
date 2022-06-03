@@ -1,121 +1,121 @@
-import React, { useState, useEffect } from 'react'
-import common from '../../common/commonImports.js'
-import NewProjectComponent from './newProjectComponent.jsx'
-import Modal from 'react-modal'
-import { useOutletContext } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import ProjectCard from './projectCardComponent.jsx'
-import { CSSTransition } from 'react-transition-group'
+import React, { useState, useEffect } from 'react';
+import common from '../../common/commonImports.js';
+import NewProjectComponent from './newProjectComponent.jsx';
+import Modal from 'react-modal';
+import { useOutletContext } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import ProjectCard from './projectCardComponent.jsx';
+import { CSSTransition } from 'react-transition-group';
 import {
 	deleteProject,
 	getAllProjects,
 	allProjects,
 	refreshStatus,
-} from './projectSlice.js'
+} from './projectSlice.js';
 
 const ProjectsComponent = (props) => {
-	const closeIt = useOutletContext()
-	const projectArray = useSelector(allProjects)
-	const refreshStat = useSelector(refreshStatus)
-	const [selectedProject, setSelectedProject] = useState()
-	const [showDetails, setShowDetails] = useState(false)
-	const dispatch = useDispatch()
-	const [modalIsOpen, setIsOpen] = useState(false)
-	const nodeRef = React.useRef(null)
+	const closeIt = useOutletContext();
+	const projectArray = useSelector(allProjects);
+	const refreshStat = useSelector(refreshStatus);
+	const [selectedProject, setSelectedProject] = useState();
+	const [showDetails, setShowDetails] = useState(false);
+	const dispatch = useDispatch();
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const nodeRef = React.useRef(null);
 
 	const scrollMe = () => {
-		if (!nodeRef) return
+		if (!nodeRef) return;
 		// Get node coords from Ref
-		const node = nodeRef.current.getBoundingClientRect().top + window.scrollY
+		const node =
+			nodeRef.current.getBoundingClientRect().top + window.scrollY;
 
 		window.scroll({
 			top: node,
 			behavior: 'smooth',
-		})
-	}
+		});
+	};
 	const scrollMeFirst = () => {
-		nodeRef.current.scrollIntoView(true)
-	}
+		nodeRef.current.scrollIntoView(true);
+	};
 	const toTop = () => {
 		window.scroll({
 			top: 0,
 			left: 0,
 			behavior: 'smooth',
-		})
-	}
-	Modal.setAppElement('#root')
+		});
+	};
+	Modal.setAppElement('#root');
 	useEffect(() => {
-		dispatch(getAllProjects())
-		console.log(refreshStat)
-	}, [refreshStat])
+		dispatch(getAllProjects());
+	}, [refreshStat]);
 
 	const openForm = () => {
-		setIsOpen(true)
-	}
+		setIsOpen(true);
+	};
 	const closeForm = () => {
-		setIsOpen(false)
-	}
+		setIsOpen(false);
+	};
 	const openDetails = () => {
-		setShowDetails(true)
-	}
+		setShowDetails(true);
+	};
 	const closeDetails = () => {
-		setShowDetails(false)
-	}
+		setShowDetails(false);
+	};
 	const closeDetailsScroll = () => {
-		setShowDetails(false)
-		setTimeout(() => toTop(), 100)
-	}
+		setShowDetails(false);
+		setTimeout(() => toTop(), 100);
+	};
 	const deleteOne = () => {
 		// console.log(sessionStorage.getItem('user'));
-		dispatch(deleteProject(selectedProject._id))
-		closeDetailsScroll()
-	}
+		dispatch(deleteProject(selectedProject._id));
+		closeDetailsScroll();
+	};
 	const showProject = (project) => {
 		if (project !== selectedProject && showDetails === true) {
-			scrollMe()
+			scrollMe();
 			setTimeout(() => {
-				closeDetails()
+				closeDetails();
 				setTimeout(() => {
-					setSelectedProject(project)
-					openDetails()
-				}, 500)
-			}, 250)
+					setSelectedProject(project);
+					openDetails();
+				}, 500);
+			}, 250);
 		} else {
-			setSelectedProject(project)
+			setSelectedProject(project);
 			if (showDetails === true) {
-				closeDetails()
+				closeDetails();
 			} else {
-				setTimeout(() => scrollMeFirst(), 1)
-				openDetails()
+				setTimeout(() => scrollMeFirst(), 1);
+				openDetails();
 			}
 		}
-	}
+	};
 	/**
 	 * Takes an array of employee names and returns them put together as one string
 	 * @param {*} empArray the array of employee names assigned to the specific project
 	 * @returns
 	 */
 	const listEmployees = (empArray) => {
-		let nameList = ''
-		let first = true
+		let nameList = '';
+		let first = true;
 		empArray.forEach((employee) => {
 			if (first === true) {
-				let name = `${employee.first_name} ${employee.last_name}`
-				nameList = name
-				first = false
+				let name = `${employee.first_name} ${employee.last_name}`;
+				nameList = name;
+				first = false;
 			} else {
-				let name = `${employee.first_name} ${employee.last_name}`
-				nameList = nameList + ', ' + name
+				let name = `${employee.first_name} ${employee.last_name}`;
+				nameList = nameList + ', ' + name;
 			}
-		})
-		return nameList
-	}
+		});
+		return nameList;
+	};
 	/**
 	 * Takes in the fetched project array and iterates over it to display relevant data in the table
 	 * @returns project table
 	 */
 	const listProjects = () => {
-		let iter = projectArray.length - 1
+		let iter = projectArray.length - 1;
 		return (
 			<div className='overflow-scroll max-h-[700px] min-h-[700px] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-dark-heading font-bold border-gray-border whitespace-nowrap'>
@@ -132,7 +132,7 @@ const ProjectsComponent = (props) => {
 				{React.Children.toArray(
 					projectArray.map((project) => {
 						if (iter !== 0) {
-							iter--
+							iter--;
 							return (
 								<div
 									tabIndex={projectArray.length - 1 - iter}
@@ -148,7 +148,7 @@ const ProjectsComponent = (props) => {
 										{project.project_description}
 									</span>
 								</div>
-							)
+							);
 						} else {
 							return (
 								<div
@@ -165,13 +165,13 @@ const ProjectsComponent = (props) => {
 										{project.project_description}
 									</span>
 								</div>
-							)
+							);
 						}
 					})
 				)}
 			</div>
-		)
-	}
+		);
+	};
 	///////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////
 	//Actual Render Section
@@ -222,8 +222,7 @@ const ProjectsComponent = (props) => {
 					}}
 					unmountOnExit
 					classNames={{
-						enter:
-							'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
+						enter: 'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 						enterActive:
 							'scale-y-100 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 						enterDone:
@@ -254,7 +253,7 @@ const ProjectsComponent = (props) => {
 				<NewProjectComponent close={closeForm}></NewProjectComponent>
 			</Modal>
 		</div>
-	)
-}
+	);
+};
 
-export default ProjectsComponent
+export default ProjectsComponent;
