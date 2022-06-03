@@ -155,13 +155,13 @@ const ProjectsComponent = (props) => {
 									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
 									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white h-full w-full'>
-									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border'>
+									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border truncate'>
 										{project.project_name}
 									</span>
-									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-b border-gray-border'>
+									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
 										{listEmployees(project.employees)}
 									</span>
-									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-gray-border'>
+									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
 										{project.project_description}
 									</span>
 								</div>
@@ -172,16 +172,20 @@ const ProjectsComponent = (props) => {
 			</div>
 		);
 	};
-	///////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
-	//Actual Render Section
-	//////////////////////////////////////////////////////////
-	///////////////////////////////////////////////////////////
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/* Actual render section */
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	return (
 		<div
 			className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
 			onClick={closeIt}>
-			<div className='w-full min-h-[7%] py-4 flex justify-center content-center text-3xl font-semibold'>
+			<div className='w-full min-h-[7%] py-4 flex justify-center content-center text-lg lg:text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>
 			<div className='w-full min-h-[93%] grid grid-cols-8 pb-4'>
@@ -198,19 +202,13 @@ const ProjectsComponent = (props) => {
 									/>
 								</div>
 							}
+							type='submit'
 							click={openForm}
 							extraClass=''></common.ActionButton>
 						<common.ActionButton
-							text={
-								<div className=''>
-									Delete Project &nbsp;
-									<common.FontAwesomeIcon
-										className='text-midnight-blue text-xl'
-										icon='fa-solid fa-square-plus'
-									/>
-								</div>
-							}
-							click={deleteOne}></common.ActionButton>
+							text='Delete Project'
+							click={deleteOne}
+							type='delete'></common.ActionButton>
 					</span>
 				</div>
 
@@ -236,7 +234,7 @@ const ProjectsComponent = (props) => {
 					nodeRef={nodeRef}>
 					<div
 						ref={nodeRef}
-						className='col-span-8 m-2 p-2 flex justify-center border-8 rounded h-full border-rich-black text-3xl'>
+						className='col-span-8 m-2 p-2 flex justify-center border-2 rounded h-fit border-rich-black text-xs sm:text-base lg:text-xl'>
 						<ProjectCard
 							project={selectedProject}
 							show={showDetails}

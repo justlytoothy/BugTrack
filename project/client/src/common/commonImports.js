@@ -9,6 +9,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 library.add(fas, fab, far);
 
+export const FontAwesome = FontAwesomeIcon;
 const common = {
 	ActionButton,
 	ErrorPageComponent,

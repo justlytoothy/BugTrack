@@ -28,17 +28,14 @@ const ProjectCard = (props) => {
 
 	const employeeGraph = () => {
 		return (
-			<div className='h-full w-full flex flex-col bg-white-filled rounded text-rich-black p-1 mx-2'>
-				<div className='border-rich-black border overflow-scroll min-h-full max-h-full bg-white'>
+			<div className='h-1/2 lg:h-full w-full flex flex-col rounded text-rich-black mx-2'>
+				<div className='border-rich-black border rounded overflow-scroll min-h-full max-h-full bg-white'>
 					<div className='grid grid-cols-4'>
-						<span className='col-span-2 p-2 border-y border-r border-rich-black'>
-							Employee Name
+						<span className='col-span-3 py-1 text-center flex flex-col justify-center border-b border-r border-rich-black'>
+							<h1 className='truncate'>Employee Name</h1>
 						</span>
-						<span className='col-span-1 p-2 border-y border-r border-rich-black'>
-							Job
-						</span>
-						<span className='col-span-1 p-2 border-y border-rich-black'>
-							Tickets
+						<span className='col-span-1 py-1 text-center border-b border-rich-black flex flex-col justify-center'>
+							<h1 className='truncate'>Job</h1>
 						</span>
 					</div>
 					{React.Children.toArray(
@@ -53,15 +50,12 @@ const ProjectCard = (props) => {
 											props.project.employees.length -
 											iter
 										}>
-										<span className='p-2 border-r border-b border-rich-black col-span-2'>
+										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
 											{employee.first_name +
 												' ' +
 												employee.last_name}
 										</span>
-										<span className='p-2 border-r border-b border-rich-black col-span-1'>
-											{employee.role}
-										</span>
-										<span className='p-2 border-b border-rich-black col-span-1'>
+										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
@@ -74,15 +68,12 @@ const ProjectCard = (props) => {
 											iter
 										}
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
-										<span className='p-2 border-r border-b border-rich-black col-span-2'>
+										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
 											{employee.first_name +
 												' ' +
 												employee.last_name}
 										</span>
-										<span className='p-2 border-r border-b border-rich-black col-span-1'>
-											{employee.role}
-										</span>
-										<span className='p-2 border-b border-rich-black col-span-1'>
+										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
@@ -95,15 +86,6 @@ const ProjectCard = (props) => {
 		);
 	};
 
-	const listEmployees = (empArray) => {
-		let iter = empArray.length - 1;
-		React.Children.toArray(
-			empArray.map((employee) => {
-				return <h1>{employee.first_name}</h1>;
-			})
-		);
-	};
-
 	const openProjectPage = () => {
 		window.location.href = `/project/${props.project._id}`;
 		props.close();
@@ -111,19 +93,18 @@ const ProjectCard = (props) => {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	/*Actual return section */
-	
+
+	/* Actual render section */
+
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
 
 	if (props.project !== null) {
 		return (
 			<div className='h-full relative w-full grid grid-cols-4'>
-				<div className='h-80 col-span-4 relative w-full flex flex-row justify-between p-2'>
+				<div className='h-80 col-span-4 relative w-full flex flex-row justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>
 					{/* Project Information Section */}
-					<div className='h-full w-full grid grid-cols-4 bg-white-filled rounded text-rich-black mx-2'>
+					<div className='h-1/2 lg:h-full w-full grid grid-cols-4 bg-white-filled rounded text-rich-black mx-2'>
 						<h1 className='col-span-4 text-2xl text-center'>
 							{props.project.project_name}
 						</h1>
@@ -137,15 +118,22 @@ const ProjectCard = (props) => {
 					{/* Employee Table Section */}
 					{employeeGraph()}
 				</div>
-				<div className='h-64 col-span-2 relative w-full flex flex-row justify-between p-2'>
+				<div className='h-48 lg:h-80 col-span-2 flex flex-row justify-between p-2'>
 					<Doughnut
-						options={{ maintainAspectRatio: false }}
-						className='h-12 w-12'
+						options={{
+							maintainAspectRatio: false,
+							responsive: true,
+							aspectRatio: 1,
+						}}
 						data={chartExampleData}></Doughnut>
 				</div>
-				<div className='h-64 col-span-2 relative w-full flex flex-row justify-between p-2'>
+				<div className='h-48 lg:h-80 col-span-2 w-full flex flex-row justify-between p-2'>
 					<Doughnut
-						options={{ maintainAspectRatio: false }}
+						options={{
+							maintainAspectRatio: false,
+							responsive: true,
+							aspectRatio: 1,
+						}}
 						data={chartExampleData}></Doughnut>
 				</div>
 				<div className='col-span-3'>
@@ -157,7 +145,7 @@ const ProjectCard = (props) => {
 				</div>
 				<div className='col-span-1 flex justify-end'>
 					<common.ActionButton
-						type='submit'
+						type='info'
 						text='More Info'
 						extraClass='col-span-1'
 						click={openProjectPage}></common.ActionButton>
