@@ -56,26 +56,30 @@ const LoginComponent = () => {
 	};
 
 	return (
-		<div className='overflow-hidden overflow-x-hidden overscroll-contain h-full min-w-[101vw] bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
-			<div className='h-full table w-full align-middle'>
-				<form className='border-gray-500 rounded-md flex flex-wrap justify-center text-center bg-prime-color text-black mx-auto min-h-fit w-1/4 space-y-8'>
-					<h1 className='text-white text-3xl m-1 mt-12 mb-[-2rem] w-full'>
+		<div className='overflow-hidden overflow-y-hidden overflow-x-hidden overscroll-contain min-h-[102vh] h-full min-w-[101vw] bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
+			<div className='w-full h-full flex flex-col justify-center'>
+				<form className='border-gray-500 rounded-md grid grid-cols-5 text-center bg-prime-color text-black mx-auto min-h-fit w-3/4 sm:w-1/2 lg:w-2/5 xl:w-1/4 space-y-8'>
+					<h1 className='text-white text-3xl m-1 mt-12 w-full col-span-5'>
 						Login:
 					</h1>
-					<input
-						className='mx-4 h-12 w-60 border-none rounded-md pl-[5px] focus:outline-2 focus:outline-white-filled'
-						name='username'
-						placeholder='Username'
-						onChange={inputChanged}
-						value={formInput.username}></input>
-					<input
-						className='mx-4 h-12 w-60 border-none rounded-md pl-[5px] focus:outline-2 focus:outline-white-filled'
-						name='password'
-						type='password'
-						placeholder='Password'
-						onChange={inputChanged}
-						value={formInput.password}></input>
-					<h4 className='text-white basis-full mt-[-2.75rem]'>
+					<div className='col-span-5 flex justify-center'>
+						<input
+							className='mx-4 h-12 w-3/4 border-none rounded-md pl-2 focus:outline-2 focus:outline-white-filled'
+							name='username'
+							placeholder='Username'
+							onChange={inputChanged}
+							value={formInput.username}></input>
+					</div>
+					<div className='col-span-5 flex justify-center'>
+						<input
+							className='mx-4 h-12 w-3/4 border-none pl-2 rounded-md focus:outline-2 focus:outline-white-filled'
+							name='password'
+							type='password'
+							placeholder='Password'
+							onChange={inputChanged}
+							value={formInput.password}></input>
+					</div>
+					<h4 className='text-white col-span-5'>
 						Don't have an account? Register{' '}
 						<span
 							className='font-semibold underline hover:font-extrabold hover:text-carolina-blue cursor-pointer'
@@ -83,7 +87,7 @@ const LoginComponent = () => {
 							here
 						</span>
 					</h4>
-					<div className='w-36'>
+					<div className='col-span-5 pb-6 flex justify-center'>
 						<common.ActionButton
 							extraClass='h-10 basis-1/3'
 							loading={isLoading}
