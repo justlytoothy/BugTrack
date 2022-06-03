@@ -1,69 +1,68 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports.js'
-import { useForm } from 'react-hook-form'
-import { typeOptions, priorityOptions } from './optionArrays.js'
-import { newTicket } from './ticketSlice.js'
-import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-import { getSelectedProject } from '../projects/projectSlice.js'
+import React, { useEffect } from 'react';
+import common from '../../common/commonImports.js';
+import { useForm } from 'react-hook-form';
+import { typeOptions, priorityOptions } from './optionArrays.js';
+import { newTicket } from './ticketSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select';
+import { getSelectedProject } from '../projects/projectSlice.js';
 
 const NewTicketComponent = (props) => {
-	const dispatch = useDispatch()
-	const selectedProject = useSelector(getSelectedProject)
+	const dispatch = useDispatch();
+	const selectedProject = useSelector(getSelectedProject);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
-	let assignedEmployees = []
-	let ticketPriority = 0
+	} = useForm();
+	let assignedEmployees = [];
+	let ticketPriority = 0;
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = []
-				break
+				assignedEmployees = [];
+				break;
 			case 'select-option':
-				assignedEmployees = []
-				assignedEmployees.push(newValue._id)
-				break
+				assignedEmployees = [];
+				assignedEmployees.push(newValue._id);
+				break;
 			default:
-				break
+				break;
 		}
-	}
-	const onInputChangePriority = (newValue, actionMeta) => {}
+	};
+	const onInputChangePriority = (newValue, actionMeta) => {};
 	const onChangePriority = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				ticketPriority = 0
-				break
+				ticketPriority = 0;
+				break;
 			case 'select-option':
-				console.log(newValue)
-				ticketPriority = newValue.id
-				break
+				console.log(newValue);
+				ticketPriority = newValue.id;
+				break;
 			default:
-				break
+				break;
 		}
-	}
-	let ticketType = ''
-	const onInputChangeType = (newValue, actionMeta) => {}
+	};
+	let ticketType = '';
+	const onInputChangeType = (newValue, actionMeta) => {};
 	const onChangeType = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				ticketType = ''
-				break
+				ticketType = '';
+				break;
 			case 'select-option':
-				console.log(newValue.label)
-				ticketType = newValue.label
-				break
+				console.log(newValue.label);
+				ticketType = newValue.label;
+				break;
 			default:
-				break
+				break;
 		}
-	}
-	const onInputChange = (newValue, actionMeta) => {}
+	};
+	const onInputChange = (newValue, actionMeta) => {};
 	const submitMe = (data) => {
-		console.log(assignedEmployees)
+		console.log(assignedEmployees);
 		const ticket = {
-			
 			project_id: props.project_id,
 			ticket_name: data.ticket_name,
 			ticket_description: data.ticket_description,
@@ -73,13 +72,18 @@ const NewTicketComponent = (props) => {
 			ticket_priority: ticketPriority,
 			assigned_employees: assignedEmployees,
 			ticket_creator: '',
-		}
-		dispatch(newTicket(ticket))
-		props.close()
-	}
-	// const handleEmployeesChange = (data) => {
+		};
+		dispatch(newTicket(ticket));
+		props.close();
+	};
 
-	// }
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/*Actual return section */
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	return (
 		<div className='h-full w-full'>
@@ -171,7 +175,7 @@ const NewTicketComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-export default NewTicketComponent
+export default NewTicketComponent;

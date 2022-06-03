@@ -1,61 +1,62 @@
-import React, { useEffect, useState } from 'react'
-import { useOutletContext, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
+import React, { useEffect, useState } from 'react';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
 import {
 	refreshTicketStatus,
 	getTicket,
 	getSelectedTicket,
-} from './ticketSlice'
-import { newComment, refreshCommentStatus } from '../comments/commentSlice'
-import { CSSTransition } from 'react-transition-group'
-import common from '../../common/commonImports'
-import Modal from 'react-modal'
-import { displayPartsToString } from 'typescript'
+} from './ticketSlice';
+import { newComment, refreshCommentStatus } from '../comments/commentSlice';
+import { CSSTransition } from 'react-transition-group';
+import common from '../../common/commonImports';
+import Modal from 'react-modal';
+import { displayPartsToString } from 'typescript';
 
 const TicketDetails = (props) => {
-	const closeIt = useOutletContext()
-	const { id } = useParams()
-	const [showDetails, setShowDetails] = useState(false)
-	const [selectedComment, setSelectedComment] = useState()
-	const [modalIsOpen, setIsOpen] = useState(false)
-	const nodeRef = React.useRef(null)
+	const closeIt = useOutletContext();
+	const { id } = useParams();
+	const [showDetails, setShowDetails] = useState(false);
+	const [selectedComment, setSelectedComment] = useState();
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const nodeRef = React.useRef(null);
 
-	const dispatch = useDispatch()
-	const ticket = useSelector(getSelectedTicket)
-	const refreshTicket = useSelector(refreshTicketStatus)
-	const refreshComment = useSelector(refreshCommentStatus)
+	const dispatch = useDispatch();
+	const ticket = useSelector(getSelectedTicket);
+	const refreshTicket = useSelector(refreshTicketStatus);
+	const refreshComment = useSelector(refreshCommentStatus);
 	useEffect(() => {
-		dispatch(getTicket(id))
-		console.log(ticket)
-	}, [refreshTicket, refreshComment])
-	Modal.setAppElement('#root')
+		dispatch(getTicket(id));
+		console.log(ticket);
+	}, [refreshTicket, refreshComment]);
+	Modal.setAppElement('#root');
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
+	} = useForm();
 	const scrollMe = () => {
-		if (!nodeRef) return
+		if (!nodeRef) return;
 		// Get node coords from Ref
-		const node = nodeRef.current.getBoundingClientRect().top + window.scrollY
+		const node =
+			nodeRef.current.getBoundingClientRect().top + window.scrollY;
 
 		window.scroll({
 			top: node,
 			behavior: 'smooth',
-		})
-	}
+		});
+	};
 	const scrollMeFirst = () => {
-		nodeRef.current.scrollIntoView(true)
-	}
+		nodeRef.current.scrollIntoView(true);
+	};
 	const toTop = () => {
 		window.scroll({
 			top: 0,
 			left: 0,
 			behavior: 'smooth',
-		})
-	}
+		});
+	};
 
 	const listComments = () => {
 		return (
@@ -73,14 +74,16 @@ const TicketDetails = (props) => {
 				</div>
 				{React.Children.toArray(
 					ticket.ticket_comments.map((comment) => {
-						let iter = ticket.ticket_comments.length - 1
+						let iter = ticket.ticket_comments.length - 1;
 						if (iter !== 0) {
-							iter--
-							console.log(ticket.ticket_comments)
+							iter--;
+							console.log(ticket.ticket_comments);
 							return (
 								<div
 									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'
-									tabIndex={ticket.ticket_comments.length - iter}>
+									tabIndex={
+										ticket.ticket_comments.length - iter
+									}>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
 										{`${comment.creator.first_name} ${comment.creator.last_name}`}
 									</span>
@@ -92,11 +95,13 @@ const TicketDetails = (props) => {
 										{comment.created_at.slice(0, 10)}
 									</span>
 								</div>
-							)
+							);
 						} else {
 							return (
 								<div
-									tabIndex={ticket.ticket_comments.length - iter}
+									tabIndex={
+										ticket.ticket_comments.length - iter
+									}
 									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'>
 									<span className='p-2 border-r border-b border-rich-black col-span-2'>
 										{`${comment.creator.first_name} ${comment.creator.last_name}`}
@@ -109,18 +114,26 @@ const TicketDetails = (props) => {
 										{comment.created_at.slice(0, 10)}
 									</span>
 								</div>
-							)
+							);
 						}
 					})
 				)}
 			</div>
-		)
-	}
+		);
+	};
 
 	const submitMe = (message) => {
-		message.ticket_id = ticket._id
-		dispatch(newComment(message))
-	}
+		message.ticket_id = ticket._id;
+		dispatch(newComment(message));
+	};
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/*Actual return section */
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	if (Object.keys(ticket).length > 0) {
 		return (
@@ -159,7 +172,9 @@ const TicketDetails = (props) => {
 											extraClass='col-span-1 text-base h-fit'
 											text='Submit Ticket'
 											type='submit'
-											click={handleSubmit(submitMe)}></common.ActionButton>
+											click={handleSubmit(
+												submitMe
+											)}></common.ActionButton>
 									</div>
 								</div>
 							</div>
@@ -206,8 +221,7 @@ const TicketDetails = (props) => {
 						}}
 						unmountOnExit
 						classNames={{
-							enter:
-								'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
+							enter: 'scale-y-0 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 							enterActive:
 								'scale-y-100 duration-300 transition-all motion-reduce:transition-none transform origin-center',
 							enterDone:
@@ -239,14 +253,14 @@ const TicketDetails = (props) => {
 					</Modal>
 				</div>
 			</div>
-		)
+		);
 	} else {
 		return (
 			<div>
 				<common.Spinner></common.Spinner>
 			</div>
-		)
+		);
 	}
-}
+};
 
-export default TicketDetails
+export default TicketDetails;

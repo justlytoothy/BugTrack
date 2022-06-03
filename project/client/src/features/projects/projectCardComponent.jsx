@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports'
-import { Doughnut } from 'react-chartjs-2'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-ChartJS.register(ArcElement, Tooltip, Legend)
+import React, { useEffect } from 'react';
+import common from '../../common/commonImports';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ProjectCard = (props) => {
 	const chartExampleData = {
@@ -24,25 +24,100 @@ const ProjectCard = (props) => {
 				borderWidth: 1,
 			},
 		],
-	}
+	};
+
+	const employeeGraph = () => {
+		return (
+			<div className='h-full w-full flex flex-col bg-white-filled rounded text-rich-black p-1 mx-2'>
+				<div className='border-rich-black border overflow-scroll min-h-full max-h-full bg-white'>
+					<div className='grid grid-cols-4'>
+						<span className='col-span-2 p-2 border-y border-r border-rich-black'>
+							Employee Name
+						</span>
+						<span className='col-span-1 p-2 border-y border-r border-rich-black'>
+							Job
+						</span>
+						<span className='col-span-1 p-2 border-y border-rich-black'>
+							Tickets
+						</span>
+					</div>
+					{React.Children.toArray(
+						props.project.employees.map((employee) => {
+							let iter = props.project.employees.length - 1;
+							if (iter !== 0) {
+								iter--;
+								return (
+									<div
+										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
+										tabIndex={
+											props.project.employees.length -
+											iter
+										}>
+										<span className='p-2 border-r border-b border-rich-black col-span-2'>
+											{employee.first_name +
+												' ' +
+												employee.last_name}
+										</span>
+										<span className='p-2 border-r border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+										<span className='p-2 border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+									</div>
+								);
+							} else {
+								return (
+									<div
+										tabIndex={
+											props.project.employees.length -
+											iter
+										}
+										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
+										<span className='p-2 border-r border-b border-rich-black col-span-2'>
+											{employee.first_name +
+												' ' +
+												employee.last_name}
+										</span>
+										<span className='p-2 border-r border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+										<span className='p-2 border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+									</div>
+								);
+							}
+						})
+					)}
+				</div>
+			</div>
+		);
+	};
+
 	const listEmployees = (empArray) => {
-		let iter = empArray.length - 1
-		{
-			React.Children.toArray(
-				empArray.map((employee) => {
-					return <h1>{employee.first_name}</h1>
-				})
-			)
-		}
-	}
+		let iter = empArray.length - 1;
+		React.Children.toArray(
+			empArray.map((employee) => {
+				return <h1>{employee.first_name}</h1>;
+			})
+		);
+	};
 
 	const openProjectPage = () => {
-		window.location.href = `/project/${props.project._id}`
-		props.close()
-	}
-	// useEffect(() => {
-	// 	console.log('hello');
-	// }, []);
+		window.location.href = `/project/${props.project._id}`;
+		props.close();
+	};
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	/*Actual return section */
+	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
 	if (props.project !== null) {
 		return (
 			<div className='h-full relative w-full grid grid-cols-4'>
@@ -60,60 +135,7 @@ const ProjectCard = (props) => {
 						</h3>
 					</div>
 					{/* Employee Table Section */}
-					<div className='h-full w-full flex flex-col bg-white-filled rounded text-rich-black p-1 mx-2'>
-						<div className='border-rich-black border overflow-scroll min-h-full max-h-full bg-white'>
-							<div className='grid grid-cols-4'>
-								<span className='col-span-2 p-2 border-y border-r border-rich-black'>
-									Employee Name
-								</span>
-								<span className='col-span-1 p-2 border-y border-r border-rich-black'>
-									Job
-								</span>
-								<span className='col-span-1 p-2 border-y border-rich-black'>
-									Tickets
-								</span>
-							</div>
-							{React.Children.toArray(
-								props.project.employees.map((employee) => {
-									let iter = props.project.employees.length - 1
-									if (iter !== 0) {
-										iter--
-										return (
-											<div
-												className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-												tabIndex={props.project.employees.length - iter}>
-												<span className='p-2 border-r border-b border-rich-black col-span-2'>
-													{employee.first_name + ' ' + employee.last_name}
-												</span>
-												<span className='p-2 border-r border-b border-rich-black col-span-1'>
-													{employee.role}
-												</span>
-												<span className='p-2 border-b border-rich-black col-span-1'>
-													{employee.role}
-												</span>
-											</div>
-										)
-									} else {
-										return (
-											<div
-												tabIndex={props.project.employees.length - iter}
-												className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
-												<span className='p-2 border-r border-b border-rich-black col-span-2'>
-													{employee.first_name + ' ' + employee.last_name}
-												</span>
-												<span className='p-2 border-r border-b border-rich-black col-span-1'>
-													{employee.role}
-												</span>
-												<span className='p-2 border-b border-rich-black col-span-1'>
-													{employee.role}
-												</span>
-											</div>
-										)
-									}
-								})
-							)}
-						</div>
-					</div>
+					{employeeGraph()}
 				</div>
 				<div className='h-64 col-span-2 relative w-full flex flex-row justify-between p-2'>
 					<Doughnut
@@ -141,12 +163,12 @@ const ProjectCard = (props) => {
 						click={openProjectPage}></common.ActionButton>
 				</div>
 			</div>
-		)
+		);
 	} else {
-		;<div></div>
+		<div></div>;
 	}
-}
+};
 
-export default ProjectCard
+export default ProjectCard;
 
 // transition-all motion-reduce:transition-none transform origin-center duration-700 ' + cardClass()

@@ -1,11 +1,11 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { listAllUsers } from '../auth/authSlice'
-import common from '../../common/commonImports.js'
-import { Doughnut, Pie } from 'react-chartjs-2'
-import { useOutletContext } from 'react-router-dom'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-ChartJS.register(ArcElement, Tooltip, Legend)
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { listAllUsers } from '../auth/authSlice';
+import common from '../../common/commonImports.js';
+import { Doughnut, Pie } from 'react-chartjs-2';
+import { useOutletContext } from 'react-router-dom';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const chartExampleData = {
 	labels: ['Open', 'Closed', 'Failed'],
@@ -26,14 +26,23 @@ const chartExampleData = {
 			borderWidth: 1,
 		},
 	],
-}
+};
 const DashboardComponent = (props) => {
-	const dispatch = useDispatch()
-	const closeIt = useOutletContext()
+	const dispatch = useDispatch();
+	const closeIt = useOutletContext();
 
 	const getUser = () => {
-		const bruh = dispatch(listAllUsers())
-	}
+		const bruh = dispatch(listAllUsers());
+	};
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/*Actual return section */
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	return (
 		<div
 			className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
@@ -78,7 +87,7 @@ const DashboardComponent = (props) => {
 				</div>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default DashboardComponent
+export default DashboardComponent;
