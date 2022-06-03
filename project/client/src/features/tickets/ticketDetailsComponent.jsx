@@ -241,7 +241,11 @@ const TicketDetails = (props) => {
 			</div>
 		)
 	} else {
-		return <div className='animate-pulse'>Loading Ticket Info...</div>
+		return (
+			<div>
+				<common.Spinner></common.Spinner>
+			</div>
+		)
 	}
 }
 
