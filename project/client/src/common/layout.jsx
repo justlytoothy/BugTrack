@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
-import Sidebar from '../features/sidebar/sidebarComponent'
-import NavBar from './navbar'
-import { Outlet } from 'react-router-dom'
-import Footer from './footer'
+import React, { useState } from 'react';
+import Sidebar from '../features/sidebar/sidebarComponent';
+import NavBar from './navbar';
+import { Outlet } from 'react-router-dom';
+import Footer from './footer';
 const Layout = (props) => {
-	const [isOpen, setIsOpen] = useState(false)
+	const [isOpen, setIsOpen] = useState(false);
 	const openSidebar = () => {
-		setIsOpen(!isOpen)
-	}
+		setIsOpen(!isOpen);
+	};
+	const onlyOpen = () => {
+		setIsOpen(true);
+	};
 	const closeSidebar = () => {
-		setIsOpen(false)
-	}
+		setIsOpen(false);
+	};
 
 	return (
 		<div className='flex flex-col'>
@@ -18,7 +21,11 @@ const Layout = (props) => {
 				<NavBar openIt={openSidebar} />
 
 				<div className='flex flex-row min-h-full w-full'>
-					<Sidebar open={isOpen} closeIt={closeSidebar} />
+					<Sidebar
+						onlyOpen={onlyOpen}
+						open={isOpen}
+						closeIt={closeSidebar}
+					/>
 					<div className='p-8 w-full'>
 						<Outlet context={closeSidebar} />
 					</div>
@@ -26,7 +33,7 @@ const Layout = (props) => {
 				{/* <Footer /> */}
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default Layout
+export default Layout;

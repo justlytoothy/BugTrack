@@ -5,7 +5,7 @@ const NavBar = (props) => {
 	return (
 		<div className='text-white bg-navbar items-center text-2xl h-12 grid grid-cols-10'>
 			<common.FontAwesomeIcon
-				className='text-3xl pl-3 col-span-1 cursor-pointer'
+				className='text-3xl pl-3 col-span-1 cursor-pointer lg:hidden'
 				icon='bars'
 				onClick={props.openIt}
 			/>

@@ -57,19 +57,19 @@ const LoginComponent = () => {
 
 	return (
 		<div className='overflow-hidden overflow-x-hidden overscroll-contain h-full min-w-[101vw] bg-[url("./images/imageBG.jpeg")] bg-cover bg-[rgba(0, 0, 0, 0.288)] bg-blend-multiply absolute'>
-			<div className='h-full'>
-				<form className='border-gray-500 rounded-md flex flex-wrap justify-center text-center bg-prime-color text-black mx-auto my-[25vh] h-[40%] w-1/4'>
+			<div className='h-full table w-full align-middle'>
+				<form className='border-gray-500 rounded-md flex flex-wrap justify-center text-center bg-prime-color text-black mx-auto min-h-fit w-1/4 space-y-8'>
 					<h1 className='text-white text-3xl m-1 mt-12 mb-[-2rem] w-full'>
 						Login:
 					</h1>
 					<input
-						className='mx-4 h-12 w-[70%] border-none rounded-md mb-[-1rem] pl-[5px] focus:outline-2 focus:outline-white-filled'
+						className='mx-4 h-12 w-60 border-none rounded-md pl-[5px] focus:outline-2 focus:outline-white-filled'
 						name='username'
 						placeholder='Username'
 						onChange={inputChanged}
 						value={formInput.username}></input>
 					<input
-						className='mx-4 h-12 w-[70%] border-none rounded-md mt-[-1rem] pl-[5px] focus:outline-2 focus:outline-white-filled'
+						className='mx-4 h-12 w-60 border-none rounded-md pl-[5px] focus:outline-2 focus:outline-white-filled'
 						name='password'
 						type='password'
 						placeholder='Password'
@@ -83,18 +83,26 @@ const LoginComponent = () => {
 							here
 						</span>
 					</h4>
-					<common.ActionButton
-						extraClass='h-10 basis-1/3 mt-[-4rem]'
-						loading={isLoading}
-						click={submit}
-						text='Login'
-						type='submit'></common.ActionButton>
+					<div className='w-36'>
+						<common.ActionButton
+							extraClass='h-10 basis-1/3'
+							loading={isLoading}
+							click={submit}
+							text='Login'
+							type='submit'></common.ActionButton>
+					</div>
 					{errorMsg()}
 				</form>
 			</div>
 			<Modal
-				className='bg-midnight-blue text-white h-1/2 fixed w-[30vw] right-[35vw] left-[35vw] top-1/4 bottom-1/4'
-				overlayClassName=''
+				// className='bg-midnight-blue text-white h-1/2 fixed w-[30vw] right-[35vw] left-[35vw] top-1/4 bottom-1/4'
+				overlayClassName='fix-modal-overlay'
+				className='fix-modal'
+				style={{
+					content: {
+						WebkitOverflowScrolling: 'touch',
+					},
+				}}
 				isOpen={modalIsOpen}
 				onRequestClose={closeForm}
 				contentLabel='New User Form'>
