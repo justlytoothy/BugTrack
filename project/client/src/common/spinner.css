@@ -15,7 +15,7 @@
 	width: 7px;
 	height: 7px;
 	border-radius: 50%;
-	background: rgb(1 113 206 / var(--tw-bg-opacity));
+	background: rgb(1 113 206);
 	margin: -4px 0 0 -4px;
 }
 .lds-roller div:nth-child(1) {
@@ -122,7 +122,7 @@
 }
 .dots span {
 	font-size: 1.3rem;
-	color: rgb(1 113 206 / var(--tw-bg-opacity));
+	color: rgb(1 113 206);
 	animation: pulse 1.7s cubic-bezier(1, 0.3, 0.3, 1) infinite;
 	display: inline-block;
 }

@@ -20,7 +20,7 @@ module.exports = {
 				'midnight-blue': '#191970',
 				'white-filled': '#E0E0E0',
 				'gray-border': '#a4a3a3',
-				'back-color': '#f0fff0',
+				'back-color': '#ffffffff',
 				'navbar': '#7fa710',
 				'nav-hover': '#f2f3f4f5',
 				'sidebar': '#a71a10',
@@ -30,3 +30,5 @@ module.exports = {
 	},
 	plugins: [],
 };
+
+//'back-color': '#f0fff0',

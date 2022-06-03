@@ -5,8 +5,8 @@ export const priorityOptions = [
 ]
 
 export const typeOptions = [
-	{ option: 'Bug' },
-	{ option: 'Planned Feature' },
-	{ option: 'Suggestion' },
-	{ option: 'Complaint' },
+	{ label: 'Bug' },
+	{ label: 'Planned Feature' },
+	{ label: 'Suggestion' },
+	{ label: 'Complaint' },
 ]

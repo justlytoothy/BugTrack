@@ -52,8 +52,8 @@ const NewTicketComponent = (props) => {
 				ticketType = ''
 				break
 			case 'select-option':
-				console.log(newValue)
-				ticketType = newValue
+				console.log(newValue.label)
+				ticketType = newValue.label
 				break
 			default:
 				break
@@ -63,11 +63,12 @@ const NewTicketComponent = (props) => {
 	const submitMe = (data) => {
 		console.log(assignedEmployees)
 		const ticket = {
+			
 			project_id: props.project_id,
 			ticket_name: data.ticket_name,
 			ticket_description: data.ticket_description,
 			ticket_status: data.ticket_status,
-			ticket_type: data.ticket_type,
+			ticket_type: ticketType,
 			ticket_steps: data.ticket_steps,
 			ticket_priority: ticketPriority,
 			assigned_employees: assignedEmployees,
@@ -115,13 +116,13 @@ const NewTicketComponent = (props) => {
 					<Select
 						isSearchable
 						isClearable
-						defaultValue='Select Priority'
+						defaultValue='Select Type'
 						options={typeOptions}
-						getOptionLabel={(option) => option.option}
+						getOptionLabel={(option) => option.label}
 						name='type-select'
 						onInputChange={onInputChangeType}
 						onChange={onChangeType}
-						getOptionValue={(option) => option.option}
+						getOptionValue={(option) => option.label}
 					/>
 				</div>
 				<input
