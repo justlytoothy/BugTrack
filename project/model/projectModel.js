@@ -34,13 +34,14 @@ projectSchema.post('findOneAndDelete', (document) => {
 	const projId = document._id
 	userModel.find({ assigned_projects: { $in: [projId] } }).then((users) => {
 		Promise.all(
-			users.map((user) =>
-				userModel.findOneAndUpdate(
-					user._id,
-					{ $pull: { assigned_projects: projId } },
-					{ new: true }
-				)
-			)
+			users.map(async (user) => {
+				let thisUser = await userModel.findById(user._id)
+				let projIndex = thisUser.assigned_projects.indexOf(projId)
+				if (projIndex > -1) {
+					thisUser.assigned_projects.splice(projIndex, 1)
+				}
+				thisUser.save()
+			})
 		)
 	})
 })

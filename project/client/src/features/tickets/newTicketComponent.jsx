@@ -1,81 +1,95 @@
-import React, { useEffect } from 'react';
-import common from '../../common/commonImports.js';
-import { useForm } from 'react-hook-form';
-import { typeOptions, priorityOptions } from './optionArrays.js';
-import { newTicket } from './ticketSlice.js';
-import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { getSelectedProject } from '../projects/projectSlice.js';
+import React, { useEffect } from 'react'
+import common from '../../common/commonImports.js'
+import { useForm } from 'react-hook-form'
+import { typeOptions, priorityOptions, statusOptions } from './optionArrays.js'
+import { newTicket } from './ticketSlice.js'
+import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import { getSelectedProject } from '../projects/projectSlice.js'
 
 const NewTicketComponent = (props) => {
-	const dispatch = useDispatch();
-	const selectedProject = useSelector(getSelectedProject);
+	const dispatch = useDispatch()
+	const selectedProject = useSelector(getSelectedProject)
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
-	let assignedEmployees = [];
-	let ticketPriority = 0;
+	} = useForm()
+	let assignedEmployees = []
+	let ticketPriority = 0
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = [];
-				break;
+				assignedEmployees = []
+				break
 			case 'select-option':
-				assignedEmployees = [];
-				assignedEmployees.push(newValue._id);
-				break;
+				assignedEmployees = []
+				assignedEmployees.push(newValue._id)
+				break
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChangePriority = (newValue, actionMeta) => {};
+	}
+	const onInputChangePriority = (newValue, actionMeta) => {}
 	const onChangePriority = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				ticketPriority = 0;
-				break;
+				ticketPriority = 0
+				break
 			case 'select-option':
-				console.log(newValue);
-				ticketPriority = newValue.id;
-				break;
+				console.log(newValue)
+				ticketPriority = newValue.id
+				break
 			default:
-				break;
+				break
 		}
-	};
-	let ticketType = '';
-	const onInputChangeType = (newValue, actionMeta) => {};
+	}
+	let status = ''
+	const onInputChangeStatus = (newValue, actionMeta) => {}
+	const onChangeStatus = (newValue, actionMeta) => {
+		switch (actionMeta.action) {
+			case 'clear':
+				status = ''
+				break
+			case 'select-option':
+				console.log(newValue)
+				status = newValue.label
+				break
+			default:
+				break
+		}
+	}
+	let ticketType = ''
+	const onInputChangeType = (newValue, actionMeta) => {}
 	const onChangeType = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				ticketType = '';
-				break;
+				ticketType = ''
+				break
 			case 'select-option':
-				console.log(newValue.label);
-				ticketType = newValue.label;
-				break;
+				console.log(newValue.label)
+				ticketType = newValue.label
+				break
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChange = (newValue, actionMeta) => {};
+	}
+	const onInputChange = (newValue, actionMeta) => {}
 	const submitMe = (data) => {
-		console.log(assignedEmployees);
 		const ticket = {
 			project_id: props.project_id,
 			ticket_name: data.ticket_name,
 			ticket_description: data.ticket_description,
-			ticket_status: data.ticket_status,
+			ticket_status: status,
 			ticket_type: ticketType,
 			ticket_steps: data.ticket_steps,
 			ticket_priority: ticketPriority,
 			assigned_employees: assignedEmployees,
 			ticket_creator: '',
-		};
-		dispatch(newTicket(ticket));
-		props.close();
-	};
+		}
+		dispatch(newTicket(ticket))
+		props.close()
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -109,13 +123,19 @@ const NewTicketComponent = (props) => {
 					name='ticket_description'
 					{...register('ticket_description')}
 				/>
-				<input
-					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
-					type='text'
-					placeholder='Status of ticket'
-					name='ticket_status'
-					{...register('ticket_status')}
-				/>
+				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
+					<Select
+						isSearchable
+						isClearable
+						defaultValue='Select Status'
+						options={statusOptions}
+						getOptionLabel={(option) => option.label}
+						name='type-select'
+						onInputChange={onInputChangeStatus}
+						onChange={onChangeStatus}
+						getOptionValue={(option) => option.label}
+					/>
+				</div>
 				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
 					<Select
 						isSearchable
@@ -175,7 +195,7 @@ const NewTicketComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	);
-};
+	)
+}
 
-export default NewTicketComponent;
+export default NewTicketComponent

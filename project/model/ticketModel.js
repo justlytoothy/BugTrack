@@ -42,17 +42,30 @@ ticketSchema.post('findOneAndDelete', (document) => {
 			)
 		)
 	})
-	userModel.find({ tickets: { $in: [ticketId] } }).then((users) => {
-		Promise.all(
-			users.map((user) =>
-				userModel.findOneAndUpdate(
-					user._id,
-					{ $pull: { tickets: ticketId } },
-					{ new: true }
-				)
+
+	userModel
+		.find({
+			$or: [
+				{ created_tickets: { $in: [ticketId] } },
+				{ assigned_tickets: { $in: [ticketId] } },
+			],
+		})
+		.then((users) => {
+			Promise.all(
+				users.map(async (user) => {
+					let thisUser = await userModel.findById(user._id)
+					let createdIndex = thisUser.created_tickets.indexOf(ticketId)
+					let assignedIndex = thisUser.assigned_tickets.indexOf(ticketId)
+					if (createdIndex > -1) {
+						thisUser.created_tickets.splice(createdIndex, 1)
+					}
+					if (assignedIndex > -1) {
+						thisUser.assigned_tickets.splice(assignedIndex, 1)
+					}
+					thisUser.save()
+				})
 			)
-		)
-	})
+		})
 })
 
 const model = mongoose.model('Ticket', ticketSchema)

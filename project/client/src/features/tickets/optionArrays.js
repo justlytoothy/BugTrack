@@ -10,3 +10,9 @@ export const typeOptions = [
 	{ label: 'Suggestion' },
 	{ label: 'Complaint' },
 ]
+
+export const statusOptions = [
+	{ label: 'Open' },
+	{ label: 'Closed' },
+	{ label: 'On Hold' },
+]

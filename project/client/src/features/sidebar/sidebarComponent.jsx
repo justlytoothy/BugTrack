@@ -26,7 +26,6 @@ const Sidebar = (props, { defaultActive }) => {
 			handleResize();
 			onLoad++;
 		}
-		console.log('fired');
 		window.addEventListener('resize', handleResize);
 	});
 	let smallScreen = (

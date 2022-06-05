@@ -36,7 +36,7 @@ const newTicket = async (req, res) => {
 		project.save()
 		let data = await userModel.find({ _id: { $in: assigned_employees } })
 		data.forEach((emp) => {
-			emp.assigned_tickets.push(project._id)
+			emp.assigned_tickets.push(ticket._id)
 			emp.save()
 		})
 		return res.status(201).json(ticket)
@@ -49,11 +49,11 @@ const newTicket = async (req, res) => {
 const getAllProjectTickets = async (req, res) => {
 	let id = req.query[0]
 	const currProject = await projectModel.findById(id)
-	const assigned_tickets = currProject.assigned_tickets
+	const tickets = currProject.tickets
 	try {
 		const response = await ticketModel
 			.find({
-				_id: { $in: assigned_tickets },
+				_id: { $in: tickets },
 			})
 			.populate('comments')
 			.exec()
