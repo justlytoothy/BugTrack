@@ -25,12 +25,13 @@ body,
 	left: 50%;
 	transform: translate(-50%, -50%);
 
-	border: 0.5px solid whitesmoke;
+	border: 1px solid black;
 	background-color: white;
 	overflow: auto;
 	border-radius: 4px;
 	outline: none;
 	padding: 20px;
+	width: fit-content;
 }
 .fix-modal-overlay {
 	position: fixed;

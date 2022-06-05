@@ -18,6 +18,7 @@ const NewTicketComponent = (props) => {
 	let assignedEmployees = []
 	let ticketPriority = 0
 	const onChange = (newValue, actionMeta) => {
+		console.log(newValue, actionMeta)
 		switch (actionMeta.action) {
 			case 'clear':
 				assignedEmployees = []
@@ -26,6 +27,7 @@ const NewTicketComponent = (props) => {
 				assignedEmployees = []
 				assignedEmployees.push(newValue._id)
 				break
+
 			default:
 				break
 		}
