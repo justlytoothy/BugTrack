@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import common from '../../common/commonImports';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-ChartJS.register(ArcElement, Tooltip, Legend);
+import React, { useEffect } from 'react'
+import common from '../../common/commonImports'
+import { Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const ProjectCard = (props) => {
 	const chartExampleData = {
@@ -24,7 +24,7 @@ const ProjectCard = (props) => {
 				borderWidth: 1,
 			},
 		],
-	};
+	}
 
 	const employeeGraph = () => {
 		return (
@@ -40,56 +40,46 @@ const ProjectCard = (props) => {
 					</div>
 					{React.Children.toArray(
 						props.project.employees.map((employee) => {
-							let iter = props.project.employees.length - 1;
+							let iter = props.project.employees.length - 1
 							if (iter !== 0) {
-								iter--;
+								iter--
 								return (
 									<div
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-										tabIndex={
-											props.project.employees.length -
-											iter
-										}>
+										tabIndex={props.project.employees.length - iter}>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name +
-												' ' +
-												employee.last_name}
+											{employee.first_name + ' ' + employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								);
+								)
 							} else {
 								return (
 									<div
-										tabIndex={
-											props.project.employees.length -
-											iter
-										}
+										tabIndex={props.project.employees.length - iter}
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name +
-												' ' +
-												employee.last_name}
+											{employee.first_name + ' ' + employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								);
+								)
 							}
 						})
 					)}
 				</div>
 			</div>
-		);
-	};
+		)
+	}
 
 	const openProjectPage = () => {
-		window.location.href = `/project/${props.project._id}`;
-		props.close();
-	};
+		window.location.href = `/project/${props.project._id}`
+		props.close()
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,17 +136,22 @@ const ProjectCard = (props) => {
 				<div className='col-span-1 flex justify-end'>
 					<common.ActionButton
 						type='info'
+						text='Edit Project'
+						extraClass='col-span-1'
+						click={props.editProject}></common.ActionButton>
+					<common.ActionButton
+						type='info'
 						text='More Info'
 						extraClass='col-span-1'
 						click={openProjectPage}></common.ActionButton>
 				</div>
 			</div>
-		);
+		)
 	} else {
-		<div></div>;
+		;<div></div>
 	}
-};
+}
 
-export default ProjectCard;
+export default ProjectCard
 
 // transition-all motion-reduce:transition-none transform origin-center duration-700 ' + cardClass()

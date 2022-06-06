@@ -6,6 +6,7 @@ import { useOutletContext } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import ProjectCard from './projectCardComponent.jsx'
 import { CSSTransition } from 'react-transition-group'
+import EditProjectComponent from './editProjectComponent.jsx'
 import {
 	deleteProject,
 	getAllProjects,
@@ -21,6 +22,7 @@ const ProjectsComponent = (props) => {
 	const [showDetails, setShowDetails] = useState(false)
 	const dispatch = useDispatch()
 	const [modalIsOpen, setIsOpen] = useState(false)
+	const [editIsOpen, setEditIsOpen] = useState(false)
 	const nodeRef = React.useRef(null)
 
 	const scrollMe = () => {
@@ -53,6 +55,12 @@ const ProjectsComponent = (props) => {
 	}
 	const closeForm = () => {
 		setIsOpen(false)
+	}
+	const openEditForm = () => {
+		setEditIsOpen(true)
+	}
+	const closeEditForm = () => {
+		setEditIsOpen(false)
 	}
 	const openDetails = () => {
 		setShowDetails(true)
@@ -237,6 +245,7 @@ const ProjectsComponent = (props) => {
 						className='col-span-8 m-2 p-2 flex justify-center border-2 rounded h-fit border-rich-black text-xs sm:text-base lg:text-xl'>
 						<ProjectCard
 							project={selectedProject}
+							editProject={openEditForm}
 							show={showDetails}
 							close={closeDetailsScroll}></ProjectCard>
 					</div>
@@ -254,6 +263,21 @@ const ProjectsComponent = (props) => {
 				onRequestClose={closeForm}
 				contentLabel='New Project Form'>
 				<NewProjectComponent close={closeForm}></NewProjectComponent>
+			</Modal>
+			<Modal
+				overlayClassName='fix-modal-overlay'
+				className='fix-modal'
+				style={{
+					content: {
+						WebkitOverflowScrolling: 'touch',
+					},
+				}}
+				isOpen={editIsOpen}
+				onRequestClose={closeEditForm}
+				contentLabel='Edit Project'>
+				<EditProjectComponent
+					project={selectedProject}
+					close={closeEditForm}></EditProjectComponent>
 			</Modal>
 		</div>
 	)
