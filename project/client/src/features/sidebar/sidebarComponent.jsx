@@ -2,16 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import SidebarItems from './sidebarItems';
 import { useDispatch } from 'react-redux';
-import { logoutUser } from '../auth/authSlice';
 import { CSSTransition } from 'react-transition-group';
 
 const Sidebar = (props, { defaultActive }) => {
 	const dispatch = useDispatch();
 	const [isBig, setIsBig] = useState(false);
 	let width = window.innerWidth;
-	function logout() {
-		dispatch(logoutUser());
-	}
+
 	let onLoad = 0;
 	const nodeRef = React.useRef(null);
 	useEffect(() => {
@@ -63,11 +60,6 @@ const Sidebar = (props, { defaultActive }) => {
 						</NavLink>
 					);
 				})}
-				<h1
-					onClick={logout}
-					className='hover:bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'>
-					Logout
-				</h1>
 			</div>
 		</CSSTransition>
 	);
@@ -90,11 +82,6 @@ const Sidebar = (props, { defaultActive }) => {
 					</NavLink>
 				);
 			})}
-			<h1
-				onClick={logout}
-				className='hover:bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'>
-				Logout
-			</h1>
 		</div>
 	);
 

@@ -3,7 +3,7 @@ import common from './commonImports';
 import { useOutletContext } from 'react-router-dom';
 
 const ErrorPageComponent = () => {
-	const closeIt = useOutletContext();
+	const { closeIt } = useOutletContext();
 
 	return (
 		<div

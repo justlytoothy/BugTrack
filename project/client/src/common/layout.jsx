@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from './footer';
 const Layout = (props) => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
 	const openSidebar = () => {
 		setIsOpen(!isOpen);
 	};
@@ -12,13 +13,16 @@ const Layout = (props) => {
 		setIsOpen(true);
 	};
 	const closeSidebar = () => {
-		setIsOpen(false);
+		if (isOpen) {
+			setIsOpen(false);
+		}
+		setDropdownIsOpen(!dropdownIsOpen);
 	};
 
 	return (
 		<div className='flex flex-col min-h-full min-w-full'>
 			<div className='flex flex-col min-w-full min-h-full'>
-				<NavBar openIt={openSidebar} />
+				<NavBar closeDropdown={dropdownIsOpen} openIt={openSidebar} />
 
 				<div className='flex flex-row min-h-full w-full'>
 					<Sidebar
