@@ -1,11 +1,26 @@
 import React from 'react';
 import { FontAwesome } from './commonImports.js';
-
+import './spinner.css';
 const ActionButton = (props) => {
 	let content = '';
 	let text = props.text;
 	if (props.loading) {
-		text = '';
+		text = (
+			<div>
+				<div className='text-base dots'>
+					<span>L</span>
+					<span>o</span>
+					<span>a</span>
+					<span>d</span>
+					<span>i</span>
+					<span>n</span>
+					<span>g</span>
+					<span>.</span>
+					<span>.</span>
+					<span>.</span>
+				</div>
+			</div>
+		);
 	}
 	switch (props.type) {
 		case 'submit':

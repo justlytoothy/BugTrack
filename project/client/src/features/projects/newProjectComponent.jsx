@@ -1,67 +1,69 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports.js'
-import { useForm } from 'react-hook-form'
-import { newProject } from './projectSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { listAllUsers, getAllUsers } from '../auth/authSlice.js'
-import makeAnimated from 'react-select/animated'
+import React, { useEffect, useState } from 'react';
+import common from '../../common/commonImports.js';
+import { useForm } from 'react-hook-form';
+import { newProject } from './projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { listAllUsers, getAllUsers } from '../auth/authSlice.js';
+import makeAnimated from 'react-select/animated';
 
-import Select from 'react-select'
+import Select from 'react-select';
 
 const NewProjectComponent = (props) => {
-	const dispatch = useDispatch()
-	const user = JSON.parse(sessionStorage.getItem('user'))
-	let employees = []
-	employees.push(user._id)
+	const dispatch = useDispatch();
+	const user = JSON.parse(sessionStorage.getItem('user'));
+	const [assignedEmployees, setAssignedEmployees] = useState([]);
+	const [count, setCount] = useState(0);
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
-	const animatedComponents = makeAnimated()
+	} = useForm();
+	const animatedComponents = makeAnimated();
 
-	const allEmployees = useSelector(getAllUsers)
+	const allEmployees = useSelector(getAllUsers);
 
 	useEffect(() => {
-		dispatch(listAllUsers()).then(console.log(allEmployees))
-	}, [])
+		dispatch(listAllUsers());
+	}, []);
 
 	const submitMe = (data) => {
-		data.createdBy = user._id
-		data.employees = assignedEmployees
-		dispatch(newProject(data))
-		props.close()
-	}
-	let assignedEmployees = []
+		data.createdBy = user._id;
+		data.employees = assignedEmployees;
+		dispatch(newProject(data));
+		props.close();
+	};
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = []
-				break
+				setAssignedEmployees([]);
+				break;
 			case 'select-option':
-				assignedEmployees = []
-				assignedEmployees = newValue
-				break
+				setAssignedEmployees(newValue);
+				break;
 			case 'remove-value':
-				assignedEmployees = []
-				assignedEmployees = newValue
-				break
+				setAssignedEmployees(newValue);
+				break;
 			default:
-				break
+				break;
 		}
-	}
+	};
+
 	const currentEmployee = () => {
-		let foundEmployee = ''
+		let foundEmployee = '';
 		allEmployees.forEach((emp) => {
 			if (emp._id === user._id) {
-				foundEmployee = emp
+				foundEmployee = emp;
 			}
-		})
-		let index = allEmployees.indexOf(foundEmployee)
-		assignedEmployees.push(allEmployees[index])
-		return index
-	}
-	const onInputChange = (newValue, actionMeta) => {}
+		});
+		let index = allEmployees.indexOf(foundEmployee);
+		if (count < 1) {
+			setAssignedEmployees([allEmployees[index]]);
+			setCount(47);
+		}
+		return index;
+	};
+	const onInputChange = (newValue, actionMeta) => {};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -124,7 +126,7 @@ const NewProjectComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-export default NewProjectComponent
+export default NewProjectComponent;
