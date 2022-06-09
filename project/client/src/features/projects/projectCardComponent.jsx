@@ -118,9 +118,9 @@ const ProjectCard = (props) => {
 					</h1>
 				</div>
 				<div className='col-span-4 grid grid-cols-4 border border-rich-black rounded p-2'>
-					<div className='h-full col-span-4 relative w-full flex justify-between flex-wrap p-2 space-y-2'>
+					<div className='h-80 col-span-4 relative w-full flex justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>
 						{/* Project Information Section */}
-						<div className='h-fit max-h-[50%] border border-rich-black rounded text-rich-black mx-2 w-full overflow-scroll p-1'>
+						<div className='h-1/2 lg:h-full border border-rich-black rounded text-rich-black mx-2 w-full overflow-scroll p-1'>
 							<h3 className='text-base'>
 								{props.project.project_description}
 							</h3>
@@ -128,7 +128,7 @@ const ProjectCard = (props) => {
 						{/* Employee Table Section */}
 						{employeeGraph()}
 					</div>
-					<div className='max-h-[12rem] lg:max-h-[20rem] col-span-2 flex flex-row justify-between p-2'>
+					<div className='h-48 lg:h-80 col-span-2 flex flex-row justify-between p-2'>
 						<Doughnut
 							options={{
 								maintainAspectRatio: false,
@@ -137,7 +137,7 @@ const ProjectCard = (props) => {
 							}}
 							data={chartExampleData}></Doughnut>
 					</div>
-					<div className='max-h-[12rem] lg:max-h-[20rem] col-span-2 w-full flex flex-row justify-between p-2'>
+					<div className='h-48 lg:h-80 col-span-2 w-full flex flex-row justify-between p-2'>
 						<Doughnut
 							options={{
 								maintainAspectRatio: false,
