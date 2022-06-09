@@ -44,7 +44,7 @@ const Sidebar = (props, { defaultActive }) => {
 			nodeRef={nodeRef}>
 			<div
 				ref={nodeRef}
-				className='bg-sidebar w-64 min-h-full flex flex-col z-50 transition-all motion-reduce:transition-none origin-left duration-300'>
+				className='bg-sidebar-color w-64 min-h-full flex flex-col z-50 transition-all motion-reduce:transition-none origin-left duration-300'>
 				{SidebarItems.map((item, index) => {
 					return (
 						<NavLink
@@ -66,7 +66,7 @@ const Sidebar = (props, { defaultActive }) => {
 	let bigScreen = (
 		<div
 			ref={nodeRef}
-			className='bg-sidebar w-64 min-h-full flex flex-col z-50 scale-x-100'>
+			className='bg-sidebar-color w-64 min-h-full flex flex-col z-50 scale-x-100'>
 			{SidebarItems.map((item, index) => {
 				return (
 					<NavLink

@@ -84,14 +84,14 @@ const ProjectsComponentNew = (props) => {
 		let iter = projectArray.length - 1;
 		return (
 			<div className='overflow-scroll max-h-[700px] min-h-[700px] border-4 border-carolina-blue w-[95%] mx-auto'>
-				<div className='grid grid-cols-7 text-dark-heading font-bold border-gray-border whitespace-nowrap'>
-					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
+				<div className='grid grid-cols-7 text-rich-black font-semibold text-lg border-gray-border whitespace-nowrap'>
+					<span className='col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Project Name
 					</span>
-					<span className='items-center flex justify-between col-span-3 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
+					<span className='col-span-3 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
 						Assigned Employees
 					</span>
-					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
+					<span className='col-span-2 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
 						Project Description
 					</span>
 				</div>
@@ -151,7 +151,7 @@ const ProjectsComponentNew = (props) => {
 		<div
 			className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
 			onClick={closeIt}>
-			<div className='w-full min-h-[7%] py-4 flex justify-center content-center text-lg lg:text-3xl font-semibold'>
+			<div className='w-full min-h-[7%] py-4 flex justify-center content-center text-2xl lg:text-3xl font-semibold'>
 				<span className='self-center'>Projects</span>
 			</div>
 			<div className='w-full min-h-[93%] grid grid-cols-8 pb-4'>

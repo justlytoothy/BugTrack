@@ -32,6 +32,7 @@ body,
 	outline: none;
 	padding: 20px;
 	width: fit-content;
+	z-index: 50;
 }
 .fix-modal-overlay {
 	position: fixed;
@@ -40,4 +41,5 @@ body,
 	right: 0;
 	bottom: 0;
 	background-color: transparent;
+	z-index: 50;
 }

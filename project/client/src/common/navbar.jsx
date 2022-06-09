@@ -28,30 +28,38 @@ const NavBar = (props) => {
 		dispatch(logoutUser());
 	}
 	return (
-		<div className='text-white bg-navbar items-center text-lg md:text-xl h-12 flex justify-between px-4'>
+		<div className='text-white bg-navbar-color items-center text-lg md:text-xl h-12 flex justify-between px-4 -mr-2'>
 			<common.FontAwesomeIcon
 				className='text-2xl md:text-3xl cursor-pointer lg:invisible'
 				icon='bars'
 				onClick={props.openIt}
 			/>
 			<div>
-				<div className='flex justify-between w-48 items-center'>
-					<div className='flex flex-col justify-center'>
-						<common.FontAwesomeIcon
-							className='text-2xl md:text-3xl cursor-pointer'
-							icon='fa-regular fa-circle-user'
-							onClick={toggleOpenDropdown}
-						/>
-					</div>
+				<div className='flex justify-end w-fit items-center'>
 					<div
-						className='flex space-x-4 cursor-pointer'
+						className='flex space-x-3 cursor-pointer'
 						onClick={toggleOpenDropdown}>
-						<span>{fullName}</span>
+						<div className='flex flex-col justify-center'>
+							<common.FontAwesomeIcon
+								className='text-2xl md:text-3xl cursor-pointer hidden sm:block'
+								icon='fa-regular fa-circle-user'
+								onClick={toggleOpenDropdown}
+							/>
+						</div>
+						<span className='hidden sm:block'>{fullName}</span>
+						<span className='sm:hidden'>
+							<div className='flex flex-col justify-center'>
+								<common.FontAwesomeIcon
+									className='text-2xl md:text-3xl cursor-pointer'
+									icon='fa-regular fa-circle-user'
+									onClick={toggleOpenDropdown}
+								/>
+							</div>
+						</span>
 						<div className='flex flex-col justify-center'>
 							<common.FontAwesomeIcon
 								className={
-									'text-lg md:text-xl transition-all ' +
-									getCaretClass()
+									'text-xl transition-all ' + getCaretClass()
 								}
 								icon='caret-left'
 							/>
@@ -76,8 +84,8 @@ const NavBar = (props) => {
 					nodeRef={nodeRef}>
 					<div
 						ref={nodeRef}
-						className='bg-sidebar border-[0.07rem] border-rich-black ml-5 h-fit w-44 absolute top-12 transition-all origin-top'>
-						<ul className=''>
+						className='bg-sidebar-color border-[0.07rem] border-rich-black md:ml-2 h-fit sm:w-44 absolute top-12 transition-all origin-top rounded-t-none rounded-b-md'>
+						<ul className='text-center sm:text-left'>
 							<li className='cursor-pointer hover:bg-sidebar-button hover:text-white py-1 px-1'>
 								This option
 							</li>
@@ -87,7 +95,10 @@ const NavBar = (props) => {
 							<li
 								onClick={logout}
 								className='cursor-pointer hover:bg-sidebar-button hover:text-white py-1 px-1'>
-								Log Out
+								<p className='hidden sm:block'>Log Out</p>
+								<common.FontAwesomeIcon
+									icon='fa-arrow-right-from-bracket'
+									className='cursor-pointer text-2xl md:text-3xl sm:hidden hover:bg-sidebar-button hover:text-white px-1'></common.FontAwesomeIcon>
 							</li>
 						</ul>
 					</div>
