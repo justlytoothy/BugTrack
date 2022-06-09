@@ -83,7 +83,7 @@ const ProjectsComponentNew = (props) => {
 	const listProjects = () => {
 		let iter = projectArray.length - 1;
 		return (
-			<div className='overflow-scroll max-h-[700px] min-h-[700px] border-4 border-carolina-blue w-[95%] mx-auto'>
+			<div className='overflow-scroll min-h-[58rem] max-h-[58rem] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-rich-black font-semibold text-lg border-gray-border whitespace-nowrap'>
 					<span className='col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Project Name
@@ -149,33 +149,37 @@ const ProjectsComponentNew = (props) => {
 
 	return (
 		<div
-			className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
+			className='bg-back-color w-full grid grid-cols-2 min-h-full rounded border-2 border-rich-black'
 			onClick={closeIt}>
-			<div className='w-full min-h-[7%] py-4 flex justify-center content-center text-2xl lg:text-3xl font-semibold'>
-				<span className='self-center'>Projects</span>
-			</div>
-			<div className='w-full min-h-[93%] grid grid-cols-8 pb-4'>
-				<div className='col-span-8 text-xl'>{listProjects()}</div>
-				<div className='col-span-8 items-center text-xl'>
-					<span className='items-center py-2 ml-6 mr-6 h-fit flex justify-between'>
-						<common.ActionButton
-							text={
-								<div>
-									New Project &nbsp;
-									<common.FontAwesomeIcon
-										className='text-midnight-blue text-xl'
-										icon='fa-solid fa-square-plus'
-									/>
-								</div>
-							}
-							type='submit'
-							click={openForm}
-							extraClass=''></common.ActionButton>
-						<common.ActionButton
-							text='Delete Project'
-							click={deleteOne}
-							type='delete'></common.ActionButton>
-					</span>
+			<div className='col-span-2 h-full'>
+				<div className='w-full flex justify-center content-center text-2xl lg:text-3xl font-semibold col-span-2'>
+					<span className='self-center'>Projects</span>
+				</div>
+				<div className='w-full min-h-full grid grid-cols-8'>
+					<div className='col-span-8 text-xl'>
+						{listProjects()}
+						<div className='text-xl flex flex-col justify-end pt-2'>
+							<span className='ml-6 mr-6 h-fit flex justify-between'>
+								<common.ActionButton
+									text={
+										<div>
+											New Project &nbsp;
+											<common.FontAwesomeIcon
+												className='text-midnight-blue text-xl'
+												icon='fa-solid fa-square-plus'
+											/>
+										</div>
+									}
+									type='submit'
+									click={openForm}
+									extraClass=''></common.ActionButton>
+								<common.ActionButton
+									text='Delete Project'
+									click={deleteOne}
+									type='delete'></common.ActionButton>
+							</span>
+						</div>
+					</div>
 				</div>
 			</div>
 			<Modal

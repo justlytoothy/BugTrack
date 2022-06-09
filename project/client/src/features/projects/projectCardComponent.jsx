@@ -118,17 +118,17 @@ const ProjectCard = (props) => {
 					</h1>
 				</div>
 				<div className='col-span-4 grid grid-cols-4 border border-rich-black rounded p-2'>
-					<div className='h-80 col-span-4 relative w-full flex justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>
+					<div className='h-full col-span-4 relative w-full flex justify-between flex-wrap p-2 space-y-2'>
 						{/* Project Information Section */}
-						<div className='h-1/2 lg:h-full border border-rich-black rounded text-rich-black mx-2 w-full overflow-scroll p-1'>
-							<h3 className='text-xl'>
+						<div className='h-fit max-h-[50%] border border-rich-black rounded text-rich-black mx-2 w-full overflow-scroll p-1'>
+							<h3 className='text-base'>
 								{props.project.project_description}
 							</h3>
 						</div>
 						{/* Employee Table Section */}
 						{employeeGraph()}
 					</div>
-					<div className='h-48 lg:h-80 col-span-2 flex flex-row justify-between p-2'>
+					<div className='max-h-[12rem] lg:max-h-[20rem] col-span-2 flex flex-row justify-between p-2'>
 						<Doughnut
 							options={{
 								maintainAspectRatio: false,
@@ -137,7 +137,7 @@ const ProjectCard = (props) => {
 							}}
 							data={chartExampleData}></Doughnut>
 					</div>
-					<div className='h-48 lg:h-80 col-span-2 w-full flex flex-row justify-between p-2'>
+					<div className='max-h-[12rem] lg:max-h-[20rem] col-span-2 w-full flex flex-row justify-between p-2'>
 						<Doughnut
 							options={{
 								maintainAspectRatio: false,
@@ -146,25 +146,25 @@ const ProjectCard = (props) => {
 							}}
 							data={chartExampleData}></Doughnut>
 					</div>
-					<div className='col-span-3'>
-						<common.ActionButton
-							type='cancel'
-							text='Close'
-							extraClass='col-span-1'
-							click={props.close}></common.ActionButton>
-					</div>
-					<div className='col-span-1 flex justify-end'>
-						<common.ActionButton
-							type='info'
-							text='Edit Project'
-							extraClass='col-span-1'
-							click={props.editProject}></common.ActionButton>
-						<common.ActionButton
-							type='info'
-							text='More Info'
-							extraClass='col-span-1'
-							click={openProjectPage}></common.ActionButton>
-					</div>
+				</div>
+				<div className='col-span-3 ml-[-1rem] mt-1'>
+					<common.ActionButton
+						type='cancel'
+						text='Close'
+						extraClass='col-span-1'
+						click={props.close}></common.ActionButton>
+				</div>
+				<div className='col-span-1 flex justify-end mr-[-1rem] mt-1'>
+					<common.ActionButton
+						type='info'
+						text='Edit Project'
+						extraClass='col-span-1'
+						click={props.editProject}></common.ActionButton>
+					<common.ActionButton
+						type='info'
+						text='More Info'
+						extraClass='col-span-1'
+						click={openProjectPage}></common.ActionButton>
 				</div>
 			</div>
 		);

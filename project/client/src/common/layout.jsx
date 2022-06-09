@@ -20,11 +20,16 @@ const Layout = (props) => {
 	};
 
 	return (
-		<div className='flex flex-col min-h-full min-w-full'>
-			<div className='flex flex-col min-w-full min-h-full'>
-				<NavBar closeDropdown={dropdownIsOpen} openIt={openSidebar} />
+		<div className='flex flex-col'>
+			<div className='grid grid-cols-2'>
+				<div className='col-span-2'>
+					<NavBar
+						closeDropdown={dropdownIsOpen}
+						openIt={openSidebar}
+					/>
+				</div>
 
-				<div className='flex flex-row min-h-full w-full'>
+				<div className='flex flex-row min-h-[98vh] w-full col-span-2'>
 					<Sidebar
 						onlyOpen={onlyOpen}
 						open={isOpen}
@@ -33,6 +38,9 @@ const Layout = (props) => {
 					<div className='p-8 w-full min-h-full'>
 						<Outlet context={closeSidebar} />
 					</div>
+				</div>
+				<div className='col-span-2'>
+					<Footer />
 				</div>
 				{/* <Footer /> */}
 			</div>
