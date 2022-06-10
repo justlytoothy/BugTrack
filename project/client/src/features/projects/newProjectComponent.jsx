@@ -5,6 +5,7 @@ import { newProject } from './projectSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAllUsers, getAllUsers } from '../auth/authSlice.js';
 import makeAnimated from 'react-select/animated';
+import TextareaAutosize from 'react-textarea-autosize';
 
 import Select from 'react-select';
 
@@ -89,9 +90,10 @@ const NewProjectComponent = (props) => {
 					name='projName'
 					{...register('projName')}
 				/>
-				<textarea
+				<TextareaAutosize
 					className='h-48 col-span-8 pl-2 m-2 text-lg border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black resize-none'
-					rows={4}
+					minRows={4}
+					maxRows={9}
 					placeholder='Description of project'
 					name='projDesc'
 					{...register('projDesc')}

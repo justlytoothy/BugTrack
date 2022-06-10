@@ -1,67 +1,68 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports.js'
-import { useForm } from 'react-hook-form'
-import { newProject } from './projectSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { listAllUsers, getAllUsers } from '../auth/authSlice.js'
-import makeAnimated from 'react-select/animated'
+import React, { useEffect } from 'react';
+import common from '../../common/commonImports.js';
+import { useForm } from 'react-hook-form';
+import { newProject } from './projectSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { listAllUsers, getAllUsers } from '../auth/authSlice.js';
+import makeAnimated from 'react-select/animated';
+import TextareaAutosize from 'react-textarea-autosize';
 
-import Select from 'react-select'
+import Select from 'react-select';
 
 const EditProjectComponent = (props) => {
-	const dispatch = useDispatch()
-	const user = JSON.parse(sessionStorage.getItem('user'))
-	let employees = []
-	employees.push(user._id)
+	const dispatch = useDispatch();
+	const user = JSON.parse(sessionStorage.getItem('user'));
+	let employees = [];
+	employees.push(user._id);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
-	const animatedComponents = makeAnimated()
+	} = useForm();
+	const animatedComponents = makeAnimated();
 
-	const allEmployees = useSelector(getAllUsers)
+	const allEmployees = useSelector(getAllUsers);
 
 	useEffect(() => {
-		dispatch(listAllUsers())
-	}, [])
+		dispatch(listAllUsers());
+	}, []);
 
 	const submitMe = (data) => {
-		data.createdBy = user._id
-		data.employees = assignedEmployees
-		dispatch(newProject(data))
-		props.close()
-	}
-	let assignedEmployees = []
+		data.createdBy = user._id;
+		data.employees = assignedEmployees;
+		dispatch(newProject(data));
+		props.close();
+	};
+	let assignedEmployees = [];
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = []
-				break
+				assignedEmployees = [];
+				break;
 			case 'select-option':
-				assignedEmployees = []
-				assignedEmployees = newValue
-				break
+				assignedEmployees = [];
+				assignedEmployees = newValue;
+				break;
 			case 'remove-value':
-				assignedEmployees = []
-				assignedEmployees = newValue
-				break
+				assignedEmployees = [];
+				assignedEmployees = newValue;
+				break;
 			default:
-				break
+				break;
 		}
-	}
+	};
 	const currentEmployee = () => {
-		let foundEmployee = ''
+		let foundEmployee = '';
 		allEmployees.forEach((emp) => {
 			if (emp._id === user._id) {
-				foundEmployee = emp
+				foundEmployee = emp;
 			}
-		})
-		let index = allEmployees.indexOf(foundEmployee)
-		assignedEmployees.push(allEmployees[index])
-		return index
-	}
-	const onInputChange = (newValue, actionMeta) => {}
+		});
+		let index = allEmployees.indexOf(foundEmployee);
+		assignedEmployees.push(allEmployees[index]);
+		return index;
+	};
+	const onInputChange = (newValue, actionMeta) => {};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,9 +88,10 @@ const EditProjectComponent = (props) => {
 					name='projName'
 					{...register('projName')}
 				/>
-				<textarea
+				<TextareaAutosize
 					className='h-48 col-span-8 pl-2 m-2 text-lg border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black resize-none'
-					rows={4}
+					minRows={4}
+					maxRows={9}
 					placeholder='Description of project'
 					name='projDesc'
 					{...register('projDesc')}
@@ -124,7 +126,7 @@ const EditProjectComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-export default EditProjectComponent
+export default EditProjectComponent;

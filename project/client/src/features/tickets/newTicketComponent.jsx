@@ -1,97 +1,151 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports.js'
-import { useForm } from 'react-hook-form'
-import { typeOptions, priorityOptions, statusOptions } from './optionArrays.js'
-import { newTicket } from './ticketSlice.js'
-import { useDispatch, useSelector } from 'react-redux'
-import Select from 'react-select'
-import { getSelectedProject } from '../projects/projectSlice.js'
+import React, { useEffect, useState } from 'react';
+import common from '../../common/commonImports.js';
+import { useForm } from 'react-hook-form';
+import TextareaAutosize from 'react-textarea-autosize';
+import { typeOptions, priorityOptions, statusOptions } from './optionArrays.js';
+import { newTicket } from './ticketSlice.js';
+import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select';
+import { getSelectedProject } from '../projects/projectSlice.js';
 
 const NewTicketComponent = (props) => {
-	const dispatch = useDispatch()
-	const selectedProject = useSelector(getSelectedProject)
+	const dispatch = useDispatch();
+	const selectedProject = useSelector(getSelectedProject);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
-	let assignedEmployees = []
-	let ticketPriority = 0
+	} = useForm();
+	const [assignedEmployees, setAssignedEmployees] = useState([]);
+	const [ticketPriority, setTicketPriority] = useState(0);
+	const [ticketStatus, setTicketStatus] = useState('');
+	const [ticketType, setTicketType] = useState('');
 	const onChange = (newValue, actionMeta) => {
-		console.log(newValue, actionMeta)
+		console.log(newValue, actionMeta);
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = []
-				break
+				setAssignedEmployees([]);
+				break;
 			case 'select-option':
-				assignedEmployees = []
-				assignedEmployees.push(newValue._id)
-				break
+				setAssignedEmployees([]);
+				setAssignedEmployees([newValue._id]);
+				break;
 
 			default:
-				break
+				break;
 		}
-	}
-	const onInputChangePriority = (newValue, actionMeta) => {}
+	};
+	const onInputChangePriority = (newValue, actionMeta) => {};
 	const onChangePriority = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				ticketPriority = 0
-				break
+				setTicketPriority(0);
+				break;
 			case 'select-option':
-				console.log(newValue)
-				ticketPriority = newValue.id
-				break
+				setTicketPriority(newValue.id);
+				break;
 			default:
-				break
+				break;
 		}
-	}
-	let status = ''
-	const onInputChangeStatus = (newValue, actionMeta) => {}
+	};
+	const onInputChangeStatus = (newValue, actionMeta) => {};
 	const onChangeStatus = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				status = ''
-				break
+				setTicketStatus('');
+				break;
 			case 'select-option':
-				console.log(newValue)
-				status = newValue.label
-				break
+				setTicketStatus(newValue.label);
+				break;
 			default:
-				break
+				break;
 		}
-	}
-	let ticketType = ''
-	const onInputChangeType = (newValue, actionMeta) => {}
+	};
+	const onInputChangeType = (newValue, actionMeta) => {};
 	const onChangeType = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				ticketType = ''
-				break
+				setTicketType('');
+				break;
 			case 'select-option':
-				console.log(newValue.label)
-				ticketType = newValue.label
-				break
+				setTicketType(newValue.label);
+				break;
 			default:
-				break
+				break;
 		}
-	}
-	const onInputChange = (newValue, actionMeta) => {}
+	};
+	const onInputChange = (newValue, actionMeta) => {};
 	const submitMe = (data) => {
 		const ticket = {
 			project_id: props.project_id,
 			ticket_name: data.ticket_name,
 			ticket_description: data.ticket_description,
-			ticket_status: status,
+			ticket_status: ticketStatus,
 			ticket_type: ticketType,
 			ticket_steps: data.ticket_steps,
 			ticket_priority: ticketPriority,
 			assigned_employees: assignedEmployees,
 			ticket_creator: '',
-		}
-		dispatch(newTicket(ticket))
-		props.close()
-	}
+		};
+		console.log(ticket);
+		// dispatch(newTicket(ticket));
+		// props.close();
+	};
+	const dot = (color = 'transparent') => ({
+		alignItems: 'center',
+		display: 'flex',
+
+		':before': {
+			backgroundColor: color,
+			borderRadius: 10,
+			content: '" "',
+			display: 'block',
+			marginRight: 8,
+			height: 10,
+			width: 10,
+		},
+	});
+	const customStyles = (type) => {
+		return type === 'priority'
+			? {
+					control: (styles) => {
+						styles.minHeight = '2rem';
+						return {
+							...styles,
+						};
+					},
+					option: (styles, { data, isSelected }) => {
+						let dotColor =
+							data.option === 'Low'
+								? 'yellow'
+								: data.option === 'Medium'
+								? 'orange'
+								: 'red';
+						return {
+							...styles,
+							...dot(dotColor),
+						};
+					},
+					singleValue: (styles, state) => {
+						let dotColor =
+							state.children === 'Low'
+								? 'yellow'
+								: state.children === 'Medium'
+								? 'orange'
+								: 'red';
+
+						return { ...styles, ...dot(dotColor) };
+					},
+			  }
+			: {
+					control: (styles) => {
+						styles.minHeight = '2rem';
+						return {
+							...styles,
+						};
+					},
+			  };
+	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,102 +156,110 @@ const NewTicketComponent = (props) => {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	return (
-		<div className='h-full w-full'>
-			<form className='text-black h-full w-full grid grid-cols-8 items-center'>
-				<h1 className='col-span-7 text-2xl text-white text-center pt-4 pl-14'>
+		<div className='h-fit w-fit min-w-[25vw]'>
+			<form className='text-rich-black h-full w-full grid grid-cols-8 items-center'>
+				<h1 className='col-span-8 text-2xl text-center pb-4'>
 					New Ticket
 				</h1>
 				<common.FontAwesomeIcon
-					className='cursor-pointer text-white text-2xl col-span-1 pl-7 pb-5'
+					className='cursor-pointer text-2xl fixed top-3 right-4'
 					icon='fa-solid fa-xmark'
 					onClick={props.close}></common.FontAwesomeIcon>
 				<input
-					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
+					className='col-span-4 ml-7 h-[2.3rem] m-2 pl-2 border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black'
 					type='text'
 					placeholder='New Ticket Name'
 					name='ticket_name'
 					{...register('ticket_name')}
 				/>
-				<input
-					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
-					type='text'
+				<Select
+					className='col-span-4 w-11/12 m-2 mx-auto mr-7'
+					isSearchable
+					styles={customStyles('priority')}
+					classNamePrefix='custom-select'
+					isClearable
+					placeholder='Select Priority'
+					options={priorityOptions}
+					getOptionLabel={(option) => option.option}
+					name='priority-select'
+					onInputChange={onInputChangePriority}
+					onChange={onChangePriority}
+					getOptionValue={(option) => option.id}
+				/>
+				<TextareaAutosize
+					className='h-48 col-span-8 w-11/12 mx-auto pl-2 m-2 border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black resize-none'
+					minRows={3}
+					maxRows={8}
 					placeholder='Description of ticket'
 					name='ticket_description'
 					{...register('ticket_description')}
 				/>
-				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
-					<Select
-						isSearchable
-						isClearable
-						defaultValue='Select Status'
-						options={statusOptions}
-						getOptionLabel={(option) => option.label}
-						name='type-select'
-						onInputChange={onInputChangeStatus}
-						onChange={onChangeStatus}
-						getOptionValue={(option) => option.label}
-					/>
-				</div>
-				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
-					<Select
-						isSearchable
-						isClearable
-						defaultValue='Select Type'
-						options={typeOptions}
-						getOptionLabel={(option) => option.label}
-						name='type-select'
-						onInputChange={onInputChangeType}
-						onChange={onChangeType}
-						getOptionValue={(option) => option.label}
-					/>
-				</div>
-				<input
-					className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'
-					type='text'
-					placeholder='Steps of ticket'
+
+				<Select
+					isSearchable
+					className='col-span-4 w-11/12 m-2 ml-5 pl-2'
+					classNamePrefix='custom-select'
+					isClearable
+					styles={customStyles('')}
+					placeholder='Select Status'
+					options={statusOptions}
+					getOptionLabel={(option) => option.label}
+					name='type-select'
+					onInputChange={onInputChangeStatus}
+					onChange={onChangeStatus}
+					getOptionValue={(option) => option.label}
+				/>
+				<Select
+					isSearchable
+					className='col-span-4 w-11/12 m-2 mx-auto mr-7'
+					classNamePrefix='custom-select'
+					isClearable
+					styles={customStyles('')}
+					placeholder='Select Type'
+					options={typeOptions}
+					getOptionLabel={(option) => option.label}
+					name='type-select'
+					onInputChange={onInputChangeType}
+					onChange={onChangeType}
+					getOptionValue={(option) => option.label}
+				/>
+
+				<TextareaAutosize
+					className='h-48 col-span-8 w-11/12 mx-auto pl-2 m-2 border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black resize-none'
+					minRows={3}
+					maxRows={8}
+					placeholder='Steps to reproduce'
 					name='ticket_steps'
 					{...register('ticket_steps')}
 				/>
-				<div className='col-span-4 h-8 w-3/4 m-2 pl-2 mx-auto'>
-					<Select
-						isSearchable
-						isClearable
-						defaultValue='Select Priority'
-						options={priorityOptions}
-						getOptionLabel={(option) => option.option}
-						name='priority-select'
-						onInputChange={onInputChangePriority}
-						onChange={onChangePriority}
-						getOptionValue={(option) => option.id}
-					/>
-				</div>
 
 				<span className='col-span-1'></span>
-				<div className='col-span-6'>
-					<Select
-						isSearchable
-						isClearable
-						defaultValue='Select Employees'
-						options={selectedProject.employees}
-						getOptionLabel={(option) =>
-							`${option.first_name} ${option.last_name}`
-						}
-						name='employee-select'
-						onInputChange={onInputChange}
-						onChange={onChange}
-						getOptionValue={(option) => option._id}
-					/>
-				</div>
+				<Select
+					isSearchable
+					styles={customStyles('')}
+					className='col-span-6'
+					classNamePrefix='custom-select'
+					isClearable
+					placeholder='Select Employees'
+					options={selectedProject.employees}
+					getOptionLabel={(option) =>
+						`${option.first_name} ${option.last_name}`
+					}
+					name='employee-select'
+					onInputChange={onInputChange}
+					onChange={onChange}
+					getOptionValue={(option) => option._id}
+				/>
 				<span className='col-span-1'></span>
 
 				<common.ActionButton
-					extraClass='col-span-8 mx-auto h-8'
+					extraClass='col-span-8 mx-auto h-8 mt-4 mb-[-0.5rem]'
 					text='Submit Ticket'
 					type='submit'
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	)
-}
+	);
+};
 
-export default NewTicketComponent
+export default NewTicketComponent;
