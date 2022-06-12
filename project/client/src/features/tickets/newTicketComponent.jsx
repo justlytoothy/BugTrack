@@ -1,80 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import common from '../../common/commonImports.js';
-import { useForm } from 'react-hook-form';
-import TextareaAutosize from 'react-textarea-autosize';
-import { typeOptions, priorityOptions, statusOptions } from './optionArrays.js';
-import { newTicket } from './ticketSlice.js';
-import { useDispatch, useSelector } from 'react-redux';
-import Select from 'react-select';
-import { getSelectedProject } from '../projects/projectSlice.js';
+import React, { useEffect, useState } from 'react'
+import common from '../../common/commonImports.js'
+import { useForm } from 'react-hook-form'
+import TextareaAutosize from 'react-textarea-autosize'
+import { typeOptions, priorityOptions, statusOptions } from './optionArrays.js'
+import { newTicket } from './ticketSlice.js'
+import { useDispatch, useSelector } from 'react-redux'
+import Select from 'react-select'
+import { getSelectedProject } from '../projects/projectSlice.js'
 
 const NewTicketComponent = (props) => {
-	const dispatch = useDispatch();
-	const selectedProject = useSelector(getSelectedProject);
+	const dispatch = useDispatch()
+	const selectedProject = useSelector(getSelectedProject)
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
-	const [assignedEmployees, setAssignedEmployees] = useState([]);
-	const [ticketPriority, setTicketPriority] = useState(0);
-	const [ticketStatus, setTicketStatus] = useState('');
-	const [ticketType, setTicketType] = useState('');
+	} = useForm()
+	const [assignedEmployees, setAssignedEmployees] = useState([])
+	const [ticketPriority, setTicketPriority] = useState(0)
+	const [ticketStatus, setTicketStatus] = useState('')
+	const [ticketType, setTicketType] = useState('')
 	const onChange = (newValue, actionMeta) => {
-		console.log(newValue, actionMeta);
+		console.log(newValue, actionMeta)
 		switch (actionMeta.action) {
 			case 'clear':
-				setAssignedEmployees([]);
-				break;
+				setAssignedEmployees([])
+				break
 			case 'select-option':
-				setAssignedEmployees([]);
-				setAssignedEmployees([newValue._id]);
-				break;
+				setAssignedEmployees([])
+				setAssignedEmployees([newValue._id])
+				break
 
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChangePriority = (newValue, actionMeta) => {};
+	}
+	const onInputChangePriority = (newValue, actionMeta) => {}
 	const onChangePriority = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				setTicketPriority(0);
-				break;
+				setTicketPriority(0)
+				break
 			case 'select-option':
-				setTicketPriority(newValue.id);
-				break;
+				setTicketPriority(newValue.id)
+				break
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChangeStatus = (newValue, actionMeta) => {};
+	}
+	const onInputChangeStatus = (newValue, actionMeta) => {}
 	const onChangeStatus = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				setTicketStatus('');
-				break;
+				setTicketStatus('')
+				break
 			case 'select-option':
-				setTicketStatus(newValue.label);
-				break;
+				setTicketStatus(newValue.label)
+				break
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChangeType = (newValue, actionMeta) => {};
+	}
+	const onInputChangeType = (newValue, actionMeta) => {}
 	const onChangeType = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				setTicketType('');
-				break;
+				setTicketType('')
+				break
 			case 'select-option':
-				setTicketType(newValue.label);
-				break;
+				setTicketType(newValue.label)
+				break
 			default:
-				break;
+				break
 		}
-	};
-	const onInputChange = (newValue, actionMeta) => {};
+	}
+	const onInputChange = (newValue, actionMeta) => {}
 	const submitMe = (data) => {
 		const ticket = {
 			project_id: props.project_id,
@@ -86,11 +86,11 @@ const NewTicketComponent = (props) => {
 			ticket_priority: ticketPriority,
 			assigned_employees: assignedEmployees,
 			ticket_creator: '',
-		};
-		console.log(ticket);
-		// dispatch(newTicket(ticket));
-		// props.close();
-	};
+		}
+		console.log(ticket)
+		dispatch(newTicket(ticket))
+		props.close()
+	}
 	const dot = (color = 'transparent') => ({
 		alignItems: 'center',
 		display: 'flex',
@@ -104,15 +104,15 @@ const NewTicketComponent = (props) => {
 			height: 10,
 			width: 10,
 		},
-	});
+	})
 	const customStyles = (type) => {
 		return type === 'priority'
 			? {
 					control: (styles) => {
-						styles.minHeight = '2rem';
+						styles.minHeight = '2rem'
 						return {
 							...styles,
-						};
+						}
 					},
 					option: (styles, { data, isSelected }) => {
 						let dotColor =
@@ -120,11 +120,11 @@ const NewTicketComponent = (props) => {
 								? 'yellow'
 								: data.option === 'Medium'
 								? 'orange'
-								: 'red';
+								: 'red'
 						return {
 							...styles,
 							...dot(dotColor),
-						};
+						}
 					},
 					singleValue: (styles, state) => {
 						let dotColor =
@@ -132,20 +132,20 @@ const NewTicketComponent = (props) => {
 								? 'yellow'
 								: state.children === 'Medium'
 								? 'orange'
-								: 'red';
+								: 'red'
 
-						return { ...styles, ...dot(dotColor) };
+						return { ...styles, ...dot(dotColor) }
 					},
 			  }
 			: {
 					control: (styles) => {
-						styles.minHeight = '2rem';
+						styles.minHeight = '2rem'
 						return {
 							...styles,
-						};
+						}
 					},
-			  };
-	};
+			  }
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,9 +158,7 @@ const NewTicketComponent = (props) => {
 	return (
 		<div className='h-fit w-fit min-w-[25vw]'>
 			<form className='text-rich-black h-full w-full grid grid-cols-8 items-center'>
-				<h1 className='col-span-8 text-2xl text-center pb-4'>
-					New Ticket
-				</h1>
+				<h1 className='col-span-8 text-2xl text-center pb-4'>New Ticket</h1>
 				<common.FontAwesomeIcon
 					className='cursor-pointer text-2xl fixed top-3 right-4'
 					icon='fa-solid fa-xmark'
@@ -259,7 +257,7 @@ const NewTicketComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	);
-};
+	)
+}
 
-export default NewTicketComponent;
+export default NewTicketComponent

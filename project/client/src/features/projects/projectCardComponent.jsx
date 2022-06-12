@@ -1,30 +1,95 @@
-import React, { useEffect } from 'react';
-import common from '../../common/commonImports';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-ChartJS.register(ArcElement, Tooltip, Legend);
+import React, { useEffect } from 'react'
+import common from '../../common/commonImports'
+import { Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const ProjectCard = (props) => {
-	const chartExampleData = {
-		labels: ['Open', 'Closed', 'Failed'],
+	const typeData = () => {
+		let bugs = 0
+		let plannedFeatures = 0
+		let complaints = 0
+		let suggestions = 0
+		let totals = []
+		props.project.tickets.forEach((ticket) => {
+			if (ticket.ticket_type === 'Bug') {
+				bugs++
+			}
+			if (ticket.ticket_type === 'Planned Feature') {
+				plannedFeatures++
+			}
+			if (ticket.ticket_type === 'Complaint') {
+				complaints++
+			}
+			if (ticket.ticket_type === 'Suggestion') {
+				suggestions++
+			}
+		})
+		totals = [bugs, plannedFeatures, complaints, suggestions]
+		return totals
+	}
+	const statusData = () => {
+		let open = 0
+		let closed = 0
+		let onHold = 0
+		let totals = []
+		props.project.tickets.forEach((ticket) => {
+			if (ticket.ticket_status === 'Open') {
+				open++
+			}
+			if (ticket.ticket_status === 'Closed') {
+				closed++
+			}
+			if (ticket.ticket_status === 'On Hold') {
+				onHold++
+			}
+		})
+		totals = [open, closed, onHold]
+		return totals
+	}
+	const typeChartData = {
+		labels: ['Bugs', 'Planned Features', 'Complaints', 'Suggestions'],
 		datasets: [
 			{
-				label: 'Current Ticket Status',
-				data: [12, 23, 6],
+				label: 'Ticket Types',
+				data: typeData(),
 				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
+					'rgba(245, 3, 9, 1)',
+					'rgba(24, 99, 187, 1)',
+					'rgba(252, 150, 0, 1)',
+					'rgba(81, 176, 100, 1)',
 				],
 				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
+					'rgba(245, 3, 9, 1)',
+					'rgba(24, 99, 187, 1)',
+					'rgba(252, 150, 0, 1)',
+					'rgba(81, 176, 100, 1)',
 				],
 				borderWidth: 1,
 			},
 		],
-	};
+	}
+	const statusChartData = {
+		labels: ['Open', 'Closed', 'On Hold'],
+		datasets: [
+			{
+				label: 'Ticket Status',
+				data: statusData(),
+				backgroundColor: [
+					'rgba(230, 255, 110, 1)',
+					'rgba(147, 250, 165, 1)',
+					'rgba(249, 180, 45, 1)',
+				],
+				borderColor: [
+					'rgba(230, 255, 110, 1)',
+					'rgba(147, 250, 165, 1)',
+					'rgba(249, 180, 45, 1)',
+				],
+				borderWidth: 1,
+			},
+		],
+	}
+	console.log(props.project)
 
 	const employeeGraph = () => {
 		return (
@@ -40,56 +105,46 @@ const ProjectCard = (props) => {
 					</div>
 					{React.Children.toArray(
 						props.project.employees.map((employee) => {
-							let iter = props.project.employees.length - 1;
+							let iter = props.project.employees.length - 1
 							if (iter !== 0) {
-								iter--;
+								iter--
 								return (
 									<div
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-										tabIndex={
-											props.project.employees.length -
-											iter
-										}>
+										tabIndex={props.project.employees.length - iter}>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name +
-												' ' +
-												employee.last_name}
+											{employee.first_name + ' ' + employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								);
+								)
 							} else {
 								return (
 									<div
-										tabIndex={
-											props.project.employees.length -
-											iter
-										}
+										tabIndex={props.project.employees.length - iter}
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name +
-												' ' +
-												employee.last_name}
+											{employee.first_name + ' ' + employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								);
+								)
 							}
 						})
 					)}
 				</div>
 			</div>
-		);
-	};
+		)
+	}
 
 	const openProjectPage = () => {
-		window.location.href = `/project/${props.project._id}`;
-		props.close();
-	};
+		window.location.href = `/project/${props.project._id}`
+		props.close()
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,7 +156,7 @@ const ProjectCard = (props) => {
 
 	if (props.project !== null) {
 		return (
-			<div className='h-full relative min-w-[25vw] max-w-[85vw] lg:max-w-[50vw] grid grid-cols-4'>
+			<div className='max-h-[80vh] relative min-w-[25vw] max-w-[85vw] lg:max-w-[50vw] grid grid-cols-4'>
 				<div className='col-span-4 pb-4'>
 					<common.FontAwesomeIcon
 						className='cursor-pointer text-rich-black text-2xl fixed top-3 right-4'
@@ -112,39 +167,35 @@ const ProjectCard = (props) => {
 						<common.FontAwesomeIcon
 							className='cursor-pointer text-edit-pad hover:text-edit-pad-hover pl-4 pb-1 text-2xl'
 							icon='fa-solid fa-edit'
-							onClick={
-								props.editProject
-							}></common.FontAwesomeIcon>
+							onClick={props.editProject}></common.FontAwesomeIcon>
 					</h1>
 				</div>
 				<div className='col-span-4 grid grid-cols-4 border border-rich-black rounded p-2'>
 					<div className='h-80 col-span-4 relative w-full flex justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>
 						{/* Project Information Section */}
 						<div className='h-1/2 lg:h-full border border-rich-black rounded text-rich-black mx-2 w-full overflow-scroll p-1'>
-							<h3 className='text-base'>
-								{props.project.project_description}
-							</h3>
+							<h3 className='text-base'>{props.project.project_description}</h3>
 						</div>
 						{/* Employee Table Section */}
 						{employeeGraph()}
 					</div>
-					<div className='h-48 lg:h-80 col-span-2 flex flex-row justify-between p-2'>
+					<div className='h-36 lg:h-52 col-span-2 flex flex-row justify-between p-2'>
 						<Doughnut
 							options={{
 								maintainAspectRatio: false,
 								responsive: true,
 								aspectRatio: 1,
 							}}
-							data={chartExampleData}></Doughnut>
+							data={statusChartData}></Doughnut>
 					</div>
-					<div className='h-48 lg:h-80 col-span-2 w-full flex flex-row justify-between p-2'>
+					<div className='h-36 lg:h-52 col-span-2 w-full flex flex-row justify-between p-2'>
 						<Doughnut
 							options={{
 								maintainAspectRatio: false,
 								responsive: true,
 								aspectRatio: 1,
 							}}
-							data={chartExampleData}></Doughnut>
+							data={typeChartData}></Doughnut>
 					</div>
 				</div>
 				<div className='col-span-3 ml-[-1rem] mt-1'>
@@ -167,12 +218,12 @@ const ProjectCard = (props) => {
 						click={openProjectPage}></common.ActionButton>
 				</div>
 			</div>
-		);
+		)
 	} else {
-		<div></div>;
+		;<div></div>
 	}
-};
+}
 
-export default ProjectCard;
+export default ProjectCard
 
 // transition-all motion-reduce:transition-none transform origin-center duration-700 ' + cardClass()

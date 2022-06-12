@@ -43,6 +43,10 @@ const getAllProjects = async (req, res) => {
 				_id: { $in: assigned_projects },
 			})
 			.populate('employees')
+			.populate({
+				path: 'tickets',
+				populate: { path: 'assigned_employees ticket_creator' },
+			})
 			.exec()
 		return res.json(response)
 	} catch (error) {
