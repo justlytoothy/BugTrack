@@ -1,58 +1,58 @@
-import React, { useEffect } from 'react'
-import common from '../../common/commonImports'
-import { Doughnut } from 'react-chartjs-2'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-ChartJS.register(ArcElement, Tooltip, Legend)
+import React, { useEffect } from 'react';
+import common from '../../common/commonImports';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ProjectCard = (props) => {
-	const typeData = () => {
-		let bugs = 0
-		let plannedFeatures = 0
-		let complaints = 0
-		let suggestions = 0
-		let totals = []
-		props.project.tickets.forEach((ticket) => {
+	const typeData = (tickets) => {
+		let bugs = 0;
+		let plannedFeatures = 0;
+		let complaints = 0;
+		let suggestions = 0;
+		let totals = [];
+		tickets.forEach((ticket) => {
 			if (ticket.ticket_type === 'Bug') {
-				bugs++
+				bugs++;
 			}
 			if (ticket.ticket_type === 'Planned Feature') {
-				plannedFeatures++
+				plannedFeatures++;
 			}
 			if (ticket.ticket_type === 'Complaint') {
-				complaints++
+				complaints++;
 			}
 			if (ticket.ticket_type === 'Suggestion') {
-				suggestions++
+				suggestions++;
 			}
-		})
-		totals = [bugs, plannedFeatures, complaints, suggestions]
-		return totals
-	}
-	const statusData = () => {
-		let open = 0
-		let closed = 0
-		let onHold = 0
-		let totals = []
-		props.project.tickets.forEach((ticket) => {
+		});
+		totals = [bugs, plannedFeatures, complaints, suggestions];
+		return totals;
+	};
+	const statusData = (tickets) => {
+		let open = 0;
+		let closed = 0;
+		let onHold = 0;
+		let totals = [];
+		tickets.forEach((ticket) => {
 			if (ticket.ticket_status === 'Open') {
-				open++
+				open++;
 			}
 			if (ticket.ticket_status === 'Closed') {
-				closed++
+				closed++;
 			}
 			if (ticket.ticket_status === 'On Hold') {
-				onHold++
+				onHold++;
 			}
-		})
-		totals = [open, closed, onHold]
-		return totals
-	}
+		});
+		totals = [open, closed, onHold];
+		return totals;
+	};
 	const typeChartData = {
 		labels: ['Bugs', 'Planned Features', 'Complaints', 'Suggestions'],
 		datasets: [
 			{
 				label: 'Ticket Types',
-				data: typeData(),
+				data: typeData(props.project.tickets),
 				backgroundColor: [
 					'rgba(245, 3, 9, 1)',
 					'rgba(24, 99, 187, 1)',
@@ -68,13 +68,13 @@ const ProjectCard = (props) => {
 				borderWidth: 1,
 			},
 		],
-	}
+	};
 	const statusChartData = {
 		labels: ['Open', 'Closed', 'On Hold'],
 		datasets: [
 			{
 				label: 'Ticket Status',
-				data: statusData(),
+				data: statusData(props.project.tickets),
 				backgroundColor: [
 					'rgba(230, 255, 110, 1)',
 					'rgba(63, 195, 128, 1)',
@@ -88,8 +88,8 @@ const ProjectCard = (props) => {
 				borderWidth: 1,
 			},
 		],
-	}
-	console.log(props.project)
+	};
+	console.log(props.project);
 
 	const employeeGraph = () => {
 		return (
@@ -105,46 +105,56 @@ const ProjectCard = (props) => {
 					</div>
 					{React.Children.toArray(
 						props.project.employees.map((employee) => {
-							let iter = props.project.employees.length - 1
+							let iter = props.project.employees.length - 1;
 							if (iter !== 0) {
-								iter--
+								iter--;
 								return (
 									<div
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-										tabIndex={props.project.employees.length - iter}>
+										tabIndex={
+											props.project.employees.length -
+											iter
+										}>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name + ' ' + employee.last_name}
+											{employee.first_name +
+												' ' +
+												employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								)
+								);
 							} else {
 								return (
 									<div
-										tabIndex={props.project.employees.length - iter}
+										tabIndex={
+											props.project.employees.length -
+											iter
+										}
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name + ' ' + employee.last_name}
+											{employee.first_name +
+												' ' +
+												employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								)
+								);
 							}
 						})
 					)}
 				</div>
 			</div>
-		)
-	}
+		);
+	};
 
 	const openProjectPage = () => {
-		window.location.href = `/project/${props.project._id}`
-		props.close()
-	}
+		window.location.href = `/project/${props.project._id}`;
+		props.close();
+	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,14 +177,18 @@ const ProjectCard = (props) => {
 						<common.FontAwesomeIcon
 							className='cursor-pointer text-edit-pad hover:text-edit-pad-hover pl-4 pb-1 text-2xl'
 							icon='fa-solid fa-edit'
-							onClick={props.editProject}></common.FontAwesomeIcon>
+							onClick={
+								props.editProject
+							}></common.FontAwesomeIcon>
 					</h1>
 				</div>
 				<div className='col-span-4 grid grid-cols-4 border border-rich-black rounded p-2'>
 					<div className='h-80 col-span-4 relative w-full flex justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>
 						{/* Project Information Section */}
 						<div className='h-1/2 lg:h-full border border-rich-black rounded text-rich-black mx-2 w-full overflow-scroll p-1'>
-							<h3 className='text-base'>{props.project.project_description}</h3>
+							<h3 className='text-base'>
+								{props.project.project_description}
+							</h3>
 						</div>
 						{/* Employee Table Section */}
 						{employeeGraph()}
@@ -218,12 +232,12 @@ const ProjectCard = (props) => {
 						click={openProjectPage}></common.ActionButton>
 				</div>
 			</div>
-		)
+		);
 	} else {
-		;<div></div>
+		<div></div>;
 	}
-}
+};
 
-export default ProjectCard
+export default ProjectCard;
 
 // transition-all motion-reduce:transition-none transform origin-center duration-700 ' + cardClass()

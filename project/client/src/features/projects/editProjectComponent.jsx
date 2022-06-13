@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import common from '../../common/commonImports.js';
 import { useForm } from 'react-hook-form';
-import { newProject } from './projectSlice';
+import { editProject } from './projectSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { listAllUsers, getAllUsers } from '../auth/authSlice.js';
 import makeAnimated from 'react-select/animated';
@@ -12,8 +12,8 @@ import Select from 'react-select';
 const EditProjectComponent = (props) => {
 	const dispatch = useDispatch();
 	const user = JSON.parse(sessionStorage.getItem('user'));
-	let employees = [];
-	employees.push(user._id);
+	const [employees, setEmployees] = useState(props.project.employees);
+
 	const {
 		register,
 		handleSubmit,
@@ -28,40 +28,33 @@ const EditProjectComponent = (props) => {
 	}, []);
 
 	const submitMe = (data) => {
-		data.createdBy = user._id;
-		data.employees = assignedEmployees;
-		dispatch(newProject(data));
+		data.project_id = props.project._id;
+		data.editedBy = user._id;
+		let justIds = [];
+		employees.forEach((employee) => justIds.push(employee._id));
+		data.employees = justIds;
+		console.log(data);
+		dispatch(editProject(data));
 		props.close();
 	};
-	let assignedEmployees = [];
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				assignedEmployees = [];
+				setEmployees([]);
 				break;
 			case 'select-option':
-				assignedEmployees = [];
-				assignedEmployees = newValue;
+				setEmployees([]);
+				setEmployees(newValue);
 				break;
 			case 'remove-value':
-				assignedEmployees = [];
-				assignedEmployees = newValue;
+				setEmployees([]);
+				setEmployees(newValue);
 				break;
 			default:
 				break;
 		}
 	};
-	const currentEmployee = () => {
-		let foundEmployee = '';
-		allEmployees.forEach((emp) => {
-			if (emp._id === user._id) {
-				foundEmployee = emp;
-			}
-		});
-		let index = allEmployees.indexOf(foundEmployee);
-		assignedEmployees.push(allEmployees[index]);
-		return index;
-	};
+
 	const onInputChange = (newValue, actionMeta) => {};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +68,7 @@ const EditProjectComponent = (props) => {
 		<div className='h-fit w-fit min-w-[25vw]'>
 			<form className='text-rich-black h-full w-full grid grid-cols-8 items-center space-y-8'>
 				<h1 className='col-span-8 text-3xl text-midnight-blue pt-4 text-center'>
-					New Project
+					{`Edit ${props.project.project_name}`}
 				</h1>
 				<common.FontAwesomeIcon
 					className='cursor-pointer text-rich-black text-2xl fixed -top-4 right-4'
@@ -85,6 +78,7 @@ const EditProjectComponent = (props) => {
 					className='h-10 col-span-8 pl-2 m-2 text-lg border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black'
 					type='text'
 					placeholder='New Project Name'
+					defaultValue={props.project.project_name}
 					name='projName'
 					{...register('projName')}
 				/>
@@ -92,6 +86,7 @@ const EditProjectComponent = (props) => {
 					className='h-48 col-span-8 pl-2 m-2 text-lg border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black resize-none'
 					minRows={4}
 					maxRows={9}
+					defaultValue={props.project.project_description}
 					placeholder='Description of project'
 					name='projDesc'
 					{...register('projDesc')}
@@ -103,7 +98,7 @@ const EditProjectComponent = (props) => {
 							isSearchable
 							isClearable
 							isMulti
-							defaultValue={allEmployees[currentEmployee()]}
+							defaultValue={props.project.employees}
 							options={allEmployees}
 							getOptionLabel={(option) =>
 								`${option.first_name} ${option.last_name}`
@@ -121,7 +116,7 @@ const EditProjectComponent = (props) => {
 				<span className='col-span-1'></span>
 				<common.ActionButton
 					extraClass='col-span-8 mx-auto h-8'
-					text='Create Project'
+					text='Save Changes'
 					type='submit'
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>

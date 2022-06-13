@@ -48,8 +48,11 @@ const LoginComponent = () => {
 	const errorMsg = () => {
 		if (errorStatus) {
 			return (
-				<h3 className='text-white text-sm'>
-					Username and/or password incorrect
+				<h3 className='text-delete-red font-bold text-sm col-span-5'>
+					Error: &nbsp;
+					<span className='text-white font-normal'>
+						Username and/or password incorrect
+					</span>
 				</h3>
 			);
 		}
@@ -70,6 +73,7 @@ const LoginComponent = () => {
 					<h1 className='text-white text-3xl m-1 mt-12 w-full col-span-5'>
 						Login:
 					</h1>
+					{errorMsg()}
 					<div className='col-span-5 flex justify-center'>
 						<input
 							className='mx-4 h-12 w-3/4 border-none rounded-md pl-2 focus:outline-2 focus:outline-white-filled'
@@ -103,7 +107,6 @@ const LoginComponent = () => {
 							text='Login'
 							type='submit'></common.ActionButton>
 					</div>
-					{errorMsg()}
 				</form>
 			</div>
 			<Modal

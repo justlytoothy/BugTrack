@@ -23,6 +23,8 @@ const ProjectDetails = (props) => {
 	const project = useSelector(getSelectedProject);
 	useEffect(() => {
 		dispatch(getProject(id));
+		setTimeout(() => dispatch(getProject(id)), 100);
+		console.log('refresh');
 	}, [refresh, refreshTicket]);
 	Modal.setAppElement('#root');
 

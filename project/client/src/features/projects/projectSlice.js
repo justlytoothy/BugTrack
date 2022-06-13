@@ -30,6 +30,14 @@ export const getProject = createAsyncThunk('project/getone', async (data) => {
 		throw error;
 	}
 });
+export const editProject = createAsyncThunk('project/edit', async (data) => {
+	try {
+		const response = await axios.put('project', data);
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+});
 
 export const getAllProjects = createAsyncThunk(
 	'project/getall',
@@ -65,15 +73,12 @@ export const deleteProject = createAsyncThunk(
 const projectSlice = createSlice({
 	name: 'project',
 	initialState,
-	reducers: {
-		login(state, action) {
-			state.push(action.payload);
-		},
-	},
+	reducers: {},
 	extraReducers(builder) {
 		builder
 			.addCase(newProject.pending, (state, action) => {
 				state.status = 'loading';
+				state.refresh++;
 			})
 			.addCase(newProject.fulfilled, (state, action) => {
 				state.status = 'success';
@@ -83,6 +88,21 @@ const projectSlice = createSlice({
 			.addCase(newProject.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
+				state.refresh++;
+			})
+			.addCase(editProject.pending, (state, action) => {
+				state.status = 'loading';
+				state.refresh++;
+			})
+			.addCase(editProject.fulfilled, (state, action) => {
+				state.status = 'success';
+				state.refresh++;
+				return action.payload;
+			})
+			.addCase(editProject.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
+				state.refresh++;
 			})
 			.addCase(getProject.pending, (state, action) => {
 				state.status = 'loading';
@@ -112,11 +132,12 @@ const projectSlice = createSlice({
 			})
 			.addCase(deleteProject.fulfilled, (state, action) => {
 				state.status = 'success';
-				state.refresh = state.refresh + 1;
+				state.refresh++;
 			})
 			.addCase(deleteProject.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
+				state.refresh++;
 			});
 	},
 });
@@ -125,5 +146,4 @@ export const projectStatus = (state) => state.project.status;
 export const refreshStatus = (state) => state.project.refresh;
 export const allProjects = (state) => state.project.allProjects;
 export const getSelectedProject = (state) => state.project.selectedProject;
-export const { login } = projectSlice.actions;
 export default projectSlice.reducer;

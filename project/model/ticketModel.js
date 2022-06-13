@@ -1,8 +1,7 @@
 import mongoose from 'mongoose';
 import userModel from './userModel.js';
 import projectModel from './projectModel.js';
-import mongooseTrack from 'mongoose-track';
-
+import patchHistory from 'mongoose-patch-history';
 
 const commentSchema = new mongoose.Schema(
 	{
@@ -33,22 +32,38 @@ const ticketSchema = new mongoose.Schema(
 	},
 	{
 		timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+	},
+	{
+		toJSON: { virtuals: true },
+		toObject: { virtuals: true },
 	}
 );
+ticketSchema.virtual('edited_by').set(function (edited_by) {
+	console.log(edited_by);
+	this._edited_by = edited_by;
+});
+ticketSchema.plugin(patchHistory.default, {
+	mongoose,
+	name: 'ticketPatches',
+	includes: {
+		edited_by: {
+			type: mongoose.Schema.Types.ObjectId,
+			from: '_edited_by',
+		},
+	},
+	removePatches: true,
+});
 
-ticketSchema.plugin(mongooseTrack.plugin);
-
-ticketSchema.post('findOneAndDelete', (document) => {
+ticketSchema.post('findOneAndDelete', async (document) => {
 	const ticketId = document._id;
 	projectModel.find({ tickets: { $in: [ticketId] } }).then((projects) => {
 		Promise.all(
-			projects.map((project) =>
-				projectModel.findOneAndUpdate(
-					project._id,
-					{ $pull: { tickets: ticketId } },
-					{ new: true }
-				)
-			)
+			projects.map((project) => {
+				const index = project.tickets.indexOf(ticketId);
+				console.log(index);
+				project.tickets.splice(index, 1);
+				project.save();
+			})
 		);
 	});
 
@@ -77,6 +92,7 @@ ticketSchema.post('findOneAndDelete', (document) => {
 				})
 			);
 		});
+	await document.patches.deleteMany({ ref: document._id });
 });
 
 const model = mongoose.model('Ticket', ticketSchema);
