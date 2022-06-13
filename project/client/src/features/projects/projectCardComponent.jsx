@@ -77,12 +77,12 @@ const ProjectCard = (props) => {
 				data: statusData(),
 				backgroundColor: [
 					'rgba(230, 255, 110, 1)',
-					'rgba(147, 250, 165, 1)',
+					'rgba(63, 195, 128, 1)',
 					'rgba(249, 180, 45, 1)',
 				],
 				borderColor: [
 					'rgba(230, 255, 110, 1)',
-					'rgba(147, 250, 165, 1)',
+					'rgba(63, 195, 128, 1)',
 					'rgba(249, 180, 45, 1)',
 				],
 				borderWidth: 1,
