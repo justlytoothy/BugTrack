@@ -36,6 +36,7 @@ const EditProjectComponent = (props) => {
 		console.log(data);
 		dispatch(editProject(data));
 		props.close();
+		props.closeParent();
 	};
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {

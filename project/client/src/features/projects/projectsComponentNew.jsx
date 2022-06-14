@@ -226,7 +226,8 @@ const ProjectsComponentNew = (props) => {
 				contentLabel='Edit Project'>
 				<EditProjectComponent
 					project={selectedProject}
-					close={closeEditForm}></EditProjectComponent>
+					close={closeEditForm}
+					closeParent={closeDetails}></EditProjectComponent>
 			</Modal>
 		</div>
 	);

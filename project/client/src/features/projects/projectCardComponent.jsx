@@ -1,10 +1,93 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import common from '../../common/commonImports';
 import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
+//Chart Default Sizes Responsive
+ChartJS.overrides['doughnut'].plugins.legend.position = 'right';
+if (window.innerWidth >= 1440) {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 15,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 23,
+	};
+} else if (window.innerWidth >= 1024) {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 12,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 20,
+	};
+} else if (window.innerWidth >= 768) {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 10,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 18,
+	};
+} else {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 7,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 15,
+	};
+}
+///////////////////
+///////////////////
 const ProjectCard = (props) => {
+	/**
+	 * Responsively change font size of chart title and legend labels
+	 */
+	window.addEventListener('resize', () => {
+		if (window.innerWidth >= 1440) {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 15,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 23,
+			};
+		} else if (window.innerWidth >= 1024) {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 12,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 20,
+			};
+		} else if (window.innerWidth >= 768) {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 10,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 18,
+			};
+		} else {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 7,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 15,
+			};
+		}
+	});
 	const typeData = (tickets) => {
 		let bugs = 0;
 		let plannedFeatures = 0;
@@ -48,7 +131,7 @@ const ProjectCard = (props) => {
 		return totals;
 	};
 	const typeChartData = {
-		labels: ['Bugs', 'Planned Features', 'Complaints', 'Suggestions'],
+		labels: ['Bugs', 'Features', 'Complaints', 'Suggestions'],
 		datasets: [
 			{
 				label: 'Ticket Types',
@@ -89,6 +172,7 @@ const ProjectCard = (props) => {
 			},
 		],
 	};
+
 	console.log(props.project);
 
 	const employeeGraph = () => {
@@ -193,23 +277,37 @@ const ProjectCard = (props) => {
 						{/* Employee Table Section */}
 						{employeeGraph()}
 					</div>
-					<div className='h-36 lg:h-52 col-span-2 flex flex-row justify-between p-2'>
-						<Doughnut
-							options={{
-								maintainAspectRatio: false,
-								responsive: true,
-								aspectRatio: 1,
-							}}
-							data={statusChartData}></Doughnut>
-					</div>
-					<div className='h-36 lg:h-52 col-span-2 w-full flex flex-row justify-between p-2'>
-						<Doughnut
-							options={{
-								maintainAspectRatio: false,
-								responsive: true,
-								aspectRatio: 1,
-							}}
-							data={typeChartData}></Doughnut>
+					<div className='col-span-4 flex justify-evenly mt-2'>
+						<div className='h-36 lg:h-52 flex justify-between w-[47%] p-2 border border-rich-black'>
+							<Doughnut
+								options={{
+									maintainAspectRatio: false,
+									responsive: true,
+									aspectRatio: 1,
+									plugins: {
+										title: {
+											display: true,
+											text: 'Ticket Status',
+										},
+									},
+								}}
+								data={statusChartData}></Doughnut>
+						</div>
+						<div className='h-36 lg:h-52 flex justify-between w-[47%] p-2 border border-rich-black'>
+							<Doughnut
+								options={{
+									maintainAspectRatio: false,
+									responsive: true,
+									aspectRatio: 1,
+									plugins: {
+										title: {
+											display: true,
+											text: 'Ticket Types',
+										},
+									},
+								}}
+								data={typeChartData}></Doughnut>
+						</div>
 					</div>
 				</div>
 				<div className='col-span-3 ml-[-1rem] mt-1'>
