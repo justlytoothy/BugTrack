@@ -7,8 +7,57 @@ import { CSSTransition } from 'react-transition-group';
 import common from '../../../common/commonImports';
 import NewTicketComponent from '../../tickets/newTicketComponent';
 import Modal from 'react-modal';
-
 import TicketCard from '../../tickets/ticketCardComponent';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
+import {
+	statusChartData,
+	typeChartData,
+	priorityChartData,
+} from './graphData.js';
+
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
+//Chart Default Sizes Responsive
+ChartJS.overrides['doughnut'].plugins.legend.position = 'right';
+if (window.innerWidth >= 1440) {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 15,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 23,
+	};
+} else if (window.innerWidth >= 1024) {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 12,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 20,
+	};
+} else if (window.innerWidth >= 768) {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 10,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 18,
+	};
+} else {
+	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+		size: 7,
+	};
+	ChartJS.defaults.plugins.title.font = {
+		...ChartJS.defaults.plugins.title.font,
+		size: 15,
+	};
+}
+///////////////////
+///////////////////
 
 const ProjectDetails = (props) => {
 	const closeIt = useOutletContext();
@@ -27,6 +76,49 @@ const ProjectDetails = (props) => {
 		console.log('refresh');
 	}, [refresh, refreshTicket]);
 	Modal.setAppElement('#root');
+
+	/**
+	 * Responsively change font size of chart title and legend labels
+	 */
+	window.addEventListener('resize', () => {
+		if (window.innerWidth >= 1440) {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 15,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 23,
+			};
+		} else if (window.innerWidth >= 1024) {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 12,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 20,
+			};
+		} else if (window.innerWidth >= 768) {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 10,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 18,
+			};
+		} else {
+			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
+				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
+				size: 7,
+			};
+			ChartJS.defaults.plugins.title.font = {
+				...ChartJS.defaults.plugins.title.font,
+				size: 15,
+			};
+		}
+	});
 
 	const scrollMe = () => {
 		if (!nodeRef) return;
@@ -174,7 +266,7 @@ const ProjectDetails = (props) => {
 
 	const listEmployees = () => {
 		return (
-			<div className='border-rich-black border overflow-scroll min-h-[20rem] max-h-[20rem] bg-white'>
+			<div className='border-rich-black border overflow-scroll min-h-[23rem] bg-white'>
 				<div className='grid grid-cols-4'>
 					<span className='col-span-2 p-2 border-y border-r border-rich-black text-2xl'>
 						Employee Name
@@ -186,49 +278,55 @@ const ProjectDetails = (props) => {
 						Tickets
 					</span>
 				</div>
-				{React.Children.toArray(
-					project.employees.map((employee) => {
-						let iter = project.employees.length - 1;
-						if (iter !== 0) {
-							iter--;
-							return (
-								<div
-									className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-									tabIndex={project.employees.length - iter}>
-									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.first_name +
-											' ' +
-											employee.last_name}
-									</span>
-									<span className='p-2 border-r border-b border-rich-black col-span-1'>
-										{employee.role}
-									</span>
-									<span className='p-2 border-b border-rich-black col-span-1'>
-										{employee.role}
-									</span>
-								</div>
-							);
-						} else {
-							return (
-								<div
-									tabIndex={project.employees.length - iter}
-									className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
-									<span className='p-2 border-r border-b border-rich-black col-span-2'>
-										{employee.first_name +
-											' ' +
-											employee.last_name}
-									</span>
-									<span className='p-2 border-r border-b border-rich-black col-span-1'>
-										{employee.role}
-									</span>
-									<span className='p-2 border-b border-rich-black col-span-1'>
-										{employee.role}
-									</span>
-								</div>
-							);
-						}
-					})
-				)}
+				<div className='min-h-[23rem] max-h-[23rem] overflow-scroll'>
+					{React.Children.toArray(
+						project.employees.map((employee) => {
+							let iter = project.employees.length - 1;
+							if (iter !== 0) {
+								iter--;
+								return (
+									<div
+										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
+										tabIndex={
+											project.employees.length - iter
+										}>
+										<span className='p-2 border-r border-b border-rich-black col-span-2'>
+											{employee.first_name +
+												' ' +
+												employee.last_name}
+										</span>
+										<span className='p-2 border-r border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+										<span className='p-2 border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+									</div>
+								);
+							} else {
+								return (
+									<div
+										tabIndex={
+											project.employees.length - iter
+										}
+										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
+										<span className='p-2 border-r border-b border-rich-black col-span-2'>
+											{employee.first_name +
+												' ' +
+												employee.last_name}
+										</span>
+										<span className='p-2 border-r border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+										<span className='p-2 border-b border-rich-black col-span-1'>
+											{employee.role}
+										</span>
+									</div>
+								);
+							}
+						})
+					)}
+				</div>
 			</div>
 		);
 	};
@@ -247,33 +345,88 @@ const ProjectDetails = (props) => {
 				className='bg-back-color w-full flex flex-col min-h-[100vh] rounded border-2 border-rich-black'
 				onClick={closeIt}>
 				<div className='w-full min-h-[7%] py-4 flex justify-center content-center text-3xl font-semibold'>
-					<span className='self-center'>{`Details of ${project.project_name}`}</span>
+					<span className='self-center'>{`${project.project_name}`}</span>
 				</div>
 				<div className='w-full min-h-[93%] grid grid-cols-8 pb-4'>
-					<div className='col-span-8 max-h-fit min-h-[45rem] border-4 border-carolina-blue w-[95%] mx-auto p-2'>
+					<div className='col-span-8 max-h-fit min-h-[45rem] border-4 border-carolina-blue w-[95%] mx-auto p-4'>
 						<div className='grid grid-cols-8'>
 							<div className='col-span-8 flex flex-row justify-between'>
-								<div className='min-h-[20rem] grid grid-cols-4 border border-rich-black p-2 w-[49%]'>
-									<h1 className='text-2xl col-span-4 text-center'>
-										Project Information
-									</h1>
-									<h2 className='col-span-4 text-xl'>{`Project Name: ${project.project_name}`}</h2>
-									<h2 className='col-span-4 text-xl'>{`Project ID: ${project._id}`}</h2>
-									<h2 className='col-span-4 text-xl'>{`Project Description: ${project.project_description}`}</h2>
-									<h2 className='col-span-4 text-xl'>{`Assigned Employees: ${project.employees.length}`}</h2>
+								<div className='grid grid-cols-4 border min-h-[23rem] border-rich-black p-2 w-[49%]'>
+									<div className='col-span-4 flex flex-col'>
+										<h1 className='text-2xl w-full border-b border-rich-black text-center'>
+											Project Description
+										</h1>
+										<div className='text-xl pt-2 max-h-[23rem] overflow-scroll'>
+											{project.project_description}
+										</div>
+									</div>
 								</div>
 								<div className='w-[49%]'>{listEmployees()}</div>
 							</div>
 							<div className='col-span-8 flex flex-col'>
 								<div className='mt-4 border border-rich-black'>
-									<h1 className='py-4 text-3xl col-span-4 text-center'>
+									<h1 className='py-2 text-2xl col-span-4 text-center'>
 										Tickets
 									</h1>
 								</div>
 								{listTickets()}
 							</div>
+							<div className='col-span-8 flex justify-evenly mt-2'>
+								<div className='h-36 lg:h-52 flex justify-between w-[32%] p-2 border border-rich-black'>
+									<Doughnut
+										options={{
+											maintainAspectRatio: false,
+											responsive: true,
+											aspectRatio: 1,
+											plugins: {
+												title: {
+													display: true,
+													text: 'Ticket Status',
+												},
+											},
+										}}
+										data={statusChartData(
+											project
+										)}></Doughnut>
+								</div>
+								<div className='h-36 lg:h-52 flex justify-between w-[32%] p-2 border border-rich-black'>
+									<Doughnut
+										options={{
+											maintainAspectRatio: false,
+											responsive: true,
+											aspectRatio: 1,
+											plugins: {
+												title: {
+													display: true,
+													text: 'Ticket Priority',
+												},
+											},
+										}}
+										data={priorityChartData(
+											project
+										)}></Doughnut>
+								</div>
+								<div className='h-36 lg:h-52 flex justify-between w-[32%] p-2 border border-rich-black'>
+									<Doughnut
+										options={{
+											maintainAspectRatio: false,
+											responsive: true,
+											aspectRatio: 1,
+											plugins: {
+												title: {
+													display: true,
+													text: 'Ticket Types',
+												},
+											},
+										}}
+										data={typeChartData(
+											project
+										)}></Doughnut>
+								</div>
+							</div>
 						</div>
 					</div>
+
 					<div className='col-span-8 items-center text-xl'>
 						<span className='items-center py-2 ml-6 mr-6 h-fit flex justify-between'>
 							<common.ActionButton

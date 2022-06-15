@@ -173,7 +173,6 @@ const ProjectCard = (props) => {
 		],
 	};
 
-	console.log(props.project);
 
 	const employeeGraph = () => {
 		return (

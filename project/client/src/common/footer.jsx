@@ -10,7 +10,7 @@ const Footer = (props) => {
 				width='80px'
 				className='block'></img>
 			<span className='flex flex-col justify-end mb-2'>
-				<p className='text-black'>
+				<p className='text-black mr-2'>
 					&copy; Copyright 2022, Jakob Schilling
 				</p>
 			</span>

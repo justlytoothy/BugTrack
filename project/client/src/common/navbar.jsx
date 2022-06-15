@@ -3,6 +3,7 @@ import common from './commonImports';
 import { useSelector, useDispatch } from 'react-redux';
 import { getName, logoutUser } from '../features/auth/authSlice';
 import { CSSTransition } from 'react-transition-group';
+import logo from '../images/exLogo.png';
 
 const NavBar = (props) => {
 	const dispatch = useDispatch();
@@ -30,10 +31,15 @@ const NavBar = (props) => {
 	return (
 		<div className='text-white bg-navbar-color items-center text-lg md:text-xl h-12 flex justify-between px-4 -mr-2'>
 			<common.FontAwesomeIcon
-				className='text-2xl md:text-3xl cursor-pointer lg:invisible'
+				className='text-2xl md:text-3xl cursor-pointer lg:hidden'
 				icon='bars'
 				onClick={props.openIt}
 			/>
+			<img
+				alt='My Example Logo'
+				src={logo}
+				width='120px'
+				className='hidden lg:block'></img>
 			<div>
 				<div className='flex justify-end w-fit items-center'>
 					<div
