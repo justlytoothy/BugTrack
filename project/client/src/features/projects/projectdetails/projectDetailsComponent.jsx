@@ -14,7 +14,7 @@ import {
 	statusChartData,
 	typeChartData,
 	priorityChartData,
-} from './graphData.js';
+} from '../graphData.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 //Chart Default Sizes Responsive
@@ -505,7 +505,7 @@ const ProjectDetails = (props) => {
 			</div>
 		);
 	} else {
-		return <div>Loading Project Info...</div>;
+		return <common.SpinnerPage closeIt={closeIt}></common.SpinnerPage>;
 	}
 };
 

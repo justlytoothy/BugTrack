@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from '../../services/auth-header';
 
 const initialState = {
-	status: 'none',
+	loading: false,
 	error: null,
 	allProjects: [],
 	selectedProject: {},
@@ -77,72 +77,72 @@ const projectSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(newProject.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 				state.refresh++;
 			})
 			.addCase(newProject.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.refresh++;
 				return action.payload;
 			})
 			.addCase(newProject.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 				state.refresh++;
 			})
 			.addCase(editProject.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 				state.refresh++;
 			})
 			.addCase(editProject.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.refresh++;
 				return action.payload;
 			})
 			.addCase(editProject.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 				state.refresh++;
 			})
 			.addCase(getProject.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 			})
 			.addCase(getProject.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.selectedProject = action.payload;
 			})
 			.addCase(getProject.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 			})
 			.addCase(getAllProjects.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 			})
 			.addCase(getAllProjects.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.allProjects = action.payload;
 			})
 			.addCase(getAllProjects.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 			})
 			.addCase(deleteProject.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 				state.refresh++;
 			})
 			.addCase(deleteProject.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.refresh++;
 			})
 			.addCase(deleteProject.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 				state.refresh++;
 			});
 	},
 });
 
-export const projectStatus = (state) => state.project.status;
+export const projectStatus = (state) => state.project.loading;
 export const refreshStatus = (state) => state.project.refresh;
 export const allProjects = (state) => state.project.allProjects;
 export const getSelectedProject = (state) => state.project.selectedProject;

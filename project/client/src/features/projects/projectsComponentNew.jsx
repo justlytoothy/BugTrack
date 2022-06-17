@@ -12,12 +12,14 @@ import {
 	getAllProjects,
 	allProjects,
 	refreshStatus,
+	projectStatus,
 } from './projectSlice.js';
 
 const ProjectsComponentNew = (props) => {
 	const closeIt = useOutletContext();
 	const projectArray = useSelector(allProjects);
 	const refreshStat = useSelector(refreshStatus);
+	const loading = useSelector(projectStatus);
 	const [selectedProject, setSelectedProject] = useState();
 	const [showDetails, setShowDetails] = useState(false);
 	const dispatch = useDispatch();
@@ -49,7 +51,6 @@ const ProjectsComponentNew = (props) => {
 	};
 
 	const deleteOne = () => {
-		// console.log(sessionStorage.getItem('user'));
 		dispatch(deleteProject(selectedProject._id));
 	};
 	const showProject = (project) => {
@@ -83,7 +84,7 @@ const ProjectsComponentNew = (props) => {
 	const listProjects = () => {
 		let iter = projectArray.length - 1;
 		return (
-			<div className='overflow-scroll min-h-[58rem] max-h-[58rem] border-4 border-carolina-blue w-[95%] mx-auto'>
+			<div className='overflow-scroll min-h-[58rem] max-h-[58rem] xl:min-h-[65rem] xl:max-h-[65rem] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-rich-black font-semibold text-lg border-gray-border whitespace-nowrap'>
 					<span className='col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Project Name
@@ -146,91 +147,95 @@ const ProjectsComponentNew = (props) => {
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	return (
-		<div
-			className='bg-back-color w-full grid grid-cols-2 min-h-full rounded border-2 border-rich-black'
-			onClick={closeIt}>
-			<div className='col-span-2 h-full'>
-				<div className='w-full flex justify-center content-center text-2xl lg:text-3xl font-semibold col-span-2 py-4'>
-					<span className='self-center'>Projects</span>
-				</div>
-				<div className='w-full min-h-full grid grid-cols-8'>
-					<div className='col-span-8 text-xl'>
-						{listProjects()}
-						<div className='text-xl flex flex-col justify-end pt-2'>
-							<span className='ml-6 mr-6 h-fit flex justify-between'>
-								<common.ActionButton
-									text={
-										<div>
-											New Project
-											{/* &nbsp;
+	if (!loading) {
+		return (
+			<div
+				className='bg-back-color w-full grid grid-cols-2 min-h-full rounded border-2 border-rich-black'
+				onClick={closeIt}>
+				<div className='col-span-2 h-full'>
+					<div className='w-full flex justify-center content-center text-2xl lg:text-3xl font-semibold col-span-2 py-4'>
+						<span className='self-center'>Projects</span>
+					</div>
+					<div className='w-full min-h-full grid grid-cols-8'>
+						<div className='col-span-8'>
+							{listProjects()}
+							<div className='flex flex-col justify-end pt-2'>
+								<span className='ml-6 mr-6 h-fit flex justify-between'>
+									<common.ActionButton
+										text={
+											<div>
+												New Project
+												{/* &nbsp;
 											<common.FontAwesomeIcon
 												className='text-midnight-blue text-xl'
 												icon='fa-solid fa-square-plus'
 									/>*/}
-										</div>
-									}
-									type='submit'
-									click={openForm}
-									extraClass=''></common.ActionButton>
-								<common.ActionButton
-									text='Delete Project'
-									click={deleteOne}
-									type='delete'></common.ActionButton>
-							</span>
+											</div>
+										}
+										type='submit'
+										click={openForm}
+										extraClass=''></common.ActionButton>
+									<common.ActionButton
+										text='Delete Project'
+										click={deleteOne}
+										type='delete'></common.ActionButton>
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
+				<Modal
+					overlayClassName='fix-modal-overlay'
+					className='fix-modal'
+					style={{
+						content: {
+							WebkitOverflowScrolling: 'touch',
+						},
+					}}
+					isOpen={modalIsOpen}
+					onRequestClose={closeForm}
+					contentLabel='New Project Form'>
+					<NewProjectComponent
+						close={closeForm}></NewProjectComponent>
+				</Modal>
+				<Modal
+					overlayClassName='fix-modal-overlay'
+					className='fix-modal'
+					style={{
+						content: {
+							WebkitOverflowScrolling: 'touch',
+						},
+					}}
+					isOpen={showDetails}
+					onRequestClose={closeDetails}
+					contentLabel='View Project'>
+					<ProjectCard
+						project={selectedProject}
+						editProject={openEditForm}
+						show={showDetails}
+						close={closeDetails}></ProjectCard>
+				</Modal>
+				<Modal
+					overlayClassName='fix-modal-overlay'
+					className='fix-modal'
+					style={{
+						content: {
+							WebkitOverflowScrolling: 'touch',
+						},
+					}}
+					isOpen={editIsOpen}
+					onRequestClose={closeEditForm}
+					contentLabel='Edit Project'>
+					<EditProjectComponent
+						project={selectedProject}
+						close={closeEditForm}
+						closeParent={closeDetails}></EditProjectComponent>
+				</Modal>
 			</div>
-			<Modal
-				overlayClassName='fix-modal-overlay'
-				className='fix-modal'
-				style={{
-					content: {
-						WebkitOverflowScrolling: 'touch',
-					},
-				}}
-				isOpen={modalIsOpen}
-				onRequestClose={closeForm}
-				contentLabel='New Project Form'>
-				<NewProjectComponent close={closeForm}></NewProjectComponent>
-			</Modal>
-			<Modal
-				overlayClassName='fix-modal-overlay'
-				className='fix-modal'
-				style={{
-					content: {
-						WebkitOverflowScrolling: 'touch',
-					},
-				}}
-				isOpen={showDetails}
-				onRequestClose={closeDetails}
-				contentLabel='View Project'>
-				<ProjectCard
-					project={selectedProject}
-					editProject={openEditForm}
-					show={showDetails}
-					close={closeDetails}></ProjectCard>
-			</Modal>
-			<Modal
-				overlayClassName='fix-modal-overlay'
-				className='fix-modal'
-				style={{
-					content: {
-						WebkitOverflowScrolling: 'touch',
-					},
-				}}
-				isOpen={editIsOpen}
-				onRequestClose={closeEditForm}
-				contentLabel='Edit Project'>
-				<EditProjectComponent
-					project={selectedProject}
-					close={closeEditForm}
-					closeParent={closeDetails}></EditProjectComponent>
-			</Modal>
-		</div>
-	);
+		);
+	} else {
+		return <common.SpinnerPage closeIt={closeIt}></common.SpinnerPage>;
+	}
 };
 
 export default ProjectsComponentNew;

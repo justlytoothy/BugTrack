@@ -115,11 +115,18 @@ const EditProjectComponent = (props) => {
 					)}
 				</div>
 				<span className='col-span-1'></span>
-				<common.ActionButton
-					extraClass='col-span-8 mx-auto h-8'
-					text='Save Changes'
-					type='submit'
-					click={handleSubmit(submitMe)}></common.ActionButton>
+				<div className='col-span-8 flex justify-between'>
+					<common.ActionButton
+						type='cancel'
+						text='Cancel'
+						extraClass=''
+						click={props.close}></common.ActionButton>
+					<common.ActionButton
+						extraClass=''
+						text='Save Changes'
+						type='submit'
+						click={handleSubmit(submitMe)}></common.ActionButton>
+				</div>
 			</form>
 		</div>
 	);

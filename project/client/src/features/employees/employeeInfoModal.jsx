@@ -2,53 +2,13 @@ import React from 'react';
 import common from '../../common/commonImports';
 import { Doughnut } from 'react-chartjs-2';
 import { useDispatch } from 'react-redux';
-import { deleteProject } from './projectSlice';
+import { deleteUser } from '../auth/authSlice.js';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
-import { statusChartData, typeChartData } from './graphData.js';
+import { statusChartData, typeChartData } from '../projects/graphData.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
-//Chart Default Sizes Responsive
-ChartJS.overrides['doughnut'].plugins.legend.position = 'right';
-if (window.innerWidth >= 1440) {
-	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
-		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
-		size: 15,
-	};
-	ChartJS.defaults.plugins.title.font = {
-		...ChartJS.defaults.plugins.title.font,
-		size: 23,
-	};
-} else if (window.innerWidth >= 1024) {
-	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
-		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
-		size: 12,
-	};
-	ChartJS.defaults.plugins.title.font = {
-		...ChartJS.defaults.plugins.title.font,
-		size: 20,
-	};
-} else if (window.innerWidth >= 768) {
-	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
-		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
-		size: 10,
-	};
-	ChartJS.defaults.plugins.title.font = {
-		...ChartJS.defaults.plugins.title.font,
-		size: 18,
-	};
-} else {
-	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
-		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
-		size: 7,
-	};
-	ChartJS.defaults.plugins.title.font = {
-		...ChartJS.defaults.plugins.title.font,
-		size: 15,
-	};
-}
 ///////////////////
 ///////////////////
-const ProjectCard = (props) => {
+const EmployeeInfoModal = (props) => {
 	const dispatch = useDispatch();
 	/**
 	 * Responsively change font size of chart title and legend labels
@@ -95,7 +55,7 @@ const ProjectCard = (props) => {
 
 	const deleteOne = () => {
 		// console.log(sessionStorage.getItem('user'));
-		dispatch(deleteProject(props.project._id));
+		dispatch(deleteUser(props.project._id));
 		setTimeout(() => props.close(), 100);
 	};
 
@@ -266,6 +226,6 @@ const ProjectCard = (props) => {
 	}
 };
 
-export default ProjectCard;
+export default EmployeeInfoModal;
 
 // transition-all motion-reduce:transition-none transform origin-center duration-700 ' + cardClass()

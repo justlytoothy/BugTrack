@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import myAxios from '../../services/auth-header';
+import axios from '../../services/auth-header';
 let initialState = {};
 if (
 	sessionStorage.length > 0 &&
@@ -11,7 +11,7 @@ if (
 		initialState = {
 			isLoggedIn: true,
 			user,
-			status: 'none',
+			loading: false,
 			error: null,
 			allUsers: [],
 			fullName: `${user.first_name} ${user.last_name}`,
@@ -20,7 +20,7 @@ if (
 		initialState = {
 			isLoggedIn: false,
 			user: null,
-			status: 'none',
+			loading: false,
 			error: null,
 			allUsers: [],
 			fullName: '',
@@ -30,7 +30,7 @@ if (
 	initialState = {
 		isLoggedIn: false,
 		user: null,
-		status: 'none',
+		loading: false,
 		error: null,
 		allUsers: [],
 		fullName: '',
@@ -39,7 +39,7 @@ if (
 
 export const loginUser = createAsyncThunk('user/login', async (user) => {
 	try {
-		const response = await myAxios.post('user/login', user);
+		const response = await axios.post('user/login', user);
 		return response.data;
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured');
@@ -48,7 +48,7 @@ export const loginUser = createAsyncThunk('user/login', async (user) => {
 });
 export const newUser = createAsyncThunk('user/register', async (user) => {
 	try {
-		const response = await myAxios.post('user/register', user);
+		const response = await axios.post('user/register', user);
 		return response.data;
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured');
@@ -57,7 +57,7 @@ export const newUser = createAsyncThunk('user/register', async (user) => {
 });
 export const listAllUsers = createAsyncThunk('user/list', async () => {
 	try {
-		const response = await myAxios.get('user');
+		const response = await axios.get('user');
 		return response.data;
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured');
@@ -67,6 +67,18 @@ export const listAllUsers = createAsyncThunk('user/list', async () => {
 
 export const logoutUser = createAsyncThunk('user/logout', async () => {
 	return true;
+});
+
+export const deleteUser = createAsyncThunk('user/delete', async (data) => {
+	try {
+		const response = await axios.delete('user', {
+			data: { id: data },
+		});
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
 });
 
 const authSlice = createSlice({
@@ -80,10 +92,10 @@ const authSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(loginUser.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 			})
 			.addCase(loginUser.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.isLoggedIn = true;
 				state.user = action.payload;
 				state.fullName = `${action.payload.first_name} ${action.payload.last_name}`;
@@ -91,27 +103,27 @@ const authSlice = createSlice({
 				sessionStorage.setItem('user', myString);
 			})
 			.addCase(loginUser.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 			})
 			.addCase(logoutUser.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 			})
 			.addCase(logoutUser.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				state.isLoggedIn = false;
 				state.user = null;
 				sessionStorage.removeItem('user');
 			})
 			.addCase(logoutUser.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 			})
 			.addCase(listAllUsers.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 			})
 			.addCase(listAllUsers.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 				let users = action.payload;
 				users.forEach((user) => {
 					user.password = '';
@@ -119,23 +131,23 @@ const authSlice = createSlice({
 				state.allUsers = users;
 			})
 			.addCase(listAllUsers.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 			})
 			.addCase(newUser.pending, (state, action) => {
-				state.status = 'loading';
+				state.loading = true;
 			})
 			.addCase(newUser.fulfilled, (state, action) => {
-				state.status = 'success';
+				state.loading = false;
 			})
 			.addCase(newUser.rejected, (state, action) => {
-				state.status = 'failed';
+				state.loading = false;
 				state.error = action.error.message;
 			});
 	},
 });
 
-export const getLoginStatus = (state) => state.auth.status;
+export const getLoginStatus = (state) => state.auth.loading;
 export const getAllUsers = (state) => state.auth.allUsers;
 export const getIsLogged = (state) => state.auth.isLoggedIn;
 export const getLoginError = (state) => state.auth.error;

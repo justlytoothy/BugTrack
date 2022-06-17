@@ -86,13 +86,28 @@ const loginUser = async (req, res) => {
 		return res.status(400).json({ Error: error });
 	}
 };
-const getUsers = (req, res) => {
-	userModel.find({}, (err, data) => {
-		if (err) {
-			return res.json({ Error: err });
-		}
-		return res.json(data);
-	});
+const getUsers = async (req, res) => {
+	try {
+		const response = await userModel
+			.find({})
+			.populate('assigned_projects assigned_tickets')
+			.exec();
+		return res.json(response);
+	} catch (error) {
+		console.log(error);
+		return res.json({ Error: error });
+	}
+};
+const deleteUser = async (req, res) => {
+	try {
+		console.log('implement me');
+		// const response = await userModel.findOneAndDelete({
+		// 	_id: req.body.id,
+		// });
+	} catch (error) {
+		console.log(error);
+		return res.status(400).json({ Error: error });
+	}
 };
 
 export default { newUser, editUser, loginUser, getUsers };

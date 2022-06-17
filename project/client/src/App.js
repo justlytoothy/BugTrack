@@ -16,7 +16,6 @@ function App() {
 			</div>
 		);
 	} else {
-		dispatch(logoutUser);
 		fullApp = (
 			<div className='min-w-[100vw] overflow-y-hidden overflow-x-hidden min-h-full p-2'>
 				<LoginComponent></LoginComponent>

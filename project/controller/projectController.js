@@ -140,11 +140,6 @@ const deleteProject = async (req, res) => {
 		console.log(error);
 		return res.status(400).json({ Error: error });
 	}
-
-	// const projectEmployees = await userModel.find({
-	// 	assigned_projects: id,
-	// });
-	// console.log(projectEmployees);
 };
 
 export default {
