@@ -1,45 +1,45 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { listAllUsers, getAllUsers } from '../auth/authSlice';
-import { useOutletContext } from 'react-router-dom';
-import common from '../../common/commonImports';
-import EmployeeInfoModal from './employeeInfoModal';
-import Modal from 'react-modal';
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { listAllUsers, getAllUsers } from '../auth/authSlice'
+import { useOutletContext } from 'react-router-dom'
+import common from '../../common/commonImports'
+import EmployeeInfoModal from './employeeInfoModal'
+import Modal from 'react-modal'
 
 const EmployeesComponent = (props) => {
-	const closeIt = useOutletContext();
-	Modal.setAppElement('#root');
-	const dispatch = useDispatch();
+	const closeIt = useOutletContext()
+	Modal.setAppElement('#root')
+	const dispatch = useDispatch()
 	useEffect(() => {
-		dispatch(listAllUsers());
-	}, []);
-	const allEmployees = useSelector(getAllUsers);
-	const [showInfo, setShowInfo] = useState(false);
-	const [showEdit, setShowEdit] = useState(false);
-	const [selectedEmployee, setSelectedEmployee] = useState('');
-	console.log(allEmployees);
+		dispatch(listAllUsers())
+	}, [])
+	const allEmployees = useSelector(getAllUsers)
+	const [showInfo, setShowInfo] = useState(false)
+	const [showEdit, setShowEdit] = useState(false)
+	const [selectedEmployee, setSelectedEmployee] = useState('')
+	console.log(allEmployees)
 	const showEmployeeInfo = (employee) => {
-		setSelectedEmployee(employee);
-		setShowInfo(true);
-	};
+		setSelectedEmployee(employee)
+		setShowInfo(true)
+	}
 	const closeEmployeeInfo = () => {
-		setShowInfo(false);
-	};
+		setShowInfo(false)
+	}
 	const openEditEmployee = () => {
-		setShowEdit(true);
-	};
+		setShowEdit(true)
+	}
 	const closeEditEmployee = () => {
-		setShowEdit(false);
-	};
+		setShowEdit(false)
+	}
 
 	/**
 	 * Takes in the fetched employee array and iterates over it to display relevant data in the table
 	 * @returns employee table
 	 */
 	const listEmployees = () => {
-		let iter = allEmployees.length - 1;
+		let iter = allEmployees.length - 1
 		return (
-			<div className='overflow-scroll min-h-[58rem] max-h-[58rem] xl:min-h-[65rem] xl:max-h-[65rem] border-4 border-carolina-blue w-[95%] mx-auto'>
+			<div className='overflow-scroll min-h-[58rem] max-h-[58rem] 2xl:min-h-[65rem] 2xl:max-h-[65rem] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-rich-black font-semibold text-lg border-gray-border whitespace-nowrap'>
 					<span className='col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Employee Name
@@ -54,7 +54,7 @@ const EmployeesComponent = (props) => {
 				{React.Children.toArray(
 					allEmployees.map((employee) => {
 						if (iter !== 0) {
-							iter--;
+							iter--
 							return (
 								<div
 									tabIndex={allEmployees.length - 1 - iter}
@@ -64,17 +64,13 @@ const EmployeesComponent = (props) => {
 										{`${employee.first_name} ${employee.last_name}`}
 									</span>
 									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-gray-border truncate'>
-										<p>
-											{listProjects(
-												employee.assigned_projects
-											)}
-										</p>
+										<p>{listProjects(employee.assigned_projects)}</p>
 									</span>
 									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-gray-border truncate'>
 										{`${employee.first_name} ${employee.last_name}`}
 									</span>
 								</div>
-							);
+							)
 						} else {
 							return (
 								<div
@@ -85,35 +81,31 @@ const EmployeesComponent = (props) => {
 										{`${employee.first_name} ${employee.last_name}`}
 									</span>
 									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
-										<p>
-											{listProjects(
-												employee.assigned_projects
-											)}
-										</p>
+										<p>{listProjects(employee.assigned_projects)}</p>
 									</span>
 									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
 										{`${employee.first_name} ${employee.last_name}`}
 									</span>
 								</div>
-							);
+							)
 						}
 					})
 				)}
 			</div>
-		);
-	};
+		)
+	}
 
 	const listProjects = (projects) => {
-		let projectString = '';
+		let projectString = ''
 		projects.forEach((project) => {
 			if (projects.length - 1 === projects.indexOf(project)) {
-				projectString += project.project_name;
+				projectString += project.project_name
 			} else {
-				projectString += project.project_name + ', ';
+				projectString += project.project_name + ', '
 			}
-		});
-		return projectString;
-	};
+		})
+		return projectString
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -174,10 +166,10 @@ const EmployeesComponent = (props) => {
 						close={closeEmployeeInfo}></EmployeeInfoModal>
 				</Modal>
 			</div>
-		);
+		)
 	} else {
-		return <common.SpinnerPage closeIt={closeIt}></common.SpinnerPage>;
+		return <common.SpinnerPage closeIt={closeIt}></common.SpinnerPage>
 	}
-};
+}
 
-export default EmployeesComponent;
+export default EmployeesComponent
