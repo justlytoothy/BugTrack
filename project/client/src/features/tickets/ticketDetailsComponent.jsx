@@ -12,7 +12,6 @@ import { newComment, refreshCommentStatus } from '../comments/commentSlice';
 import { CSSTransition } from 'react-transition-group';
 import common from '../../common/commonImports';
 import Modal from 'react-modal';
-import { displayPartsToString } from 'typescript';
 
 const TicketDetails = (props) => {
 	const closeIt = useOutletContext();

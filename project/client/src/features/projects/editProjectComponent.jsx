@@ -13,6 +13,7 @@ const EditProjectComponent = (props) => {
 	const dispatch = useDispatch();
 	const user = JSON.parse(sessionStorage.getItem('user'));
 	const [employees, setEmployees] = useState(props.project.employees);
+	const [isChanged, setIsChanged] = useState(false);
 
 	const {
 		register,
@@ -28,17 +29,23 @@ const EditProjectComponent = (props) => {
 	}, []);
 
 	const submitMe = (data) => {
-		data.project_id = props.project._id;
-		data.editedBy = user._id;
-		let justIds = [];
-		employees.forEach((employee) => justIds.push(employee._id));
-		data.employees = justIds;
-		console.log(data);
-		dispatch(editProject(data));
+		if (
+			data.projDesc !== props.project.project_description ||
+			data.projName !== props.project.project_name ||
+			isChanged
+		) {
+			data.project_id = props.project._id;
+			data.editedBy = user._id;
+			let justIds = [];
+			employees.forEach((employee) => justIds.push(employee._id));
+			data.employees = justIds;
+			dispatch(editProject(data));
+		}
 		props.close();
 		props.closeParent();
 	};
 	const onChange = (newValue, actionMeta) => {
+		setIsChanged(true);
 		switch (actionMeta.action) {
 			case 'clear':
 				setEmployees([]);

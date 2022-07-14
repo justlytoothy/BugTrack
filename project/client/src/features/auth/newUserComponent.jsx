@@ -19,6 +19,9 @@ const NewUserComponent = (props) => {
 		dispatch(newUser(data));
 		props.close();
 	};
+	// const handleEnter = (e) => {
+	// 	if ()
+	// };
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -29,15 +32,16 @@ const NewUserComponent = (props) => {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	return (
-		<div className='min-h-fit min-w-fit'>
-			<form className='text-black h-full w-full grid grid-cols-8 items-center place-content-center space-y-8 pb-4'>
+		<div className='min-h-fit h-[25rem] min-w-fit'>
+			<form className='text-black h-full w-full grid grid-cols-8 items-center space-y-8 pb-4'>
 				<h1 className='col-span-8 text-3xl text-midnight-blue pt-4 text-center'>
 					New User
 				</h1>
-				<common.FontAwesomeIcon
+				<button
 					className='cursor-pointer text-rich-black text-2xl fixed -top-4 right-4'
-					icon='fa-solid fa-xmark'
-					onClick={props.close}></common.FontAwesomeIcon>
+					onClick={props.close}>
+					<common.FontAwesomeIcon icon='fa-solid fa-xmark'></common.FontAwesomeIcon>
+				</button>
 				<input
 					className='h-10 col-span-8 md:col-span-4 pl-2 m-2 text-lg border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black'
 					type='text'
