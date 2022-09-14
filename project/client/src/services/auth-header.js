@@ -4,7 +4,9 @@ let store;
 export const injectStore = (_store) => {
 	store = _store;
 };
-axios.defaults.baseURL = 'http://localhost:3500/';
+axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
+console.log(process.env.REACT_APP_SERVER_URL)
+console.log('hi')
 axios.interceptors.request.use((request) => {
 	if (
 		sessionStorage.length > 0 &&
@@ -16,6 +18,7 @@ axios.interceptors.request.use((request) => {
 			request.headers.common['x-access-token'] = user.token;
 		}
 	}
+
 	return request;
 });
 axios.interceptors.response.use(
