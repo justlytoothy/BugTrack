@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import common from './commonImports';
-import { useSelector, useDispatch } from 'react-redux';
-import { getName, logoutUser } from '../features/auth/authSlice';
-import { CSSTransition } from 'react-transition-group';
-import logo from '../images/exLogo.png';
+import React, { useEffect, useState } from 'react'
+import common from './commonImports'
+import { useSelector, useDispatch } from 'react-redux'
+import { getName, logoutUser } from '../features/auth/authSlice'
+import { CSSTransition } from 'react-transition-group'
+import logo from '../images/exLogo.png'
 
 const NavBar = (props) => {
-	const dispatch = useDispatch();
-	const fullName = useSelector(getName);
-	const nodeRef = React.useRef(null);
-	const [openDropdown, setOpenDropdown] = useState(false);
+	const dispatch = useDispatch()
+	const fullName = useSelector(getName)
+	const nodeRef = React.useRef(null)
+	const [openDropdown, setOpenDropdown] = useState(false)
 	const toggleOpenDropdown = () => {
-		setOpenDropdown(!openDropdown);
-	};
+		setOpenDropdown(!openDropdown)
+	}
 	const getCaretClass = () => {
 		if (openDropdown) {
-			return '-rotate-90';
+			return '-rotate-90'
 		}
-		return '';
-	};
+		return ''
+	}
 	useEffect(() => {
 		if (openDropdown) {
-			toggleOpenDropdown();
+			toggleOpenDropdown()
 		}
-	}, [props.closeDropdown]);
+	}, [props.closeDropdown])
 
 	function logout() {
-		dispatch(logoutUser());
+		dispatch(logoutUser())
 	}
 	return (
 		<div className='text-white bg-navbar-color items-center text-lg md:text-xl h-12 flex justify-between px-4 -mr-2'>
@@ -64,9 +64,7 @@ const NavBar = (props) => {
 						</span>
 						<div className='flex flex-col justify-center'>
 							<common.FontAwesomeIcon
-								className={
-									'text-xl transition-all ' + getCaretClass()
-								}
+								className={'text-xl transition-all ' + getCaretClass()}
 								icon='caret-left'
 							/>
 						</div>
@@ -103,7 +101,7 @@ const NavBar = (props) => {
 								className='cursor-pointer hover:bg-sidebar-button hover:text-white py-1 px-1'>
 								<p className='hidden sm:block'>Log Out</p>
 								<common.FontAwesomeIcon
-									icon='fa-arrow-right-from-bracket'
+									icon='fa-arrow-down-from-bracket'
 									className='cursor-pointer text-2xl md:text-3xl sm:hidden hover:bg-sidebar-button hover:text-white px-1'></common.FontAwesomeIcon>
 							</li>
 						</ul>
@@ -111,7 +109,7 @@ const NavBar = (props) => {
 				</CSSTransition>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default NavBar;
+export default NavBar
