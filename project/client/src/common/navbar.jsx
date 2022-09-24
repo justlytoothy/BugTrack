@@ -15,7 +15,7 @@ const NavBar = (props) => {
 	}
 	const getCaretClass = () => {
 		if (openDropdown) {
-			return '-rotate-90'
+			return '-rotate-180'
 		}
 		return ''
 	}
@@ -65,7 +65,7 @@ const NavBar = (props) => {
 						<div className='flex flex-col justify-center'>
 							<common.FontAwesomeIcon
 								className={'text-xl transition-all ' + getCaretClass()}
-								icon='caret-left'
+								icon='caret-down'
 							/>
 						</div>
 					</div>
@@ -101,7 +101,7 @@ const NavBar = (props) => {
 								className='cursor-pointer hover:bg-sidebar-button hover:text-white py-1 px-1'>
 								<p className='hidden sm:block'>Log Out</p>
 								<common.FontAwesomeIcon
-									icon='fa-arrow-down-from-bracket'
+									icon='fa-arrow-right-from-bracket'
 									className='cursor-pointer text-2xl md:text-3xl sm:hidden hover:bg-sidebar-button hover:text-white px-1'></common.FontAwesomeIcon>
 							</li>
 						</ul>
