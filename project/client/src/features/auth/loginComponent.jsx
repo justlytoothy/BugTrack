@@ -43,6 +43,7 @@ const LoginComponent = () => {
 	function submit(e) {
 		e.preventDefault()
 		let data = formInput
+		console.log(data)
 		dispatch(loginUser(data))
 	}
 	const errorMsg = () => {

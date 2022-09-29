@@ -5,8 +5,6 @@ export const injectStore = (_store) => {
 	store = _store;
 };
 axios.defaults.baseURL = process.env.REACT_APP_SERVER_URL;
-console.log(process.env.REACT_APP_SERVER_URL)
-console.log('hi')
 axios.interceptors.request.use((request) => {
 	if (
 		sessionStorage.length > 0 &&
