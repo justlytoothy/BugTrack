@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 const newUser = async (req, res) => {
 	try {
-		const { username, password, first_name, last_name, role } = req.body;
+		let { username, password, first_name, last_name, role } = req.body;
 
 		//Check for all input
 		if (!(username && password && first_name && last_name && role)) {
@@ -61,12 +61,12 @@ const editUser = (req, res) => {
 
 const loginUser = async (req, res) => {
 	try {
-		const { username, password } = req.body;
+		let { username, password } = req.body;
 		if (!(username && password)) {
 			return res.status(400).send('All input is required');
 		}
+		username = username.toLowerCase();
 		const user = await userModel.findOne({ username });
-
 		if (user && (await bcryptjs.compare(password, user.password))) {
 			const token = jwt.sign(
 				{ user_id: user._id, username },
