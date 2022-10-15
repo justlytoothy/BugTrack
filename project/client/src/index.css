@@ -11,6 +11,13 @@ body,
 #root {
 	margin: -8px;
 }
+html {
+	scrollbar-width: none !important;
+	-ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+	display: none;
+}
 :root {
 	--prime-color: #19282f;
 	--color-1: #19282f;

@@ -84,7 +84,7 @@ const ProjectsComponent = (props) => {
 	const listProjects = () => {
 		let iter = projectArray.length - 1
 		return (
-			<div className='overflow-scroll no-scroll-bar min-h-[40rem] max-h-[40rem] 2xl:min-h-[65rem] 2xl:max-h-[65rem] border-4 border-carolina-blue w-[95%] mx-auto'>
+			<div className='overflow-scroll no-scroll-bar min-h-[35rem] max-h-[35rem] 2xl:min-h-[50rem] 2xl:max-h-[50rem] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-rich-black font-semibold text-lg border-gray-border whitespace-nowrap'>
 					<span className='col-span-7 sm:col-span-2 text-center sm:text-left px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Project Name

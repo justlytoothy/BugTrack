@@ -124,12 +124,8 @@ const EmployeeInfoModal = (props) => {
 
 	if (props.employee !== null) {
 		return (
-			<div className='max-h-[80vh] relative min-w-[25vw] max-w-[85vw] lg:max-w-[60vw] 2xl:max-w-[50vw] grid grid-cols-4'>
-				<div className='col-span-4 pb-4'>
-					<common.FontAwesomeIcon
-						className='cursor-pointer text-rich-black text-2xl fixed top-3 right-4'
-						icon='fa-solid fa-xmark'
-						onClick={props.close}></common.FontAwesomeIcon>
+			<div className='max-h-fit relative min-w-[25vw] max-w-[85vw] lg:max-w-[60vw] 2xl:max-w-[50vw] grid grid-cols-4'>
+				<div className='col-span-4 pb-4 flex justify-between'>
 					<h1 className='w-full mt-4 pl-8 text-3xl font-semibold'>
 						{props.employee.first_name + ' ' + props.employee.last_name}
 						<common.FontAwesomeIcon
@@ -137,6 +133,10 @@ const EmployeeInfoModal = (props) => {
 							icon='fa-solid fa-edit'
 							onClick={props.editEmployee}></common.FontAwesomeIcon>
 					</h1>
+					<common.FontAwesomeIcon
+						className='cursor-pointer text-rich-black text-2xl'
+						icon='fa-solid fa-xmark'
+						onClick={props.close}></common.FontAwesomeIcon>
 				</div>
 				<div className='col-span-4 grid grid-cols-4 border border-rich-black rounded p-2'>
 					<div className='h-80 col-span-4 relative w-full flex justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>

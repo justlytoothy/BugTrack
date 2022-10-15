@@ -196,8 +196,8 @@ const DashboardComponent = (props) => {
 						<div className='col-span-8'>
 							<div className='overflow-scroll no-scroll-bar min-h-[30rem] max-h-[40rem] p-2 2xl:min-h-[45rem] 2xl:max-h-fit border-4 border-carolina-blue w-[95%] mx-auto flex flex-col space-y-16'>
 								{listProjects()}
-								<div className='flex justify-between px-4 h-fit space-x-8'>
-									<div className='h-48 lg:h-[14rem] flex justify-between w-[40rem] p-2 border border-rich-black'>
+								<div className='flex justify-evenly flex-wrap px-4 h-fit'>
+									<div className='h-36 lg:h-52 flex justify-between w-[30%] p-2 border border-rich-black'>
 										<Doughnut
 											options={{
 												maintainAspectRatio: false,
@@ -212,7 +212,7 @@ const DashboardComponent = (props) => {
 											}}
 											data={allStatusChartData(getTickets())}></Doughnut>
 									</div>
-									<div className='h-48 lg:h-[14rem] flex justify-between w-[40rem] p-2 border border-rich-black'>
+									<div className='h-36 lg:h-52 flex justify-between w-[30%] p-2 border border-rich-black'>
 										<Doughnut
 											options={{
 												maintainAspectRatio: false,
@@ -227,7 +227,7 @@ const DashboardComponent = (props) => {
 											}}
 											data={allPriorityChartData(getTickets())}></Doughnut>
 									</div>
-									<div className='h-48 lg:h-[14rem] flex justify-between w-[40rem] p-2 border border-rich-black'>
+									<div className='h-36 lg:h-52 flex justify-between w-[30%] p-2 border border-rich-black'>
 										<Doughnut
 											options={{
 												maintainAspectRatio: false,
