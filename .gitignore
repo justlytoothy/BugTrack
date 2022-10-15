@@ -1,2 +1,6 @@
 project/.env
 project/client/.env
+project/serverforprod.txt
+project/client/envforprod.txt
+project/envforprod.txt
+project/client/certs

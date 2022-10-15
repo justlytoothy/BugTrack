@@ -86,13 +86,13 @@ const ProjectsComponent = (props) => {
 		return (
 			<div className='overflow-scroll min-h-[40rem] max-h-[40rem] 2xl:min-h-[65rem] 2xl:max-h-[65rem] border-4 border-carolina-blue w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-rich-black font-semibold text-lg border-gray-border whitespace-nowrap'>
-					<span className='col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
+					<span className='col-span-7 sm:col-span-2 text-center sm:text-left px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Project Name
 					</span>
-					<span className='col-span-3 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
+					<span className='hidden sm:block sm:col-span-3 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
 						Assigned Employees
 					</span>
-					<span className='col-span-2 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
+					<span className='hidden sm:block sm:col-span-2 px-5 py-2 border-t border-b border-r border-gray-border truncate'>
 						Project Description
 					</span>
 				</div>
@@ -105,13 +105,13 @@ const ProjectsComponent = (props) => {
 									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
 									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white h-full w-full text-base'>
-									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-l border-gray-border truncate'>
+									<span className='col-span-7 sm:col-span-2 text-center sm:text-left justify-left px-5 py-2 border-r border-t border-l border-gray-border truncate'>
 										{project.project_name}
 									</span>
-									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-gray-border truncate'>
+									<span className='hidden sm:block sm:col-span-3 justify-left px-5 py-2 border-r border-t border-gray-border truncate'>
 										{listEmployees(project.employees)}
 									</span>
-									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-gray-border truncate'>
+									<span className='hidden sm:block sm:col-span-2 justify-left px-5 py-2 border-r border-t border-gray-border truncate'>
 										{project.project_description}
 									</span>
 								</div>
@@ -122,13 +122,13 @@ const ProjectsComponent = (props) => {
 									tabIndex={projectArray.length - 1 - iter}
 									onClick={() => showProject(project)}
 									className='grid grid-cols-7 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white h-full w-full text-base'>
-									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border truncate'>
+									<span className='col-span-7 text-center sm:text-left sm:col-span-2 justify-left px-5 py-2 border-r border-t border-b border-l border-gray-border truncate'>
 										{project.project_name}
 									</span>
-									<span className='col-span-3 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
+									<span className='hidden sm:block sm:col-span-3 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
 										{listEmployees(project.employees)}
 									</span>
-									<span className='col-span-2 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
+									<span className='hidden sm:block sm:col-span-2 justify-left px-5 py-2 border-r border-t border-b border-gray-border truncate'>
 										{project.project_description}
 									</span>
 								</div>
