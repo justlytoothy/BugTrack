@@ -1,5 +1,5 @@
-import React from 'react';
-import logo from '../images/exLogo.png';
+import React from 'react'
+import logo from '../images/exLogo.png'
 
 const Footer = (props) => {
 	return (
@@ -10,12 +10,19 @@ const Footer = (props) => {
 				width='80px'
 				className='block'></img>
 			<span className='flex flex-col justify-end mb-2'>
+				<a
+					className='text-black mr-2'
+					href='https://github.com/justlytoothy/BugTrack'>
+					https://github.com/justlytoothy/BugTrack
+				</a>
+			</span>
+			<span className='flex flex-col justify-end mb-2'>
 				<p className='text-black mr-2'>
 					&copy; Copyright 2022, Jakob Schilling
 				</p>
 			</span>
 		</div>
-	);
-};
+	)
+}
 
-export default Footer;
+export default Footer

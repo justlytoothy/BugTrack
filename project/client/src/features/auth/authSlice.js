@@ -40,7 +40,6 @@ if (
 export const loginUser = createAsyncThunk('user/login', async (user) => {
 	try {
 		const response = await axios.post('user/login', user)
-		console.log(response.data)
 		return response.data
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured')
