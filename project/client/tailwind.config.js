@@ -31,6 +31,6 @@ module.exports = {
 		},
 	},
 	plugins: [],
-};
+}
 
 //'back-color': '#f0fff0',

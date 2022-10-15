@@ -7,23 +7,25 @@ if (
 ) {
 	const userPre = sessionStorage.getItem('user')
 	let user = JSON.parse(userPre)
-	if (user.token) {
-		initialState = {
-			isLoggedIn: true,
-			user,
-			loading: false,
-			error: null,
-			allUsers: [],
-			fullName: `${user.first_name} ${user.last_name}`,
-		}
-	} else {
-		initialState = {
-			isLoggedIn: false,
-			user: null,
-			loading: false,
-			error: null,
-			allUsers: [],
-			fullName: '',
+	if (user != null) {
+		if (user.token) {
+			initialState = {
+				isLoggedIn: true,
+				user,
+				loading: false,
+				error: null,
+				allUsers: [],
+				fullName: `${user.first_name} ${user.last_name}`,
+			}
+		} else {
+			initialState = {
+				isLoggedIn: false,
+				user: null,
+				loading: false,
+				error: null,
+				allUsers: [],
+				fullName: '',
+			}
 		}
 	}
 } else {
@@ -40,7 +42,7 @@ if (
 export const loginUser = createAsyncThunk('user/login', async (user) => {
 	try {
 		const response = await axios.post('user/login', user)
-		console.log('this',response)
+		console.log('this', response)
 		return response.data
 	} catch (error) {
 		console.log('An error of ' + error.message + ' has occured')
@@ -153,5 +155,6 @@ export const getAllUsers = (state) => state.auth.allUsers
 export const getIsLogged = (state) => state.auth.isLoggedIn
 export const getLoginError = (state) => state.auth.error
 export const getName = (state) => state.auth.fullName
+export const getUser = (state) => state.auth.user
 export const { login } = authSlice.actions
 export default authSlice.reducer

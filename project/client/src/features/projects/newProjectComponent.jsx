@@ -1,70 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import common from '../../common/commonImports.js';
-import { useForm } from 'react-hook-form';
-import { newProject } from './projectSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { listAllUsers, getAllUsers } from '../auth/authSlice.js';
-import makeAnimated from 'react-select/animated';
-import TextareaAutosize from 'react-textarea-autosize';
+import React, { useEffect, useState } from 'react'
+import common from '../../common/commonImports.js'
+import { useForm } from 'react-hook-form'
+import { newProject } from './projectSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { listAllUsers, getAllUsers } from '../auth/authSlice.js'
+import makeAnimated from 'react-select/animated'
+import TextareaAutosize from 'react-textarea-autosize'
 
-import Select from 'react-select';
+import Select from 'react-select'
 
 const NewProjectComponent = (props) => {
-	const dispatch = useDispatch();
-	const user = JSON.parse(sessionStorage.getItem('user'));
-	const [assignedEmployees, setAssignedEmployees] = useState([]);
-	const [count, setCount] = useState(0);
+	const dispatch = useDispatch()
+	const user = JSON.parse(sessionStorage.getItem('user'))
+	const [assignedEmployees, setAssignedEmployees] = useState([])
+	const [count, setCount] = useState(0)
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm();
-	const animatedComponents = makeAnimated();
+	} = useForm()
+	const animatedComponents = makeAnimated()
 
-	const allEmployees = useSelector(getAllUsers);
+	const allEmployees = useSelector(getAllUsers)
 
 	useEffect(() => {
-		dispatch(listAllUsers());
-	}, []);
+		dispatch(listAllUsers())
+	}, [])
 
 	const submitMe = (data) => {
-		data.createdBy = user._id;
-		data.employees = assignedEmployees;
-		dispatch(newProject(data));
-		props.close();
-	};
+		data.createdBy = user._id
+		data.employees = assignedEmployees
+		dispatch(newProject(data))
+		props.close()
+	}
 	const onChange = (newValue, actionMeta) => {
 		switch (actionMeta.action) {
 			case 'clear':
-				setAssignedEmployees([]);
-				break;
+				setAssignedEmployees([])
+				break
 			case 'select-option':
-				setAssignedEmployees(newValue);
-				break;
+				setAssignedEmployees(newValue)
+				break
 			case 'remove-value':
-				setAssignedEmployees(newValue);
-				break;
+				setAssignedEmployees(newValue)
+				break
 			default:
-				break;
+				break
 		}
-	};
+	}
 
 	const currentEmployee = () => {
-		let foundEmployee = '';
+		let foundEmployee = ''
 		allEmployees.forEach((emp) => {
 			if (emp._id === user._id) {
-				foundEmployee = emp;
+				foundEmployee = emp
 			}
-		});
-		let index = allEmployees.indexOf(foundEmployee);
+		})
+		let index = allEmployees.indexOf(foundEmployee)
 		if (count < 1) {
-			setAssignedEmployees([allEmployees[index]]);
-			setCount(47);
+			setAssignedEmployees([allEmployees[index]])
+			setCount(47)
 		}
-		return index;
-	};
-	const onInputChange = (newValue, actionMeta) => {};
+		return index
+	}
+	const onInputChange = (newValue, actionMeta) => {}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,15 +74,18 @@ const NewProjectComponent = (props) => {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	return (
-		<div className='h-fit w-fit min-w-[25vw]'>
+		<div className='h-fit w-fit lg:max-h-[80vh] relative sm:min-w-[40vw] lg:max-w-[50vw] 2xl:max-w-[45vw]'>
 			<form className='text-rich-black h-full w-full grid grid-cols-8 items-center space-y-8'>
-				<h1 className='col-span-8 text-3xl text-midnight-blue pt-4 text-center'>
-					New Project
-				</h1>
-				<common.FontAwesomeIcon
-					className='cursor-pointer text-rich-black text-2xl fixed -top-4 right-4'
-					icon='fa-solid fa-xmark'
-					onClick={props.close}></common.FontAwesomeIcon>
+				<div className='col-span-8 flex justify-between'>
+					<h1 className='col-span-8 text-3xl text-midnight-blue pt-4 text-center'>
+						New Project
+					</h1>
+					<common.FontAwesomeIcon
+						className='cursor-pointer text-rich-black text-2xl'
+						icon='fa-solid fa-xmark'
+						onClick={props.close}></common.FontAwesomeIcon>
+				</div>
+
 				<input
 					className='h-10 col-span-8 pl-2 m-2 text-lg border-[1px] border-midnight-blue rounded drop-shadow-lg shadow-black'
 					type='text'
@@ -105,6 +108,7 @@ const NewProjectComponent = (props) => {
 							isSearchable
 							isClearable
 							isMulti
+							maxMenuHeight={140}
 							defaultValue={allEmployees[currentEmployee()]}
 							options={allEmployees}
 							getOptionLabel={(option) =>
@@ -128,7 +132,7 @@ const NewProjectComponent = (props) => {
 					click={handleSubmit(submitMe)}></common.ActionButton>
 			</form>
 		</div>
-	);
-};
+	)
+}
 
-export default NewProjectComponent;
+export default NewProjectComponent

@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import common from '../../common/commonImports';
-import { Doughnut } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-ChartJS.register(ArcElement, Tooltip, Legend);
+import React, { useEffect } from 'react'
+import common from '../../common/commonImports'
+import { Doughnut } from 'react-chartjs-2'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const TicketCard = (props) => {
 	const chartExampleData = {
@@ -24,7 +24,7 @@ const TicketCard = (props) => {
 				borderWidth: 1,
 			},
 		],
-	};
+	}
 	// const listEmployees = (empArray) => {
 	// 	let iter = empArray.length - 1
 	// 	{
@@ -37,9 +37,9 @@ const TicketCard = (props) => {
 	// }
 
 	const openTicketPage = () => {
-		window.location.href = `/ticket/${props.ticket._id}`;
-		props.close();
-	};
+		window.location.href = `/ticket/${props.ticket._id}`
+		props.close()
+	}
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,15 +55,13 @@ const TicketCard = (props) => {
 				<div className='h-80 col-span-4 relative w-full flex flex-row justify-between p-2'>
 					{/* Ticket Information Section */}
 					<div className='h-full w-full grid grid-cols-4 bg-white-filled rounded text-rich-black mx-2'>
-						<h1 className='col-span-4 text-2xl text-center'>
-							Name
-						</h1>
+						<h1 className='col-span-4 text-2xl text-center'>Name</h1>
 						<h2 className='col-span-4 text-xl text-center'>Id</h2>
 						<h3 className='col-span-4 text-xl text-center'>Desc</h3>
 					</div>
 					{/* Employee Table Section */}
 					<div className='h-full w-full flex flex-col bg-white-filled rounded text-rich-black p-1 mx-2'>
-						<div className='border-rich-black border overflow-scroll min-h-full max-h-full bg-white'>
+						<div className='border-rich-black border overflow-scroll no-scroll-bar min-h-full max-h-full bg-white'>
 							<div className='grid grid-cols-4'>
 								<span className='col-span-2 p-2 border-y border-r border-rich-black'>
 									Employee Name
@@ -143,10 +141,10 @@ const TicketCard = (props) => {
 						click={openTicketPage}></common.ActionButton>
 				</div>
 			</div>
-		);
+		)
 	} else {
-		<div></div>;
+		;<div></div>
 	}
-};
+}
 
-export default TicketCard;
+export default TicketCard
