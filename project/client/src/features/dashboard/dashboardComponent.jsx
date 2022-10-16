@@ -194,9 +194,9 @@ const DashboardComponent = (props) => {
 					</div>
 					<div className='w-full min-h-full grid grid-cols-8'>
 						<div className='col-span-8'>
-							<div className='overflow-scroll no-scroll-bar min-h-[30rem] max-h-[40rem] p-2 2xl:min-h-[45rem] 2xl:max-h-fit border-4 border-carolina-blue w-[95%] mx-auto flex flex-col space-y-16'>
+							<div className='overflow-scroll no-scroll-bar min-h-[30rem] max-h-[40rem] p-2 2xl:min-h-[45rem] 2xl:max-h-fit border-4 border-margencito w-[95%] mx-auto flex flex-col space-y-16'>
 								{listProjects()}
-								<div className='flex justify-evenly flex-wrap px-4 h-fit'>
+								<div className='flex justify-evenly flex-wrap px-4 h-fit mb-4'>
 									<div className='h-36 lg:h-52 flex justify-between w-[30%] p-2 border border-rich-black'>
 										<Doughnut
 											options={{

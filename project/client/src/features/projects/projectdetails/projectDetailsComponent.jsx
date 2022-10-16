@@ -296,7 +296,7 @@ const ProjectDetails = (props) => {
 					<span className='self-center'>{`${project.project_name}`}</span>
 				</div>
 				<div className='w-full min-h-[93%] grid grid-cols-8 pb-4'>
-					<div className='col-span-8 max-h-fit min-h-[45rem] border-4 border-carolina-blue w-[95%] mx-auto p-4'>
+					<div className='col-span-8 max-h-fit min-h-[45rem] border-4 border-margencito w-[95%] mx-auto p-4'>
 						<div className='grid grid-cols-8'>
 							<div className='col-span-8 flex flex-row justify-between'>
 								<div className='grid grid-cols-4 border min-h-[17rem] 2xl:min-h-[23rem] border-rich-black p-2 w-[49%]'>

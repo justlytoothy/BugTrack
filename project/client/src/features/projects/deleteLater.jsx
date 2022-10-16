@@ -124,7 +124,7 @@ const ProjectsComponent = (props) => {
 	const listProjects = () => {
 		let iter = projectArray.length - 1
 		return (
-			<div className='overflow-scroll no-scroll-bar max-h-[700px] min-h-[700px] border-4 border-carolina-blue w-[95%] mx-auto'>
+			<div className='overflow-scroll no-scroll-bar max-h-[700px] min-h-[700px] border-4 border-margencito w-[95%] mx-auto'>
 				<div className='grid grid-cols-7 text-rich-black font-bold border-gray-border whitespace-nowrap'>
 					<span className='items-center flex justify-between col-span-2 px-5 py-2 border-r border-b border-l border-t border-gray-border truncate'>
 						Project Name

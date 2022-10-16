@@ -74,9 +74,10 @@ const NewProjectComponent = (props) => {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	return (
-		<div className='h-fit w-fit lg:max-h-[80vh] relative sm:min-w-[40vw] lg:max-w-[50vw] 2xl:max-w-[45vw]'>
+		<div className='h-fit w-fit min-h-[50h] lg:max-h-[80vh] relative sm:min-w-[40vw] lg:max-w-[50vw] 2xl:max-w-[45vw]'>
 			<form className='text-rich-black h-full w-full grid grid-cols-8 items-center space-y-8'>
 				<div className='col-span-8 flex justify-between'>
+					<span className='invisible'></span>
 					<h1 className='col-span-8 text-3xl text-midnight-blue pt-4 text-center'>
 						New Project
 					</h1>

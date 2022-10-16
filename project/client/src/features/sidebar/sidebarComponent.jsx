@@ -53,8 +53,8 @@ const Sidebar = (props, { defaultActive }) => {
 							onClick={props.closeIt}
 							className={({ isActive }) =>
 								isActive
-									? 'bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
-									: 'hover:bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
+									? 'bg-sidebar-button text-charred-charcoal font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
+									: 'hover:bg-sidebar-button text-charred-charcoal font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
 							}>
 							{item.name}
 						</NavLink>
@@ -75,8 +75,8 @@ const Sidebar = (props, { defaultActive }) => {
 						onClick={props.closeIt}
 						className={({ isActive }) =>
 							isActive
-								? 'bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
-								: 'hover:bg-sidebar-button text-white font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
+								? 'bg-sidebar-button text-charred-charcoal font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
+								: 'hover:bg-sidebar-button text-charred-charcoal font-bold text-xl py-4 px-4 transition-all duration-100 ease-in-out my-1 rounded cursor-pointer w-full'
 						}>
 						{item.name}
 					</NavLink>
