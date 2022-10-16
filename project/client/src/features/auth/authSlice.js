@@ -41,6 +41,7 @@ if (
 
 export const loginUser = createAsyncThunk('user/login', async (user) => {
 	try {
+		console.log(user)
 		const response = await axios.post('user/login', user)
 		console.log('this', response)
 		return response.data
