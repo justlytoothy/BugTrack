@@ -82,7 +82,6 @@ const ProjectCard = (props) => {
 	};
 
 	const openProjectPage = () => {
-		console.log('hi there');
 		window.location.href = `${process.env.REACT_APP_PREFIX}/project/${props.project._id}`;
 		props.close();
 	};
