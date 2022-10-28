@@ -10,7 +10,7 @@ import Layout from '../../common/layout';
 
 const MyRoutes = () => {
 	return (
-		<BrowserRouter basename='/build'>
+		<BrowserRouter basename={process.env.REACT_APP_PREFIX}>
 			<Routes>
 				<Route path='/' element={<Layout />}>
 					<Route index element={<DashboardComponent />} />
