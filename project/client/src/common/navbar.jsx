@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import common from './commonImports'
-import { useSelector, useDispatch } from 'react-redux'
-import { getName, logoutUser } from '../features/auth/authSlice'
-import { CSSTransition } from 'react-transition-group'
-import logo from '../images/exLogo.png'
+import React, { useEffect, useState } from 'react';
+import common from './commonImports';
+import { useSelector, useDispatch } from 'react-redux';
+import { getName, logoutUser } from '../features/auth/authSlice';
+import { CSSTransition } from 'react-transition-group';
+import logo from '../images/exLogo.png';
 
 const NavBar = (props) => {
-	const dispatch = useDispatch()
-	const fullName = useSelector(getName)
-	const nodeRef = React.useRef(null)
-	const [openDropdown, setOpenDropdown] = useState(false)
+	const dispatch = useDispatch();
+	const fullName = useSelector(getName);
+	const nodeRef = React.useRef(null);
+	const [openDropdown, setOpenDropdown] = useState(false);
 	const toggleOpenDropdown = () => {
-		setOpenDropdown(!openDropdown)
-	}
+		setOpenDropdown(!openDropdown);
+	};
 	const getCaretClass = () => {
 		if (openDropdown) {
-			return '-rotate-180'
+			return '-rotate-180';
 		}
-		return ''
-	}
+		return '';
+	};
 	useEffect(() => {
 		if (openDropdown) {
-			toggleOpenDropdown()
+			toggleOpenDropdown();
 		}
-	}, [props.closeDropdown])
+	}, [props.closeDropdown]);
 
 	function logout() {
-		dispatch(logoutUser())
+		dispatch(logoutUser());
 	}
 	return (
 		<div className='text-white bg-navbar-color items-center text-lg md:text-xl h-12 flex justify-between px-4 -mr-2'>
@@ -64,7 +64,9 @@ const NavBar = (props) => {
 						</span>
 						<div className='flex flex-col justify-center'>
 							<common.FontAwesomeIcon
-								className={'text-xl transition-all ' + getCaretClass()}
+								className={
+									'text-xl transition-all ' + getCaretClass()
+								}
 								icon='caret-down'
 							/>
 						</div>
@@ -88,7 +90,7 @@ const NavBar = (props) => {
 					nodeRef={nodeRef}>
 					<div
 						ref={nodeRef}
-						className='bg-sidebar-color border-[0.07rem] border-rich-black md:ml-2 h-fit sm:w-44 absolute top-12 transition-all origin-top rounded-t-none rounded-b-md'>
+						className='bg-sidebar-color border-[0.07rem] border-rich-black md:ml-2 h-fit sm:w-44 absolute top-12 transition-all origin-top rounded-t-none rounded-b-md text-rich-black'>
 						<ul className='text-center sm:text-left'>
 							<li className='cursor-pointer hover:bg-sidebar-button hover:text-white py-1 px-1'>
 								This option
@@ -109,7 +111,7 @@ const NavBar = (props) => {
 				</CSSTransition>
 			</div>
 		</div>
-	)
-}
+	);
+};
 
-export default NavBar
+export default NavBar;
