@@ -1,25 +1,25 @@
-import React from 'react'
-import common from '../../common/commonImports'
-import { Doughnut } from 'react-chartjs-2'
-import { useDispatch } from 'react-redux'
-import { deleteProject } from './projectSlice'
-import ChartJS, { resizeChecker } from '../../common/chartDefaults.js'
-import { statusChartData, typeChartData } from './graphData.js'
+import React from 'react';
+import common from '../../common/commonImports';
+import { Doughnut } from 'react-chartjs-2';
+import { useDispatch } from 'react-redux';
+import { deleteProject } from './projectSlice';
+import ChartJS, { resizeChecker } from '../../common/chartDefaults.js';
+import { statusChartData, typeChartData } from './graphData.js';
 
 ///////////////////
 ///////////////////
 const ProjectCard = (props) => {
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 	/**
 	 * Responsively change font size of chart title and legend labels
 	 */
-	window.addEventListener('resize', resizeChecker)
+	window.addEventListener('resize', resizeChecker);
 
 	const deleteOne = () => {
 		// console.log(sessionStorage.getItem('user'));
-		dispatch(deleteProject(props.project._id))
-		setTimeout(() => props.close(), 100)
-	}
+		dispatch(deleteProject(props.project._id));
+		setTimeout(() => props.close(), 100);
+	};
 
 	const employeeGraph = () => {
 		return (
@@ -35,46 +35,57 @@ const ProjectCard = (props) => {
 					</div>
 					{React.Children.toArray(
 						props.project.employees.map((employee) => {
-							let iter = props.project.employees.length - 1
+							let iter = props.project.employees.length - 1;
 							if (iter !== 0) {
-								iter--
+								iter--;
 								return (
 									<div
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-										tabIndex={props.project.employees.length - iter}>
+										tabIndex={
+											props.project.employees.length -
+											iter
+										}>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name + ' ' + employee.last_name}
+											{employee.first_name +
+												' ' +
+												employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								)
+								);
 							} else {
 								return (
 									<div
-										tabIndex={props.project.employees.length - iter}
+										tabIndex={
+											props.project.employees.length -
+											iter
+										}
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 										<span className='p-2 border-r border-b border-rich-black col-span-3 truncate'>
-											{employee.first_name + ' ' + employee.last_name}
+											{employee.first_name +
+												' ' +
+												employee.last_name}
 										</span>
 										<span className='p-2 border-b border-rich-black col-span-1 truncate'>
 											{employee.role}
 										</span>
 									</div>
-								)
+								);
 							}
 						})
 					)}
 				</div>
 			</div>
-		)
-	}
+		);
+	};
 
 	const openProjectPage = () => {
-		window.location.href = `/project/${props.project._id}`
-		props.close()
-	}
+		console.log(process.env);
+		window.location.href = `${process.env.REACT_APP_PREFIX}/project/${props.project._id}`;
+		props.close();
+	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +104,9 @@ const ProjectCard = (props) => {
 						<common.FontAwesomeIcon
 							className='cursor-pointer text-edit-pad hover:text-edit-pad-hover pl-4 pb-1 text-2xl'
 							icon='fa-solid fa-edit'
-							onClick={props.editProject}></common.FontAwesomeIcon>
+							onClick={
+								props.editProject
+							}></common.FontAwesomeIcon>
 					</h1>
 					<common.FontAwesomeIcon
 						className='cursor-pointer text-rich-black text-2xl'
@@ -104,7 +117,9 @@ const ProjectCard = (props) => {
 					<div className='h-72 col-span-4 relative w-full flex justify-between flex-wrap lg:flex-nowrap p-2 space-y-2 lg:space-y-0'>
 						{/* Project Information Section */}
 						<div className='h-1/2 lg:h-full border border-rich-black text-rich-black mx-2 w-full overflow-scroll no-scroll-bar p-1'>
-							<h3 className='text-base'>{props.project.project_description}</h3>
+							<h3 className='text-base'>
+								{props.project.project_description}
+							</h3>
 						</div>
 						{/* Employee Table Section */}
 						{employeeGraph()}
@@ -123,7 +138,9 @@ const ProjectCard = (props) => {
 										},
 									},
 								}}
-								data={statusChartData(props.project)}></Doughnut>
+								data={statusChartData(
+									props.project
+								)}></Doughnut>
 						</div>
 						<div className='h-36 lg:h-52 flex justify-between w-[47%] p-2 border border-rich-black'>
 							<Doughnut
@@ -168,12 +185,12 @@ const ProjectCard = (props) => {
 					</div>
 				</div>
 			</div>
-		)
+		);
 	} else {
-		return <div></div>
+		return <div></div>;
 	}
-}
+};
 
-export default ProjectCard
+export default ProjectCard;
 
 // transition-all motion-reduce:transition-none transform origin-center duration-700 ' + cardClass()
