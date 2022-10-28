@@ -1,81 +1,82 @@
-import React, { useEffect, useState } from 'react'
-import { useOutletContext, useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { getProject, getSelectedProject, refreshStatus } from '../projectSlice'
-import { refreshTicketStatus, deleteTicket } from '../../tickets/ticketSlice'
-import { CSSTransition } from 'react-transition-group'
-import common from '../../../common/commonImports'
-import NewTicketComponent from '../../tickets/newTicketComponent'
-import Modal from 'react-modal'
-import TicketCard from '../../tickets/ticketCardComponent'
-import { Doughnut } from 'react-chartjs-2'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js'
+import React, { useEffect, useState } from 'react';
+import { useOutletContext, useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProject, getSelectedProject, refreshStatus } from '../projectSlice';
+import { refreshTicketStatus, deleteTicket } from '../../tickets/ticketSlice';
+import { CSSTransition } from 'react-transition-group';
+import common from '../../../common/commonImports';
+import NewTicketComponent from '../../tickets/newTicketComponent';
+import Modal from 'react-modal';
+import TicketCard from '../../tickets/ticketCardComponent';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import {
 	statusChartData,
 	typeChartData,
 	priorityChartData,
-} from '../graphData.js'
+} from '../graphData.js';
 
-ChartJS.register(ArcElement, Tooltip, Legend, Title)
+ChartJS.register(ArcElement, Tooltip, Legend, Title);
 //Chart Default Sizes Responsive
-ChartJS.overrides['doughnut'].plugins.legend.position = 'right'
+ChartJS.overrides['doughnut'].plugins.legend.position = 'right';
 if (window.innerWidth >= 1440) {
 	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 		size: 15,
-	}
+	};
 	ChartJS.defaults.plugins.title.font = {
 		...ChartJS.defaults.plugins.title.font,
 		size: 23,
-	}
+	};
 } else if (window.innerWidth >= 1024) {
 	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 		size: 12,
-	}
+	};
 	ChartJS.defaults.plugins.title.font = {
 		...ChartJS.defaults.plugins.title.font,
 		size: 20,
-	}
+	};
 } else if (window.innerWidth >= 768) {
 	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 		size: 10,
-	}
+	};
 	ChartJS.defaults.plugins.title.font = {
 		...ChartJS.defaults.plugins.title.font,
 		size: 18,
-	}
+	};
 } else {
 	ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 		...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 		size: 7,
-	}
+	};
 	ChartJS.defaults.plugins.title.font = {
 		...ChartJS.defaults.plugins.title.font,
 		size: 15,
-	}
+	};
 }
 ///////////////////
 ///////////////////
 
 const ProjectDetails = (props) => {
-	const closeIt = useOutletContext()
-	const { id } = useParams()
-	const [selectedTicket, setSelectedTicket] = useState(null)
-	const [showDetails, setShowDetails] = useState(false)
-	const [modalIsOpen, setIsOpen] = useState(false)
-	const nodeRef = React.useRef(null)
-	const dispatch = useDispatch()
-	const refresh = useSelector(refreshStatus)
-	const refreshTicket = useSelector(refreshTicketStatus)
-	const project = useSelector(getSelectedProject)
+	const closeIt = useOutletContext();
+	const { id } = useParams();
+	const [selectedTicket, setSelectedTicket] = useState(null);
+	const [showDetails, setShowDetails] = useState(false);
+	const [modalIsOpen, setIsOpen] = useState(false);
+	const nodeRef = React.useRef(null);
+	const dispatch = useDispatch();
+	const refresh = useSelector(refreshStatus);
+	const refreshTicket = useSelector(refreshTicketStatus);
+	const project = useSelector(getSelectedProject);
 	useEffect(() => {
-		dispatch(getProject(id))
-		setTimeout(() => dispatch(getProject(id)), 100)
-		console.log('refresh')
-	}, [refresh, refreshTicket])
-	Modal.setAppElement('#root')
+		console.log(id);
+		dispatch(getProject(id));
+		setTimeout(() => dispatch(getProject(id)), 100);
+		console.log('refresh');
+	}, [refresh, refreshTicket]);
+	Modal.setAppElement('#root');
 
 	/**
 	 * Responsively change font size of chart title and legend labels
@@ -85,63 +86,63 @@ const ProjectDetails = (props) => {
 			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 				size: 15,
-			}
+			};
 			ChartJS.defaults.plugins.title.font = {
 				...ChartJS.defaults.plugins.title.font,
 				size: 23,
-			}
+			};
 		} else if (window.innerWidth >= 1024) {
 			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 				size: 12,
-			}
+			};
 			ChartJS.defaults.plugins.title.font = {
 				...ChartJS.defaults.plugins.title.font,
 				size: 20,
-			}
+			};
 		} else if (window.innerWidth >= 768) {
 			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 				size: 10,
-			}
+			};
 			ChartJS.defaults.plugins.title.font = {
 				...ChartJS.defaults.plugins.title.font,
 				size: 18,
-			}
+			};
 		} else {
 			ChartJS.overrides['doughnut'].plugins.legend.labels.font = {
 				...ChartJS.overrides['doughnut'].plugins.legend.labels.font,
 				size: 7,
-			}
+			};
 			ChartJS.defaults.plugins.title.font = {
 				...ChartJS.defaults.plugins.title.font,
 				size: 15,
-			}
+			};
 		}
-	})
+	});
 
 	const openForm = () => {
-		setIsOpen(true)
-	}
+		setIsOpen(true);
+	};
 	const closeForm = () => {
-		setIsOpen(false)
-	}
+		setIsOpen(false);
+	};
 	const showTicket = (ticket) => {
-		setSelectedTicket(ticket)
-		openDetails()
-	}
+		setSelectedTicket(ticket);
+		openDetails();
+	};
 	const openDetails = () => {
-		setShowDetails(true)
-	}
+		setShowDetails(true);
+	};
 	const closeDetails = () => {
-		setShowDetails(false)
-	}
+		setShowDetails(false);
+	};
 
 	const deleteSelectedTicket = () => {
 		if (selectedTicket !== null) {
-			dispatch(deleteTicket(selectedTicket))
+			dispatch(deleteTicket(selectedTicket));
 		}
-	}
+	};
 
 	const listTickets = () => {
 		return (
@@ -165,9 +166,9 @@ const ProjectDetails = (props) => {
 				</div>
 				{React.Children.toArray(
 					project.tickets.map((ticket) => {
-						let iter = project.tickets.length - 1
+						let iter = project.tickets.length - 1;
 						if (iter !== 0) {
-							iter--
+							iter--;
 							return (
 								<div
 									className='grid grid-cols-8 hover:bg-white-filled cursor-pointer active:bg-rich-black active:text-white focus:bg-rich-black focus:text-white'
@@ -189,7 +190,7 @@ const ProjectDetails = (props) => {
 										{`${ticket.assigned_employees[0].first_name} ${ticket.assigned_employees[0].last_name}`}
 									</span>
 								</div>
-							)
+							);
 						} else {
 							return (
 								<div
@@ -212,13 +213,13 @@ const ProjectDetails = (props) => {
 										{`${ticket.assigned_employees[0].first_name} ${ticket.assigned_employees[0].last_name}`}
 									</span>
 								</div>
-							)
+							);
 						}
 					})
 				)}
 			</div>
-		)
-	}
+		);
+	};
 
 	const listEmployees = () => {
 		return (
@@ -237,15 +238,19 @@ const ProjectDetails = (props) => {
 				<div className='min-h-[17rem] max-h-[17rem] 2xl:min-h-[23rem] 2xl:max-h-[23rem] overflow-scroll no-scroll-bar'>
 					{React.Children.toArray(
 						project.employees.map((employee) => {
-							let iter = project.employees.length - 1
+							let iter = project.employees.length - 1;
 							if (iter !== 0) {
-								iter--
+								iter--;
 								return (
 									<div
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'
-										tabIndex={project.employees.length - iter}>
+										tabIndex={
+											project.employees.length - iter
+										}>
 										<span className='p-2 border-r border-b border-rich-black col-span-2'>
-											{employee.first_name + ' ' + employee.last_name}
+											{employee.first_name +
+												' ' +
+												employee.last_name}
 										</span>
 										<span className='p-2 border-r border-b border-rich-black col-span-1'>
 											{employee.role}
@@ -254,14 +259,18 @@ const ProjectDetails = (props) => {
 											{employee.role}
 										</span>
 									</div>
-								)
+								);
 							} else {
 								return (
 									<div
-										tabIndex={project.employees.length - iter}
+										tabIndex={
+											project.employees.length - iter
+										}
 										className='grid grid-cols-4 hover:bg-white-filled focus:bg-white-filled cursor-pointer'>
 										<span className='p-2 border-r border-b border-rich-black col-span-2'>
-											{employee.first_name + ' ' + employee.last_name}
+											{employee.first_name +
+												' ' +
+												employee.last_name}
 										</span>
 										<span className='p-2 border-r border-b border-rich-black col-span-1'>
 											{employee.role}
@@ -270,14 +279,14 @@ const ProjectDetails = (props) => {
 											{employee.role}
 										</span>
 									</div>
-								)
+								);
 							}
 						})
 					)}
 				</div>
 			</div>
-		)
-	}
+		);
+	};
 
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -335,7 +344,9 @@ const ProjectDetails = (props) => {
 												},
 											},
 										}}
-										data={statusChartData(project)}></Doughnut>
+										data={statusChartData(
+											project
+										)}></Doughnut>
 								</div>
 								<div className='h-36 lg:h-52 flex justify-between w-[32%] p-2 border border-rich-black'>
 									<Doughnut
@@ -350,7 +361,9 @@ const ProjectDetails = (props) => {
 												},
 											},
 										}}
-										data={priorityChartData(project)}></Doughnut>
+										data={priorityChartData(
+											project
+										)}></Doughnut>
 								</div>
 								<div className='h-36 lg:h-52 flex justify-between w-[32%] p-2 border border-rich-black'>
 									<Doughnut
@@ -365,7 +378,9 @@ const ProjectDetails = (props) => {
 												},
 											},
 										}}
-										data={typeChartData(project)}></Doughnut>
+										data={typeChartData(
+											project
+										)}></Doughnut>
 								</div>
 							</div>
 						</div>
@@ -381,7 +396,9 @@ const ProjectDetails = (props) => {
 							<common.ActionButton
 								text={<div className=''>Delete Ticket</div>}
 								type='delete'
-								click={deleteSelectedTicket}></common.ActionButton>
+								click={
+									deleteSelectedTicket
+								}></common.ActionButton>
 						</span>
 					</div>
 
@@ -418,10 +435,10 @@ const ProjectDetails = (props) => {
 					</Modal>
 				</div>
 			</div>
-		)
+		);
 	} else {
-		return <common.SpinnerPage closeIt={closeIt}></common.SpinnerPage>
+		return <common.SpinnerPage closeIt={closeIt}></common.SpinnerPage>;
 	}
-}
+};
 
-export default ProjectDetails
+export default ProjectDetails;
