@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getName, listAllUsers, getUser } from '../auth/authSlice'
 import common from '../../common/commonImports.js'
 import { Doughnut, Pie } from 'react-chartjs-2'
-import { useOutletContext } from 'react-router-dom'
+import { useOutletContext, useNavigate } from 'react-router-dom'
 import {
 	allStatusChartData,
 	allTypeChartData,
@@ -20,6 +20,7 @@ import ChartJS, { resizeChecker } from '../../common/chartDefaults'
 
 const DashboardComponent = (props) => {
 	const dispatch = useDispatch()
+	const navigate = useNavigate();
 	/**
 	 * Responsively change font size of chart title and legend labels
 	 */
@@ -67,7 +68,8 @@ const DashboardComponent = (props) => {
 		return myTickets
 	}
 	const openProjectPage = (project) => {
-		window.location.href = `/project/${project._id}`
+		navigate(`/project/${props.project._id}`)
+
 	}
 
 	/**

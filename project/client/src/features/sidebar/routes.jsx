@@ -1,16 +1,16 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import DashboardComponent from '../dashboard/dashboardComponent';
-import EmployeesComponent from '../employees/employeesComponent';
-import common from '../../common/commonImports';
-import ProjectsComponent from '../projects/projectsComponent';
-import ProjectDetails from '../projects/projectdetails/projectDetailsComponent';
-import TicketDetails from '../tickets/ticketDetailsComponent';
-import Layout from '../../common/layout';
+import React from 'react'
+import { BrowserRouter, Route, Routes, HashRouter } from 'react-router-dom'
+import DashboardComponent from '../dashboard/dashboardComponent'
+import EmployeesComponent from '../employees/employeesComponent'
+import common from '../../common/commonImports'
+import ProjectsComponent from '../projects/projectsComponent'
+import ProjectDetails from '../projects/projectdetails/projectDetailsComponent'
+import TicketDetails from '../tickets/ticketDetailsComponent'
+import Layout from '../../common/layout'
 
 const MyRoutes = () => {
 	return (
-		<BrowserRouter basename={process.env.REACT_APP_PREFIX}>
+		<HashRouter>
 			<Routes>
 				<Route path='/' element={<Layout />}>
 					<Route index element={<DashboardComponent />} />
@@ -21,8 +21,8 @@ const MyRoutes = () => {
 					<Route path='*' element={<common.ErrorPageComponent />} />
 				</Route>
 			</Routes>
-		</BrowserRouter>
-	);
-};
+		</HashRouter>
+	)
+}
 
-export default MyRoutes;
+export default MyRoutes

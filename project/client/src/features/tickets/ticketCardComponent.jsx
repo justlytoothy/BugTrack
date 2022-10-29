@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react'
 import common from '../../common/commonImports'
 import { Doughnut } from 'react-chartjs-2'
+import { useNavigate } from 'react-router-dom'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 ChartJS.register(ArcElement, Tooltip, Legend)
 
 const TicketCard = (props) => {
+	const navigate = useNavigate()
 	const chartExampleData = {
 		labels: ['Open', 'Closed', 'Failed'],
 		datasets: [
@@ -37,7 +39,7 @@ const TicketCard = (props) => {
 	// }
 
 	const openTicketPage = () => {
-		window.location.href = `/ticket/${props.ticket._id}`
+		navigate(`/ticket/${props.ticket._id}`)
 		props.close()
 	}
 
