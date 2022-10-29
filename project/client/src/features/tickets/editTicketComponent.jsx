@@ -21,7 +21,6 @@ const EditTicketComponent = (props) => {
 	const [ticketStatus, setTicketStatus] = useState('')
 	const [ticketType, setTicketType] = useState('')
 	const onChange = (newValue, actionMeta) => {
-		console.log(newValue, actionMeta)
 		switch (actionMeta.action) {
 			case 'clear':
 				setAssignedEmployees([])

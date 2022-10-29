@@ -54,7 +54,6 @@ const EmployeeInfoModal = (props) => {
 	})
 
 	const deleteOne = () => {
-		// console.log(sessionStorage.getItem('user'));
 		dispatch(deleteUser(props.employee._id))
 		setTimeout(() => props.close(), 100)
 	}

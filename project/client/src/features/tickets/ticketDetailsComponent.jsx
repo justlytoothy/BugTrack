@@ -28,7 +28,6 @@ const TicketDetails = (props) => {
 	const refreshComment = useSelector(refreshCommentStatus)
 	useEffect(() => {
 		dispatch(getTicket(id))
-		console.log(ticket)
 	}, [refreshTicket, refreshComment])
 	Modal.setAppElement('#root')
 	const {

@@ -21,7 +21,6 @@ const NewTicketComponent = (props) => {
 	const [ticketStatus, setTicketStatus] = useState('')
 	const [ticketType, setTicketType] = useState('')
 	const onChange = (newValue, actionMeta) => {
-		console.log(newValue, actionMeta)
 		switch (actionMeta.action) {
 			case 'clear':
 				setAssignedEmployees([])
@@ -87,7 +86,6 @@ const NewTicketComponent = (props) => {
 			assigned_employees: assignedEmployees,
 			ticket_creator: '',
 		}
-		console.log(ticket)
 		dispatch(newTicket(ticket))
 		props.close()
 	}

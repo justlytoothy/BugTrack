@@ -16,7 +16,6 @@ const TicketCard = (props) => {
 		props.close()
 	}
 	const deleteOne = () => {
-		console.log('deleting')
 		dispatch(deleteTicket(props.ticket._id))
 	}
 
@@ -29,7 +28,6 @@ const TicketCard = (props) => {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	if (props.ticket !== null) {
-		console.log(props.ticket)
 
 		return (
 			<div className='grid grid-cols-4 h-fit w-fit'>

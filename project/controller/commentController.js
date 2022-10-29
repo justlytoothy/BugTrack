@@ -9,7 +9,6 @@ const newComment = async (req, res) => {
 		const ticket = await ticketModel.findById(ticket_id)
 		ticket.ticket_comments.push({ message: message, creator: creator })
 		ticket.save()
-		console.log(ticket.ticket_comments)
 		return res.status(201).json(ticket)
 	} catch (err) {
 		console.log(err)
@@ -24,7 +23,6 @@ const getAllComments = async (req, res) => {
 			.findById(ticket_id)
 			.populate('ticket_comments')
 			.exec()
-		console.log(ticket.ticket_comments)
 		return res.json(ticket)
 	} catch (error) {
 		console.log(error)
@@ -40,7 +38,6 @@ const getComment = async (req, res) => {
 			.populate('ticket_comments')
 			.exec()
 		const comment = await ticket.ticket_comments.id(comment_id)
-		console.log(comment)
 		return res.status(200).json(comment)
 	} catch (error) {
 		console.log(error)
@@ -59,7 +56,6 @@ const deleteComment = async (req, res) => {
 	try {
 		const ticket = await ticketModel.findById(ticket_id)
 		const response = await ticket.ticket_comments.id(comment_id).remove()
-		console.log('removed comment', comment_id)
 	} catch (error) {
 		console.log(error)
 		return res.status(400).json({ Error: error })
@@ -68,7 +64,6 @@ const deleteComment = async (req, res) => {
 	// const commentEmployees = await userModel.find({
 	// 	assigned_comments: id,
 	// });
-	// console.log(commentEmployees);
 }
 
 export default {

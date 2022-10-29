@@ -19,7 +19,6 @@ const EmployeesComponent = (props) => {
 	const [selectedEmployee, setSelectedEmployee] = useState('')
 	const showEmployeeInfo = (employee) => {
 		setSelectedEmployee(employee)
-		console.log(employee)
 		setShowInfo(true)
 	}
 	const closeEmployeeInfo = () => {

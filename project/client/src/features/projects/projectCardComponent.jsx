@@ -18,7 +18,6 @@ const ProjectCard = (props) => {
 	window.addEventListener('resize', resizeChecker)
 
 	const deleteOne = () => {
-		// console.log(sessionStorage.getItem('user'));
 		dispatch(deleteProject(props.project._id))
 		setTimeout(() => props.close(), 100)
 	}
