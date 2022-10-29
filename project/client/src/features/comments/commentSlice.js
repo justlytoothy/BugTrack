@@ -103,6 +103,8 @@ const commentSlice = createSlice({
 	extraReducers(builder) {
 		builder
 			.addCase(newComment.pending, (state, action) => {
+				state.refresh++
+
 				state.status = 'loading'
 			})
 			.addCase(newComment.fulfilled, (state, action) => {

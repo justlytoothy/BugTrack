@@ -205,7 +205,7 @@ const EmployeeInfoModal = (props) => {
 			</div>
 		)
 	} else {
-		;<div></div>
+		return <div></div>
 	}
 }
 
